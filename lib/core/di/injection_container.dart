@@ -1,0 +1,124 @@
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../app/cubit/app_shell_cubit.dart';
+import '../../app/cubit/app_start_cubit.dart';
+import '../../features/auth/data/data_sources/auth_local_data_source.dart';
+import '../../features/auth/data/data_sources/auth_remote_data_source.dart';
+import '../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/domain/repositories/auth_repository.dart';
+import '../../features/auth/domain/usecases/get_current_user_usecase.dart';
+import '../../features/auth/domain/usecases/login_usecase.dart';
+import '../../features/auth/domain/usecases/logout_usecase.dart';
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/auth/presentation/cubit/login_cubit.dart';
+import '../../features/home/data/repositories/home_repository_impl.dart';
+import '../../features/home/domain/repositories/home_repository.dart';
+import '../../features/home/domain/usecases/get_home_feed_usecase.dart';
+import '../../features/home/presentation/cubit/home_cubit.dart';
+import '../../features/recipe/data/repositories/recipe_repository_impl.dart';
+import '../../features/recipe/domain/repositories/recipe_repository.dart';
+import '../../features/recipe/domain/usecases/get_popular_recipes_usecase.dart';
+import '../../features/recipe/presentation/cubit/recipe_cubit.dart';
+import '../../features/settings/presentation/cubit/settings_cubit.dart';
+import '../../features/splash/presentation/cubit/splash_cubit.dart';
+import '../network/dio_client.dart';
+import '../network/dio_factory.dart';
+import '../network/interceptors/auth_interceptor.dart';
+import '../network/interceptors/logging_interceptor.dart';
+import '../network/interceptors/retry_interceptor.dart';
+import '../network/network_info.dart';
+import '../services/connectivity_service.dart';
+import '../services/logger_service.dart';
+import '../services/storage_service.dart';
+import '../services/token_service.dart';
+
+final GetIt getIt = GetIt.instance;
+
+Future<void> configureDependencies({bool enableAuthFeature = true}) async {
+  if (getIt.isRegistered<Dio>()) return;
+
+  _registerCoreDependencies();
+  _registerHomeDependencies();
+  _registerRecipeDependencies();
+  _registerSettingsDependencies();
+  _registerSplashDependencies();
+  if (enableAuthFeature) {
+    _registerAuthDependencies();
+  }
+}
+
+void _registerCoreDependencies() {
+  getIt
+    ..registerLazySingleton<StorageService>(StorageService.new)
+    ..registerLazySingleton<TokenService>(() => TokenService(getIt()))
+    ..registerLazySingleton<LoggerService>(LoggerService.new)
+    ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
+    ..registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()))
+    ..registerFactory<AppStartCubit>(() => AppStartCubit(getIt()))
+    ..registerLazySingleton<AppShellCubit>(AppShellCubit.new);
+
+  final dio = DioFactory.create()
+    ..interceptors.addAll([
+      LoggingInterceptor(getIt()),
+      AuthInterceptor(getIt()),
+      RetryInterceptor(),
+    ]);
+
+  getIt
+    ..registerLazySingleton<Dio>(() => dio)
+    ..registerLazySingleton<DioClient>(() => DioClient(getIt()));
+}
+
+void _registerHomeDependencies() {
+  getIt
+    ..registerLazySingleton<HomeRepository>(HomeRepositoryImpl.new)
+    ..registerLazySingleton<GetHomeFeedUseCase>(
+      () => GetHomeFeedUseCase(getIt()),
+    )
+    ..registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+}
+
+void _registerRecipeDependencies() {
+  getIt
+    ..registerLazySingleton<RecipeRepository>(RecipeRepositoryImpl.new)
+    ..registerLazySingleton<GetPopularRecipesUseCase>(
+      () => GetPopularRecipesUseCase(getIt()),
+    )
+    ..registerFactory<RecipeCubit>(() => RecipeCubit(getIt()));
+}
+
+void _registerSettingsDependencies() {
+  getIt.registerFactory<SettingsCubit>(SettingsCubit.new);
+}
+
+void _registerSplashDependencies() {
+  getIt.registerFactory<SplashCubit>(SplashCubit.new);
+}
+
+void _registerAuthDependencies() {
+  getIt
+    ..registerLazySingleton<AuthRemoteDataSource>(
+      () => AuthRemoteDataSourceImpl(getIt()),
+    )
+    ..registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl(getIt()),
+    )
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(
+        remoteDataSource: getIt(),
+        localDataSource: getIt(),
+        tokenService: getIt(),
+        networkInfo: getIt(),
+      ),
+    )
+    ..registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()))
+    ..registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(getIt()))
+    ..registerLazySingleton<GetCurrentUserUseCase>(
+      () => GetCurrentUserUseCase(getIt()),
+    )
+    ..registerFactory<LoginCubit>(() => LoginCubit(getIt()))
+    ..registerFactory<AuthCubit>(
+      () => AuthCubit(getCurrentUserUseCase: getIt(), logoutUseCase: getIt()),
+    );
+}

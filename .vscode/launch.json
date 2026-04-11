@@ -1,0 +1,134 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    // --- Universal Launch Configuration ---
+    {
+      "name": "ayva_finance_client_mobile (current device, debug)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--dart-define=octopus.logs=true"
+      ]
+    },
+
+    // --- iOS Launch Configurations ---
+    {
+      "name": "ayva_finance_client_mobile (ios)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}",
+      "noDebug": true,
+      "args": [
+        "--dart-define=octopus.logs=true",
+        "--dart-define=config.platform=ios"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (profile mode, iOS)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--dart-define=config.platform=ios"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (release mode, iOS)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--dart-define=config.platform=ios"
+      ]
+    },
+
+    // --- Android Launch Configurations ---
+    {
+      "name": "ayva_finance_client_mobile (android)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}",
+      "noDebug": true,
+      "args": [
+        "--dart-define=octopus.logs=true",
+        "--dart-define=config.platform=android"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (profile mode, android)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--dart-define=config.platform=android"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (release mode, android)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "cwd": "${workspaceFolder}",
+      "args": [
+        "--dart-define=config.platform=android"
+      ]
+    },
+
+    // --- Web Launch Configurations ---
+    {
+      "name": "ayva_finance_client_mobile (web chrome)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}",
+      "deviceId": "chrome",
+      "noDebug": true,
+      "args": [
+        "--dart-define=octopus.logs=true",
+        "--dart-define=config.platform=web"
+      ]
+    },
+
+    // --- Desktop Launch Configurations ---
+    {
+      "name": "ayva_finance_client_mobile (windows)",
+      "request": "launch",
+      "type": "dart",
+      "cwd": "${workspaceFolder}",
+      "deviceId": "windows",
+      "noDebug": true,
+      "args": [
+        "--dart-define=octopus.logs=true",
+        "--dart-define=config.platform=windows"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (profile mode, windows)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "cwd": "${workspaceFolder}",
+      "deviceId": "windows",
+      "args": [
+        "--dart-define=config.platform=windows"
+      ]
+    },
+    {
+      "name": "ayva_finance_client_mobile (release mode, windows)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "cwd": "${workspaceFolder}",
+      "deviceId": "windows",
+      "args": [
+        "--dart-define=config.platform=windows"
+      ]
+    }
+  ]
+}
