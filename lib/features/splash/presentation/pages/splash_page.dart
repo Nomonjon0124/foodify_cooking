@@ -19,8 +19,9 @@ class SplashPage extends StatelessWidget {
       create: (_) => getIt<SplashCubit>()..start(),
       child: BlocListener<SplashCubit, SplashState>(
         listenWhen: (previous, current) =>
-            previous.status != current.status && current.status == SplashStatus.completed,
-        listener: (context, state) => context.go(RouteNames.home),
+            previous.status != current.status &&
+            current.status == SplashStatus.completed,
+        listener: (context, state) => context.go(RouteNames.onboarding),
         child: const _SplashView(),
       ),
     );
@@ -34,7 +35,8 @@ class _SplashView extends StatefulWidget {
   State<_SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<_SplashView> with SingleTickerProviderStateMixin {
+class _SplashViewState extends State<_SplashView>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _logoController;
   late final Animation<double> _fadeAnimation;
   late final Animation<double> _scaleAnimation;
@@ -42,15 +44,16 @@ class _SplashViewState extends State<_SplashView> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    _logoController = AnimationController(vsync: this, duration: const Duration(seconds: 5))..forward();
-    _fadeAnimation = Tween<double>(
-      begin: 0.2,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _logoController, curve: Curves.easeOutCubic));
-    _scaleAnimation = Tween<double>(
-      begin: 0.92,
-      end: 1,
-    ).animate(CurvedAnimation(parent: _logoController, curve: Curves.easeOutBack));
+    _logoController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..forward();
+    _fadeAnimation = Tween<double>(begin: 0.2, end: 1).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeOutCubic),
+    );
+    _scaleAnimation = Tween<double>(begin: 0.92, end: 1).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeOutBack),
+    );
   }
 
   @override
@@ -73,7 +76,10 @@ class _SplashViewState extends State<_SplashView> with SingleTickerProviderState
               opacity: _fadeAnimation,
               child: ScaleTransition(
                 scale: _scaleAnimation,
-                child: Assets.icons.foodifySplashLogo.svg(width: 120, height: 120),
+                child: Assets.icons.foodifySplashLogo.svg(
+                  width: 120,
+                  height: 120,
+                ),
               ),
             ),
             Gap(35),

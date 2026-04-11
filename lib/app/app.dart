@@ -16,7 +16,8 @@ class App extends StatelessWidget {
       create: (_) => getIt<AppStartCubit>()..initialize(),
       child: BlocBuilder<AppStartCubit, AppStartState>(
         builder: (context, state) {
-          if (state.status == AppStartStatus.loading || state.status == AppStartStatus.initial) {
+          if (state.status == AppStartStatus.loading ||
+              state.status == AppStartStatus.initial) {
             return const MaterialApp(
               debugShowCheckedModeBanner: false,
               home: Scaffold(body: Center(child: CircularProgressIndicator())),
@@ -26,7 +27,11 @@ class App extends StatelessWidget {
           if (state.status == AppStartStatus.failure) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              home: Scaffold(body: Center(child: Text(state.errorMessage ?? 'Startup error'))),
+              home: Scaffold(
+                body: Center(
+                  child: Text(state.errorMessage ?? 'Startup error'),
+                ),
+              ),
             );
           }
 

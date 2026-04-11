@@ -7,6 +7,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/profile_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/recipe/presentation/pages/recipe_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../app/cubit/app_shell_cubit.dart';
@@ -21,6 +22,11 @@ abstract final class AppRouter {
         path: RouteNames.splash,
         name: 'splash',
         builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        path: RouteNames.onboarding,
+        name: 'onboarding',
+        builder: (context, state) => const OnboardingPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

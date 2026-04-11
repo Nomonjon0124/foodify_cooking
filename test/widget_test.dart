@@ -1,6 +1,9 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:foodify_cooking/app/app.dart';
+import 'package:foodify_cooking/config/routes/app_router.dart';
+import 'package:foodify_cooking/config/routes/route_names.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
 
 void main() {
@@ -12,13 +15,13 @@ void main() {
     await getIt.reset();
   });
 
-  testWidgets('App boots and shows guest shell', (tester) async {
+  testWidgets('App boots and shows onboarding after splash', (tester) async {
+    AppRouter.router.go(RouteNames.splash);
     await tester.pumpWidget(const App());
     await tester.pump(const Duration(milliseconds: 1900));
     await tester.pumpAndSettle();
 
-    expect(find.text('Home'), findsOneWidget);
-    expect(find.text('Recipes'), findsOneWidget);
-    expect(find.text('Settings'), findsOneWidget);
+    expect(find.text('Your personal guide to be a chef'), findsOneWidget);
+    expect(find.byType(PageView), findsOneWidget);
   });
 }

@@ -1,5 +1,6 @@
 abstract final class RouteNames {
   static const splash = '/splash';
+  static const onboarding = '/onboarding';
   static const home = '/home';
   static const recipes = '/recipes';
   static const settings = '/settings';

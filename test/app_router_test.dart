@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foodify_cooking/config/routes/route_names.dart';
+import 'package:foodify_cooking/features/splash/presentation/widgets/splash_loading_dots.dart';
 
 import 'package:foodify_cooking/config/routes/app_router.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
@@ -13,24 +15,23 @@ void main() {
     await getIt.reset();
   });
 
-  testWidgets('Router starts from splash and opens home for guest', (
-    tester,
-  ) async {
+  testWidgets('Router starts from splash and opens onboarding', (tester) async {
+    AppRouter.router.go(RouteNames.splash);
     await tester.pumpWidget(MaterialApp.router(routerConfig: AppRouter.router));
     await tester.pump();
 
-    expect(find.text('Foodify'), findsOneWidget);
+    expect(find.byType(SplashLoadingDots), findsOneWidget);
 
     await tester.pump(const Duration(milliseconds: 1900));
     await tester.pumpAndSettle();
 
-    expect(find.text('Foodify Home'), findsOneWidget);
+    expect(find.text('Your personal guide to be a chef'), findsOneWidget);
     expect(find.text('Login'), findsNothing);
   });
 
   testWidgets('Bottom navigation switches between tabs', (tester) async {
     await tester.pumpWidget(MaterialApp.router(routerConfig: AppRouter.router));
-    await tester.pump(const Duration(milliseconds: 1900));
+    AppRouter.router.go(RouteNames.home);
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Recipes'));

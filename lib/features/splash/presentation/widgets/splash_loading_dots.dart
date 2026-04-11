@@ -7,13 +7,17 @@ class SplashLoadingDots extends StatefulWidget {
   State<SplashLoadingDots> createState() => _SplashLoadingDotsState();
 }
 
-class _SplashLoadingDotsState extends State<SplashLoadingDots> with SingleTickerProviderStateMixin {
+class _SplashLoadingDotsState extends State<SplashLoadingDots>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 5))..repeat();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat();
   }
 
   @override
@@ -41,13 +45,19 @@ class _SplashLoadingDotsState extends State<SplashLoadingDots> with SingleTicker
             crossAxisAlignment: CrossAxisAlignment.center,
             children: List.generate(3, (index) {
               return Padding(
-                padding: EdgeInsets.only(left: index == 0 ? 0 : 7, right: index == 2 ? 0 : 7),
+                padding: EdgeInsets.only(
+                  left: index == 0 ? 0 : 7,
+                  right: index == 2 ? 0 : 7,
+                ),
                 child: Opacity(
                   opacity: _phaseValue(index),
                   child: Container(
                     width: 16,
                     height: 16,
-                    decoration: const BoxDecoration(color: Color(0xFFDEE21B), shape: BoxShape.circle),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFDEE21B),
+                      shape: BoxShape.circle,
+                    ),
                   ),
                 ),
               );

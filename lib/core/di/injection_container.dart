@@ -16,6 +16,7 @@ import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
 import '../../features/home/domain/usecases/get_home_feed_usecase.dart';
 import '../../features/home/presentation/cubit/home_cubit.dart';
+import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
 import '../../features/recipe/data/repositories/recipe_repository_impl.dart';
 import '../../features/recipe/domain/repositories/recipe_repository.dart';
 import '../../features/recipe/domain/usecases/get_popular_recipes_usecase.dart';
@@ -40,6 +41,7 @@ Future<void> configureDependencies({bool enableAuthFeature = true}) async {
 
   _registerCoreDependencies();
   _registerHomeDependencies();
+  _registerOnboardingDependencies();
   _registerRecipeDependencies();
   _registerSettingsDependencies();
   _registerSplashDependencies();
@@ -77,6 +79,10 @@ void _registerHomeDependencies() {
       () => GetHomeFeedUseCase(getIt()),
     )
     ..registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+}
+
+void _registerOnboardingDependencies() {
+  getIt.registerFactory<OnboardingCubit>(OnboardingCubit.new);
 }
 
 void _registerRecipeDependencies() {
