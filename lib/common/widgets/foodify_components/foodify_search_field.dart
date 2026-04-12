@@ -12,6 +12,8 @@ class FoodifySearchField extends StatefulWidget {
     this.controller,
     this.initialText,
     this.hintText = 'Search',
+    this.backgroundColor,
+    this.activeBackgroundColor = Colors.white,
     this.onChanged,
     this.onTap,
     this.enabled = true,
@@ -20,6 +22,8 @@ class FoodifySearchField extends StatefulWidget {
   final TextEditingController? controller;
   final String? initialText;
   final String hintText;
+  final Color? backgroundColor;
+  final Color activeBackgroundColor;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onTap;
   final bool enabled;
@@ -37,7 +41,8 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
   void initState() {
     super.initState();
     _ownsController = widget.controller == null;
-    _controller = widget.controller ?? TextEditingController(text: widget.initialText);
+    _controller =
+        widget.controller ?? TextEditingController(text: widget.initialText);
     _focusNode = FocusNode()..addListener(_handleStateChanged);
     _controller.addListener(_handleStateChanged);
   }
@@ -45,7 +50,9 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
   @override
   void didUpdateWidget(covariant FoodifySearchField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (_ownsController && widget.initialText != oldWidget.initialText && widget.initialText != _controller.text) {
+    if (_ownsController &&
+        widget.initialText != oldWidget.initialText &&
+        widget.initialText != _controller.text) {
       _controller.text = widget.initialText ?? '';
     }
   }
@@ -82,7 +89,9 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final targetWidth = 277.r;
-        final width = constraints.hasBoundedWidth ? math.min(targetWidth, constraints.maxWidth) : targetWidth;
+        final width = constraints.hasBoundedWidth
+            ? math.min(targetWidth, constraints.maxWidth)
+            : targetWidth;
 
         return SizedBox(
           width: width,
@@ -90,7 +99,11 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
           child: DecoratedBox(
             key: const Key('foodify_search_field_container'),
             decoration: BoxDecoration(
-              color: isActive ? Colors.white : const Color(0xFFF6FBF4),
+              color:
+                  widget.backgroundColor ??
+                  (isActive
+                      ? widget.activeBackgroundColor
+                      : const Color(0xFFF6FBF4)),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Padding(
@@ -100,7 +113,10 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
                   Assets.icons.foodifyComponents.searchNormal.svg(
                     width: 24.r,
                     height: 24.r,
-                    colorFilter: const ColorFilter.mode(Color(0xFF353535), BlendMode.srcIn),
+                    colorFilter: const ColorFilter.mode(
+                      Color(0xFF353535),
+                      BlendMode.srcIn,
+                    ),
                   ),
                   SizedBox(width: 8.r),
                   Expanded(
@@ -116,7 +132,9 @@ class _FoodifySearchFieldState extends State<FoodifySearchField> {
                       cursorColor: const Color(0xFF353535),
                       decoration: InputDecoration.collapsed(
                         hintText: widget.hintText,
-                        hintStyle: textStyle.copyWith(color: const Color(0xFFADADAD)),
+                        hintStyle: textStyle.copyWith(
+                          color: const Color(0xFFADADAD),
+                        ),
                       ),
                     ),
                   ),

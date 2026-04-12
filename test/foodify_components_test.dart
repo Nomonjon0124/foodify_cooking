@@ -159,14 +159,18 @@ void main() {
     );
     expect(
       find.byKey(const Key('foodify_popular_card_save_icon')),
-      findsNWidgets(2),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const Key('foodify_popular_card_unsave_icon')),
+      findsOneWidget,
     );
 
     await tester.tap(
       find.byKey(const Key('foodify_popular_card_select_circle')).first,
     );
     await tester.tap(
-      find.byKey(const Key('foodify_popular_card_save_icon')).first,
+      find.byKey(const Key('foodify_popular_card_unsave_icon')).first,
     );
     await tester.pump();
 

@@ -127,6 +127,10 @@ class $AssetsIconsFoodifyComponentsGen {
   SvgGenImage get documentCopy =>
       const SvgGenImage('assets/icons/foodify_components/document_copy.svg');
 
+  /// File path: assets/icons/foodify_components/document_filter.svg
+  SvgGenImage get documentFilter =>
+      const SvgGenImage('assets/icons/foodify_components/document_filter.svg');
+
   /// File path: assets/icons/foodify_components/foodify_wordmark.svg
   SvgGenImage get foodifyWordmark =>
       const SvgGenImage('assets/icons/foodify_components/foodify_wordmark.svg');
@@ -162,6 +166,7 @@ class $AssetsIconsFoodifyComponentsGen {
     archiveMinusBold,
     archiveMinusOutline,
     documentCopy,
+    documentFilter,
     foodifyWordmark,
     logoMarkHorizontal,
     logoMarkLarge,
@@ -199,8 +204,22 @@ class $AssetsImagesFoodifyComponentsGen {
     'assets/images/foodify_components/popular_card_cake.png',
   );
 
+  /// File path: assets/images/foodify_components/popular_card_icecream.png
+  AssetGenImage get popularCardIcecream => const AssetGenImage(
+    'assets/images/foodify_components/popular_card_icecream.png',
+  );
+
+  /// File path: assets/images/foodify_components/popular_card_pizza.png
+  AssetGenImage get popularCardPizza => const AssetGenImage(
+    'assets/images/foodify_components/popular_card_pizza.png',
+  );
+
   /// List of all assets
-  List<AssetGenImage> get values => [popularCardCake];
+  List<AssetGenImage> get values => [
+    popularCardCake,
+    popularCardIcecream,
+    popularCardPizza,
+  ];
 }
 
 class $AssetsImagesOnboardingGen {
@@ -263,20 +282,42 @@ class $AssetsImagesRecipeCardsGen {
   AssetGenImage get mainCardContent =>
       const AssetGenImage('assets/images/recipe_cards/main_card_content.png');
 
+  /// File path: assets/images/recipe_cards/main_card_content_omelets.png
+  AssetGenImage get mainCardContentOmelets => const AssetGenImage(
+    'assets/images/recipe_cards/main_card_content_omelets.png',
+  );
+
   /// File path: assets/images/recipe_cards/main_card_content_overlay.png
   AssetGenImage get mainCardContentOverlay => const AssetGenImage(
     'assets/images/recipe_cards/main_card_content_overlay.png',
+  );
+
+  /// File path: assets/images/recipe_cards/main_card_content_victoria.png
+  AssetGenImage get mainCardContentVictoria => const AssetGenImage(
+    'assets/images/recipe_cards/main_card_content_victoria.png',
   );
 
   /// File path: assets/images/recipe_cards/user_pic.png
   AssetGenImage get userPic =>
       const AssetGenImage('assets/images/recipe_cards/user_pic.png');
 
+  /// File path: assets/images/recipe_cards/user_pic_dave.png
+  AssetGenImage get userPicDave =>
+      const AssetGenImage('assets/images/recipe_cards/user_pic_dave.png');
+
+  /// File path: assets/images/recipe_cards/user_pic_rick.png
+  AssetGenImage get userPicRick =>
+      const AssetGenImage('assets/images/recipe_cards/user_pic_rick.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     mainCardContent,
+    mainCardContentOmelets,
     mainCardContentOverlay,
+    mainCardContentVictoria,
     userPic,
+    userPicDave,
+    userPicRick,
   ];
 }
 
