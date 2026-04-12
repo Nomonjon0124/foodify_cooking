@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextField extends StatelessWidget {
   const AppTextField({
@@ -20,7 +21,10 @@ class AppTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(
+        labelText: label,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+      ),
       obscureText: obscureText,
       keyboardType: keyboardType,
       validator: validator,

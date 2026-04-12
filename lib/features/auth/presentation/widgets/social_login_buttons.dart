@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SocialLoginButtons extends StatelessWidget {
   const SocialLoginButtons({super.key});
@@ -15,7 +16,7 @@ class SocialLoginButtons extends StatelessWidget {
             child: const Text('Google'),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12.w),
         Expanded(
           child: OutlinedButton(
             onPressed: () {

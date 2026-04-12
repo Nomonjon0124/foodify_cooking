@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/assets.gen.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -77,12 +78,12 @@ class _SplashViewState extends State<_SplashView>
               child: ScaleTransition(
                 scale: _scaleAnimation,
                 child: Assets.icons.foodifySplashLogo.svg(
-                  width: 120,
-                  height: 120,
+                  width: 120.r,
+                  height: 120.r,
                 ),
               ),
             ),
-            Gap(35),
+            Gap(35.h),
             const SplashLoadingDots(),
           ],
         ),

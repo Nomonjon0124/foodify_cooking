@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/app_snackbar.dart';
@@ -28,7 +29,7 @@ class LoginPage extends StatelessWidget {
         appBar: AppBar(title: const Text('Login')),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.r),
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state.status == LoginStatus.success) {
@@ -49,7 +50,7 @@ class LoginPage extends StatelessWidget {
                       title: 'Welcome back',
                       subtitle: 'Login to continue cooking',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     LoginForm(
                       isLoading: state.status == LoginStatus.loading,
                       onSubmit: (email, password) {
@@ -59,7 +60,7 @@ class LoginPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     const SocialLoginButtons(),
                     const Spacer(),
                     TextButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/app_snackbar.dart';
@@ -35,9 +36,9 @@ class RecipePage extends StatelessWidget {
             }
 
             return ListView.separated(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.r),
               itemCount: state.recipes.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 12),
+              separatorBuilder: (_, _) => SizedBox(height: 12.h),
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(

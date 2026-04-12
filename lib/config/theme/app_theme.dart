@@ -11,13 +11,11 @@ abstract final class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.background,
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-      textTheme: const TextTheme(
+      textTheme: TextTheme(
         titleLarge: AppTextStyles.title,
         bodyMedium: AppTextStyles.body,
       ),
-      extensions: const [
-        AppThemeExtension(cardRadius: AppDimensions.borderRadiusMd),
-      ],
+      extensions: [AppThemeExtension(cardRadius: AppDimensions.borderRadiusMd)],
     );
   }
 

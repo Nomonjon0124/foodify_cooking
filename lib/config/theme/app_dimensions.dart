@@ -1,7 +1,9 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 abstract final class AppDimensions {
-  static const double paddingXs = 4;
-  static const double paddingSm = 8;
-  static const double paddingMd = 16;
-  static const double paddingLg = 24;
-  static const double borderRadiusMd = 12;
+  static double get paddingXs => 4.r;
+  static double get paddingSm => 8.r;
+  static double get paddingMd => 16.r;
+  static double get paddingLg => 24.r;
+  static double get borderRadiusMd => 12.r;
 }

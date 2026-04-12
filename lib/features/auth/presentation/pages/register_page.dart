@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -13,7 +14,7 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('TODO: Implement registration flow'),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             TextButton(
               onPressed: () => context.pop(),
               child: const Text('Back'),

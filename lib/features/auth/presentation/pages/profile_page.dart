@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/route_names.dart';
@@ -31,7 +32,7 @@ class ProfilePage extends StatelessWidget {
                   context.go(RouteNames.settings);
                 }
               },
-              icon: const Icon(Icons.logout),
+              icon: Icon(Icons.logout, size: 24.r),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:foodify_cooking/core/di/injection_container.dart';
@@ -16,7 +17,9 @@ void main() {
   testWidgets('Onboarding starts from first page and changes by CTA', (
     tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: OnboardingPage()));
+    await tester.pumpWidget(
+      _withScreenUtil(const MaterialApp(home: OnboardingPage())),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Your personal guide to be a chef'), findsOneWidget);
@@ -31,4 +34,13 @@ void main() {
     expect(find.text('Foodify Your Global Kitchen'), findsOneWidget);
     expect(find.text('Go'), findsOneWidget);
   });
+}
+
+Widget _withScreenUtil(Widget child) {
+  return ScreenUtilInit(
+    designSize: const Size(360, 800),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    builder: (context, _) => child,
+  );
 }

@@ -70,6 +70,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
         body: BlocBuilder<OnboardingCubit, OnboardingState>(
           builder: (context, state) {
             final page = _pages[state.currentIndex];
+            final bottomReservedHeight = OnboardingBottomPanel.responsiveHeight(
+              context,
+            );
+
             return Stack(
               children: [
                 PageView.builder(
@@ -81,6 +85,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     return OnboardingPageContent(
                       backgroundColor: data.backgroundColor,
                       imagePaths: data.images,
+                      isActive: index == state.currentIndex,
+                      bottomReservedHeight: bottomReservedHeight,
                     );
                   },
                 ),
@@ -94,6 +100,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     totalPages: state.totalPages,
                     isLastPage: state.isLastPage,
                     pageColor: page.backgroundColor,
+                    pageController: _pageController,
                     onCtaPressed: () {
                       context.read<OnboardingCubit>().onCtaPressed(
                         pageController: _pageController,

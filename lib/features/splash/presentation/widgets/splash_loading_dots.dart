@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashLoadingDots extends StatefulWidget {
   const SplashLoadingDots({super.key});
@@ -35,8 +36,8 @@ class _SplashLoadingDotsState extends State<SplashLoadingDots>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 98,
-      height: 65,
+      width: 98.w,
+      height: 65.h,
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, _) {
@@ -46,14 +47,14 @@ class _SplashLoadingDotsState extends State<SplashLoadingDots>
             children: List.generate(3, (index) {
               return Padding(
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 0 : 7,
-                  right: index == 2 ? 0 : 7,
+                  left: index == 0 ? 0 : 7.w,
+                  right: index == 2 ? 0 : 7.w,
                 ),
                 child: Opacity(
                   opacity: _phaseValue(index),
                   child: Container(
-                    width: 16,
-                    height: 16,
+                    width: 16.r,
+                    height: 16.r,
                     decoration: const BoxDecoration(
                       color: Color(0xFFDEE21B),
                       shape: BoxShape.circle,

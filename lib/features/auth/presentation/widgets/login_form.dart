@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/app_button.dart';
 import '../../../../common/widgets/app_text_field.dart';
@@ -55,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           AppTextField(
             controller: _passwordController,
             label: 'Password',
@@ -63,7 +64,7 @@ class _LoginFormState extends State<LoginForm> {
             validator: (value) =>
                 Validators.requiredField(value, fieldName: 'Password'),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16.h),
           AppButton(
             text: 'Login',
             isLoading: widget.isLoading,

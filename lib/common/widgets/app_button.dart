@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -19,10 +20,10 @@ class AppButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         child: isLoading
-            ? const SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(strokeWidth: 2),
+            ? SizedBox(
+                width: 18.r,
+                height: 18.r,
+                child: CircularProgressIndicator(strokeWidth: 2.r),
               )
             : Text(text),
       ),

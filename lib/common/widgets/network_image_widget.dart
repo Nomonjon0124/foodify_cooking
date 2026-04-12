@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NetworkImageWidget extends StatelessWidget {
   const NetworkImageWidget({
@@ -23,7 +24,7 @@ class NetworkImageWidget extends StatelessWidget {
       height: height,
       fit: fit,
       placeholder: (_, _) => const Center(child: CircularProgressIndicator()),
-      errorWidget: (_, _, _) => const Icon(Icons.error_outline),
+      errorWidget: (_, _, _) => Icon(Icons.error_outline, size: 24.r),
     );
   }
 }
