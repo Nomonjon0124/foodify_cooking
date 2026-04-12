@@ -50,8 +50,10 @@ flutter:
   assets:
     - assets/images/
     - assets/images/onboarding/
+    - assets/images/recipe_cards/
     - assets/icons/
     - assets/icons/bottom_nav/
+    - assets/icons/recipe_cards/
 
   fonts:
     - family: Montserrat
