@@ -17,6 +17,9 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// Directory path: assets/icons/bottom_nav
+  $AssetsIconsBottomNavGen get bottomNav => const $AssetsIconsBottomNavGen();
+
   /// File path: assets/icons/foodify_splash_logo.svg
   SvgGenImage get foodifySplashLogo =>
       const SvgGenImage('assets/icons/foodify_splash_logo.svg');
@@ -31,6 +34,64 @@ class $AssetsImagesGen {
   /// Directory path: assets/images/onboarding
   $AssetsImagesOnboardingGen get onboarding =>
       const $AssetsImagesOnboardingGen();
+}
+
+class $AssetsIconsBottomNavGen {
+  const $AssetsIconsBottomNavGen();
+
+  /// File path: assets/icons/bottom_nav/add_new_bold.svg
+  SvgGenImage get addNewBold =>
+      const SvgGenImage('assets/icons/bottom_nav/add_new_bold.svg');
+
+  /// File path: assets/icons/bottom_nav/add_new_outline.svg
+  SvgGenImage get addNewOutline =>
+      const SvgGenImage('assets/icons/bottom_nav/add_new_outline.svg');
+
+  /// File path: assets/icons/bottom_nav/home_bold.svg
+  SvgGenImage get homeBold =>
+      const SvgGenImage('assets/icons/bottom_nav/home_bold.svg');
+
+  /// File path: assets/icons/bottom_nav/home_outline.svg
+  SvgGenImage get homeOutline =>
+      const SvgGenImage('assets/icons/bottom_nav/home_outline.svg');
+
+  /// File path: assets/icons/bottom_nav/profile_bold.svg
+  SvgGenImage get profileBold =>
+      const SvgGenImage('assets/icons/bottom_nav/profile_bold.svg');
+
+  /// File path: assets/icons/bottom_nav/profile_outline.svg
+  SvgGenImage get profileOutline =>
+      const SvgGenImage('assets/icons/bottom_nav/profile_outline.svg');
+
+  /// File path: assets/icons/bottom_nav/save_bold.svg
+  SvgGenImage get saveBold =>
+      const SvgGenImage('assets/icons/bottom_nav/save_bold.svg');
+
+  /// File path: assets/icons/bottom_nav/save_outline.svg
+  SvgGenImage get saveOutline =>
+      const SvgGenImage('assets/icons/bottom_nav/save_outline.svg');
+
+  /// File path: assets/icons/bottom_nav/search_bold.svg
+  SvgGenImage get searchBold =>
+      const SvgGenImage('assets/icons/bottom_nav/search_bold.svg');
+
+  /// File path: assets/icons/bottom_nav/search_outline.svg
+  SvgGenImage get searchOutline =>
+      const SvgGenImage('assets/icons/bottom_nav/search_outline.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+    addNewBold,
+    addNewOutline,
+    homeBold,
+    homeOutline,
+    profileBold,
+    profileOutline,
+    saveBold,
+    saveOutline,
+    searchBold,
+    searchOutline,
+  ];
 }
 
 class $AssetsImagesOnboardingGen {

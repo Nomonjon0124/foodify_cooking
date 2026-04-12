@@ -6,9 +6,12 @@ import '../../core/di/injection_container.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/profile_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/add_new/presentation/pages/add_new_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/recipe/presentation/pages/recipe_page.dart';
+import '../../features/save/presentation/pages/save_page.dart';
+import '../../features/search/presentation/pages/search_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../app/cubit/app_shell_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
@@ -48,18 +51,36 @@ abstract final class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: RouteNames.recipes,
-                name: 'recipes',
-                builder: (context, state) => const RecipePage(),
+                path: RouteNames.search,
+                name: 'search',
+                builder: (context, state) => const SearchPage(),
               ),
             ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: RouteNames.settings,
-                name: 'settings',
-                builder: (context, state) => const SettingsPage(),
+                path: RouteNames.addNew,
+                name: 'add-new',
+                builder: (context, state) => const AddNewPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: RouteNames.save,
+                name: 'save',
+                builder: (context, state) => const SavePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: RouteNames.profile,
+                name: 'profile',
+                builder: (context, state) => const ProfilePage(),
               ),
             ],
           ),
@@ -76,9 +97,14 @@ abstract final class AppRouter {
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: RouteNames.profile,
-        name: 'profile',
-        builder: (context, state) => const ProfilePage(),
+        path: RouteNames.recipes,
+        name: 'recipes',
+        builder: (context, state) => const RecipePage(),
+      ),
+      GoRoute(
+        path: RouteNames.settings,
+        name: 'settings',
+        builder: (context, state) => const SettingsPage(),
       ),
     ],
   );

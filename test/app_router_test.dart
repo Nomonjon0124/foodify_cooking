@@ -39,14 +39,27 @@ void main() {
     AppRouter.router.go(RouteNames.home);
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Recipes'));
-    await tester.pumpAndSettle();
-    expect(find.text('Recipes'), findsWidgets);
-    expect(find.text('No recipes found'), findsNothing);
+    expect(find.text('Home'), findsOneWidget);
+    expect(find.text('Search'), findsOneWidget);
+    expect(find.text('Add New'), findsOneWidget);
+    expect(find.text('Save'), findsOneWidget);
+    expect(find.text('Profile'), findsOneWidget);
 
-    await tester.tap(find.text('Settings'));
+    await tester.tap(find.text('Search'));
     await tester.pumpAndSettle();
-    expect(find.text('Sign in (optional)'), findsOneWidget);
+    expect(find.text('TODO: Implement search flow'), findsOneWidget);
+
+    await tester.tap(find.text('Add New'));
+    await tester.pumpAndSettle();
+    expect(find.text('TODO: Implement add new flow'), findsOneWidget);
+
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('TODO: Implement saved recipes flow'), findsOneWidget);
+
+    await tester.tap(find.text('Profile'));
+    await tester.pumpAndSettle();
+    expect(find.text('Guest mode: no profile loaded'), findsOneWidget);
   });
 }
 
