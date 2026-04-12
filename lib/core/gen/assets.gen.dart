@@ -20,9 +20,17 @@ class $AssetsIconsGen {
   /// Directory path: assets/icons/bottom_nav
   $AssetsIconsBottomNavGen get bottomNav => const $AssetsIconsBottomNavGen();
 
+  /// Directory path: assets/icons/foodify_components
+  $AssetsIconsFoodifyComponentsGen get foodifyComponents =>
+      const $AssetsIconsFoodifyComponentsGen();
+
   /// File path: assets/icons/foodify_splash_logo.svg
   SvgGenImage get foodifySplashLogo =>
       const SvgGenImage('assets/icons/foodify_splash_logo.svg');
+
+  /// Directory path: assets/icons/recipe_cards
+  $AssetsIconsRecipeCardsGen get recipeCards =>
+      const $AssetsIconsRecipeCardsGen();
 
   /// List of all assets
   List<SvgGenImage> get values => [foodifySplashLogo];
@@ -31,9 +39,17 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// Directory path: assets/images/foodify_components
+  $AssetsImagesFoodifyComponentsGen get foodifyComponents =>
+      const $AssetsImagesFoodifyComponentsGen();
+
   /// Directory path: assets/images/onboarding
   $AssetsImagesOnboardingGen get onboarding =>
       const $AssetsImagesOnboardingGen();
+
+  /// Directory path: assets/images/recipe_cards
+  $AssetsImagesRecipeCardsGen get recipeCards =>
+      const $AssetsImagesRecipeCardsGen();
 }
 
 class $AssetsIconsBottomNavGen {
@@ -94,6 +110,99 @@ class $AssetsIconsBottomNavGen {
   ];
 }
 
+class $AssetsIconsFoodifyComponentsGen {
+  const $AssetsIconsFoodifyComponentsGen();
+
+  /// File path: assets/icons/foodify_components/archive_minus_bold.svg
+  SvgGenImage get archiveMinusBold => const SvgGenImage(
+    'assets/icons/foodify_components/archive_minus_bold.svg',
+  );
+
+  /// File path: assets/icons/foodify_components/archive_minus_outline.svg
+  SvgGenImage get archiveMinusOutline => const SvgGenImage(
+    'assets/icons/foodify_components/archive_minus_outline.svg',
+  );
+
+  /// File path: assets/icons/foodify_components/document_copy.svg
+  SvgGenImage get documentCopy =>
+      const SvgGenImage('assets/icons/foodify_components/document_copy.svg');
+
+  /// File path: assets/icons/foodify_components/foodify_wordmark.svg
+  SvgGenImage get foodifyWordmark =>
+      const SvgGenImage('assets/icons/foodify_components/foodify_wordmark.svg');
+
+  /// File path: assets/icons/foodify_components/logo_mark_horizontal.svg
+  SvgGenImage get logoMarkHorizontal => const SvgGenImage(
+    'assets/icons/foodify_components/logo_mark_horizontal.svg',
+  );
+
+  /// File path: assets/icons/foodify_components/logo_mark_large.svg
+  SvgGenImage get logoMarkLarge =>
+      const SvgGenImage('assets/icons/foodify_components/logo_mark_large.svg');
+
+  /// File path: assets/icons/foodify_components/logo_mark_medium_vertical.svg
+  SvgGenImage get logoMarkMediumVertical => const SvgGenImage(
+    'assets/icons/foodify_components/logo_mark_medium_vertical.svg',
+  );
+
+  /// File path: assets/icons/foodify_components/logo_mark_small.svg
+  SvgGenImage get logoMarkSmall =>
+      const SvgGenImage('assets/icons/foodify_components/logo_mark_small.svg');
+
+  /// File path: assets/icons/foodify_components/search_normal.svg
+  SvgGenImage get searchNormal =>
+      const SvgGenImage('assets/icons/foodify_components/search_normal.svg');
+
+  /// File path: assets/icons/foodify_components/trend_down.svg
+  SvgGenImage get trendDown =>
+      const SvgGenImage('assets/icons/foodify_components/trend_down.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+    archiveMinusBold,
+    archiveMinusOutline,
+    documentCopy,
+    foodifyWordmark,
+    logoMarkHorizontal,
+    logoMarkLarge,
+    logoMarkMediumVertical,
+    logoMarkSmall,
+    searchNormal,
+    trendDown,
+  ];
+}
+
+class $AssetsIconsRecipeCardsGen {
+  const $AssetsIconsRecipeCardsGen();
+
+  /// File path: assets/icons/recipe_cards/send.svg
+  SvgGenImage get send =>
+      const SvgGenImage('assets/icons/recipe_cards/send.svg');
+
+  /// File path: assets/icons/recipe_cards/star_dark.svg
+  SvgGenImage get starDark =>
+      const SvgGenImage('assets/icons/recipe_cards/star_dark.svg');
+
+  /// File path: assets/icons/recipe_cards/star_white.svg
+  SvgGenImage get starWhite =>
+      const SvgGenImage('assets/icons/recipe_cards/star_white.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [send, starDark, starWhite];
+}
+
+class $AssetsImagesFoodifyComponentsGen {
+  const $AssetsImagesFoodifyComponentsGen();
+
+  /// File path: assets/images/foodify_components/popular_card_cake.png
+  AssetGenImage get popularCardCake => const AssetGenImage(
+    'assets/images/foodify_components/popular_card_cake.png',
+  );
+
+  /// List of all assets
+  List<AssetGenImage> get values => [popularCardCake];
+}
+
 class $AssetsImagesOnboardingGen {
   const $AssetsImagesOnboardingGen();
 
@@ -144,6 +253,30 @@ class $AssetsImagesOnboardingGen {
     onboarding31,
     onboarding32,
     onboarding33,
+  ];
+}
+
+class $AssetsImagesRecipeCardsGen {
+  const $AssetsImagesRecipeCardsGen();
+
+  /// File path: assets/images/recipe_cards/main_card_content.png
+  AssetGenImage get mainCardContent =>
+      const AssetGenImage('assets/images/recipe_cards/main_card_content.png');
+
+  /// File path: assets/images/recipe_cards/main_card_content_overlay.png
+  AssetGenImage get mainCardContentOverlay => const AssetGenImage(
+    'assets/images/recipe_cards/main_card_content_overlay.png',
+  );
+
+  /// File path: assets/images/recipe_cards/user_pic.png
+  AssetGenImage get userPic =>
+      const AssetGenImage('assets/images/recipe_cards/user_pic.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+    mainCardContent,
+    mainCardContentOverlay,
+    userPic,
   ];
 }
 

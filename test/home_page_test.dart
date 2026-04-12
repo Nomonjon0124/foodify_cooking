@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:foodify_cooking/common/widgets/foodify_components/foodify_components.dart';
 import 'package:foodify_cooking/common/widgets/recipe_cards/recipe_main_card.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
 import 'package:foodify_cooking/features/home/presentation/pages/home_page.dart';
@@ -29,6 +30,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(RecipeMainCard), findsOneWidget);
+    expect(find.byType(FoodifyComponentsPreview), findsOneWidget);
     expect(find.text('Muffin with Blue Cream'), findsOneWidget);
   });
 }

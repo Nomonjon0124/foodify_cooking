@@ -49,10 +49,12 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/foodify_components/
     - assets/images/onboarding/
     - assets/images/recipe_cards/
     - assets/icons/
     - assets/icons/bottom_nav/
+    - assets/icons/foodify_components/
     - assets/icons/recipe_cards/
 
   fonts:

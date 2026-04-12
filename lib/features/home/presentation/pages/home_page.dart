@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/app_snackbar.dart';
+import '../../../../common/widgets/foodify_components/foodify_components.dart';
 import '../../../../common/widgets/recipe_cards/recipe_main_card.dart';
 import '../../../../core/di/injection_container.dart';
 import '../cubit/home_cubit.dart';
@@ -48,12 +49,16 @@ class HomePage extends StatelessWidget {
                 AppSnackbar.show(context, 'Recipe card action');
               },
             );
+            // TODO: Remove this preview when these common widgets are wired into real Foodify screens.
+            const componentsPreview = FoodifyComponentsPreview();
 
             if (state.collections.isEmpty) {
               return ListView(
                 padding: EdgeInsets.all(16.r),
                 children: [
                   Center(child: demoCard),
+                  SizedBox(height: 16.h),
+                  componentsPreview,
                   SizedBox(height: 12.h),
                   const Center(child: Text('No featured collections yet')),
                 ],
@@ -62,14 +67,17 @@ class HomePage extends StatelessWidget {
 
             return ListView.separated(
               padding: EdgeInsets.all(16.r),
-              itemCount: state.collections.length + 1,
+              itemCount: state.collections.length + 2,
               separatorBuilder: (_, _) => SizedBox(height: 12.h),
               itemBuilder: (context, index) {
                 if (index == 0) {
                   return Center(child: demoCard);
                 }
+                if (index == 1) {
+                  return componentsPreview;
+                }
 
-                final collection = state.collections[index - 1];
+                final collection = state.collections[index - 2];
                 return Card(
                   child: ListTile(
                     title: Text(collection),
