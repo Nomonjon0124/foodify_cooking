@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodify_cooking/core/gen/assets.gen.dart';
 
 import '../../core/gen/fonts.gen.dart';
 import 'foodify_components/foodify_logo.dart';
@@ -10,18 +10,13 @@ import 'foodify_components/foodify_search_field.dart';
 enum _FoodifyAppBarVariant { home, searchFilter, titleAction }
 
 class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const FoodifyAppBar.home({
-    super.key,
-    this.controller,
-    this.hintText = 'Search',
-    this.onChanged,
-    this.onFilterTap,
-  }) : _variant = _FoodifyAppBarVariant.home,
-       initialText = null,
-       title = null,
-       actionText = null,
-       onBackTap = null,
-       onActionTap = null;
+  const FoodifyAppBar.home({super.key, this.controller, this.hintText = 'Search', this.onChanged, this.onFilterTap})
+    : _variant = _FoodifyAppBarVariant.home,
+      initialText = null,
+      title = null,
+      actionText = null,
+      onBackTap = null,
+      onActionTap = null;
 
   const FoodifyAppBar.searchFilter({
     super.key,
@@ -36,18 +31,13 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
        onBackTap = null,
        onActionTap = null;
 
-  const FoodifyAppBar.titleAction({
-    required this.title,
-    super.key,
-    this.onBackTap,
-    this.actionText,
-    this.onActionTap,
-  }) : _variant = _FoodifyAppBarVariant.titleAction,
-       controller = null,
-       initialText = null,
-       hintText = 'Search',
-       onChanged = null,
-       onFilterTap = null;
+  const FoodifyAppBar.titleAction({required this.title, super.key, this.onBackTap, this.actionText, this.onActionTap})
+    : _variant = _FoodifyAppBarVariant.titleAction,
+      controller = null,
+      initialText = null,
+      hintText = 'Search',
+      onChanged = null,
+      onFilterTap = null;
 
   final _FoodifyAppBarVariant _variant;
   final TextEditingController? controller;
@@ -63,26 +53,20 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
   static const _primary = Color(0xFF4058A0);
   static const _tertiary = Color(0xFFDEE21B);
   static const _dark = Color(0xFF353535);
-  static const _filterIconPath =
-      'assets/icons/foodify_components/document_filter.svg';
+  static final _filterIcon = Assets.icons.foodifyComponents.documentFilter.svg(
+    width: 20.r,
+    height: 20.r,
+    colorFilter: const ColorFilter.mode(FoodifyAppBar._dark, BlendMode.srcIn),
+  );
 
   @override
   Size get preferredSize => Size.fromHeight(_spec.height);
 
   _FoodifyAppBarSpec get _spec {
     return switch (_variant) {
-      _FoodifyAppBarVariant.home => const _FoodifyAppBarSpec(
-        height: 131,
-        bottomRadius: 12,
-      ),
-      _FoodifyAppBarVariant.searchFilter => const _FoodifyAppBarSpec(
-        height: 98,
-        bottomRadius: 12,
-      ),
-      _FoodifyAppBarVariant.titleAction => const _FoodifyAppBarSpec(
-        height: 80,
-        bottomRadius: 20,
-      ),
+      _FoodifyAppBarVariant.home => const _FoodifyAppBarSpec(height: 131, bottomRadius: 12),
+      _FoodifyAppBarVariant.searchFilter => const _FoodifyAppBarSpec(height: 98, bottomRadius: 12),
+      _FoodifyAppBarVariant.titleAction => const _FoodifyAppBarSpec(height: 80, bottomRadius: 20),
     };
   }
 
@@ -91,31 +75,21 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final spec = _spec;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: _primary,
-        systemNavigationBarColor: Colors.white,
-      ),
+      value: SystemUiOverlayStyle.light.copyWith(statusBarColor: _primary, systemNavigationBarColor: Colors.white),
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(spec.bottomRadius.r),
-        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(spec.bottomRadius.r)),
         child: DecoratedBox(
           decoration: const BoxDecoration(color: _primary),
-          child: Material(
-            color: Colors.transparent,
-            child: SafeArea(
-              bottom: false,
-              child: SizedBox(
-                height: spec.height.h,
-                width: double.infinity,
-                child: switch (_variant) {
-                  _FoodifyAppBarVariant.home => _buildHomeHeader(),
-                  _FoodifyAppBarVariant.searchFilter => _buildSearchHeader(),
-                  _FoodifyAppBarVariant.titleAction => _buildTitleHeader(
-                    context,
-                  ),
-                },
-              ),
+          child: SafeArea(
+            bottom: false,
+            child: SizedBox(
+              height: spec.height.h,
+              width: double.infinity,
+              child: switch (_variant) {
+                _FoodifyAppBarVariant.home => _buildHomeHeader(),
+                _FoodifyAppBarVariant.searchFilter => _buildSearchHeader(),
+                _FoodifyAppBarVariant.titleAction => _buildTitleHeader(context),
+              },
             ),
           ),
         ),
@@ -187,11 +161,7 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
             key: const Key('foodify_app_bar_back'),
             padding: EdgeInsets.zero,
             splashRadius: 22.r,
-            icon: Icon(
-              Icons.chevron_left_rounded,
-              color: Colors.white,
-              size: 28.r,
-            ),
+            icon: Icon(Icons.chevron_left_rounded, color: Colors.white, size: 28.r),
             onPressed: onBackTap ?? () => Navigator.of(context).maybePop(),
           ),
         ),
@@ -239,10 +209,7 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  static TextStyle _headlineStyle({
-    required double fontSize,
-    required Color color,
-  }) {
+  static TextStyle _headlineStyle({required double fontSize, required Color color}) {
     return TextStyle(
       color: color,
       fontSize: fontSize,
@@ -308,17 +275,7 @@ class _FilterButton extends StatelessWidget {
         child: SizedBox(
           width: 40.r,
           height: 40.r,
-          child: Center(
-            child: SvgPicture.asset(
-              FoodifyAppBar._filterIconPath,
-              width: 20.r,
-              height: 20.r,
-              colorFilter: const ColorFilter.mode(
-                FoodifyAppBar._dark,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
+          child: Center(child: FoodifyAppBar._filterIcon),
         ),
       ),
     );
