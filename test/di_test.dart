@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:foodify_cooking/app/cubit/app_shell_cubit.dart';
 import 'package:foodify_cooking/app/cubit/app_start_cubit.dart';
@@ -16,6 +17,7 @@ void main() {
 
     expect(getIt<AppStartCubit>(), isA<AppStartCubit>());
     expect(getIt<AppShellCubit>(), isA<AppShellCubit>());
+    expect(getIt.isRegistered<SupabaseClient>(), isTrue);
     expect(getIt<HomeCubit>(), isA<HomeCubit>());
     expect(getIt<OnboardingCubit>(), isA<OnboardingCubit>());
     expect(getIt<RecipeCubit>(), isA<RecipeCubit>());
@@ -30,6 +32,7 @@ void main() {
     await configureDependencies(enableAuthFeature: false);
 
     expect(getIt.isRegistered<AppStartCubit>(), isTrue);
+    expect(getIt.isRegistered<SupabaseClient>(), isTrue);
     expect(getIt.isRegistered<HomeCubit>(), isTrue);
     expect(getIt.isRegistered<OnboardingCubit>(), isTrue);
     expect(getIt.isRegistered<SplashCubit>(), isTrue);

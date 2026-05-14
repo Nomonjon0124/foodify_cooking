@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/recipe_cards/recipe_main_card.dart';
-import '../data/home_sample_data.dart';
+import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
 
 class LatestRecipesSection extends StatelessWidget {
-  const LatestRecipesSection({super.key, required this.onActionPressed});
+  const LatestRecipesSection({
+    super.key,
+    required this.recipes,
+    required this.onActionPressed,
+  });
 
+  final List<HomeRecipe> recipes;
   final VoidCallback onActionPressed;
 
   @override
@@ -28,26 +33,29 @@ class LatestRecipesSection extends StatelessWidget {
               child: const HomeSectionTitle('The Latest Recipes'),
             ),
             SizedBox(height: 24.h),
-            ...latestRecipes.expand(
-              (recipe) => [
+            ...recipes.asMap().entries.expand((entry) {
+              final recipe = entry.value;
+              final author = recipe.author;
+
+              return [
                 Center(
                   child: RecipeMainCard(
                     title: recipe.title,
-                    authorName: recipe.authorName,
-                    description: recipe.description,
-                    durationLabel: recipe.durationLabel,
-                    difficultyLabel: recipe.difficultyLabel,
-                    imagePath: recipe.imagePath,
-                    overlayImagePath: recipe.overlayImagePath,
-                    authorImagePath: recipe.authorImagePath,
-                    topRating: recipe.topRating,
-                    authorRating: recipe.authorRating,
+                    authorName: author?.displayName ?? '',
+                    description: recipe.description ?? '',
+                    durationLabel: recipe.durationLabel ?? '',
+                    difficultyLabel: recipe.difficultyLabel ?? '',
+                    imagePath: recipe.coverImageUrl,
+                    overlayImagePath: recipe.overlayImageUrl ?? '',
+                    authorImagePath: author?.avatarUrl ?? '',
+                    topRating: recipe.topRatingLabel,
+                    authorRating: author?.ratingLabel ?? '0.0',
                     onActionPressed: onActionPressed,
                   ),
                 ),
-                if (recipe != latestRecipes.last) SizedBox(height: 12.h),
-              ],
-            ),
+                if (entry.key != recipes.length - 1) SizedBox(height: 12.h),
+              ];
+            }),
           ],
         ),
       ),

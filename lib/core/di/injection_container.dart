@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app/cubit/app_shell_cubit.dart';
 import '../../app/cubit/app_start_cubit.dart';
@@ -12,6 +13,7 @@ import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/domain/usecases/logout_usecase.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/login_cubit.dart';
+import '../../features/home/data/data_sources/home_remote_data_source.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
 import '../../features/home/domain/usecases/get_home_feed_usecase.dart';
@@ -32,6 +34,7 @@ import '../network/network_info.dart';
 import '../services/connectivity_service.dart';
 import '../services/logger_service.dart';
 import '../services/storage_service.dart';
+import '../services/supabase_service.dart';
 import '../services/token_service.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -56,6 +59,7 @@ void _registerCoreDependencies() {
     ..registerLazySingleton<TokenService>(() => TokenService(getIt()))
     ..registerLazySingleton<LoggerService>(LoggerService.new)
     ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
+    ..registerLazySingleton<SupabaseClient>(() => SupabaseService.client)
     ..registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()))
     ..registerFactory<AppStartCubit>(() => AppStartCubit(getIt()))
     ..registerLazySingleton<AppShellCubit>(AppShellCubit.new);
@@ -74,7 +78,10 @@ void _registerCoreDependencies() {
 
 void _registerHomeDependencies() {
   getIt
-    ..registerLazySingleton<HomeRepository>(HomeRepositoryImpl.new)
+    ..registerLazySingleton<HomeRemoteDataSource>(
+      () => SupabaseHomeRemoteDataSource(() => getIt<SupabaseClient>()),
+    )
+    ..registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(getIt()))
     ..registerLazySingleton<GetHomeFeedUseCase>(
       () => GetHomeFeedUseCase(getIt()),
     )

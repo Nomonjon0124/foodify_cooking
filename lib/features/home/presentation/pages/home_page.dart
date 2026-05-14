@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
             }
 
             return HomeFeedView(
+              feed: state.feed,
               onRecipeActionPressed: () {
                 AppSnackbar.show(context, 'Recipe card action');
               },

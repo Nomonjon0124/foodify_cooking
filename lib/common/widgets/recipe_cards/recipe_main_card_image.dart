@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/widgets/foodify_image.dart';
 import '../../../core/gen/fonts.gen.dart';
 import 'recipe_rating_badge.dart';
 
@@ -31,8 +32,9 @@ class RecipeMainCardImage extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(imagePath, fit: BoxFit.cover),
-            Image.asset(overlayImagePath, fit: BoxFit.cover),
+            FoodifyImage(imagePath, fit: BoxFit.cover),
+            if (overlayImagePath.isNotEmpty)
+              FoodifyImage(overlayImagePath, fit: BoxFit.cover),
             Positioned(
               left: 8 * scale,
               top: 8 * scale,

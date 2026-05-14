@@ -6,10 +6,14 @@ import 'package:foodify_cooking/features/splash/presentation/widgets/splash_load
 
 import 'package:foodify_cooking/config/routes/app_router.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
+import 'package:foodify_cooking/features/home/domain/entities/home_feed.dart';
+import 'package:foodify_cooking/features/home/domain/repositories/home_repository.dart';
 
 void main() {
   setUpAll(() async {
     await configureDependencies();
+    await getIt.unregister<HomeRepository>();
+    getIt.registerLazySingleton<HomeRepository>(_FakeHomeRepository.new);
   });
 
   tearDownAll(() async {
@@ -61,8 +65,15 @@ void main() {
 
     AppRouter.router.go(RouteNames.profile);
     await tester.pumpAndSettle();
-    expect(find.text('Guest mode: no profile loaded'), findsOneWidget);
+    expect(find.text('Mark Salvador'), findsOneWidget);
   });
+}
+
+class _FakeHomeRepository implements HomeRepository {
+  @override
+  Future<HomeFeed> getHomeFeed() async {
+    return const HomeFeed.empty();
+  }
 }
 
 Widget _withScreenUtil(Widget child) {

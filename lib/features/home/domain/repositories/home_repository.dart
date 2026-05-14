@@ -1,3 +1,5 @@
+import '../entities/home_feed.dart';
+
 abstract interface class HomeRepository {
-  Future<List<String>> getFeaturedCollections();
+  Future<HomeFeed> getHomeFeed();
 }

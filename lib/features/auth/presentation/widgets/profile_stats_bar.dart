@@ -43,30 +43,33 @@ class _StatColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          count,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w700,
-            height: 1.2,
-            fontFamily: FontFamily.montserrat,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            count,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w700,
+              height: 1.2,
+              fontFamily: FontFamily.montserrat,
+            ),
           ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-            height: 1.25,
-            fontFamily: FontFamily.montserrat,
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              height: 1.25,
+              fontFamily: FontFamily.montserrat,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

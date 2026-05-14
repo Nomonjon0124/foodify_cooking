@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../common/widgets/foodify_image.dart';
 import '../../../core/gen/fonts.gen.dart';
 import 'recipe_card_action_button.dart';
 import 'recipe_main_card_image.dart';
@@ -182,7 +183,7 @@ class _RecipeAuthorRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipOval(
-          child: Image.asset(
+          child: FoodifyImage(
             authorImagePath,
             width: 37 * scale,
             height: 37 * scale,

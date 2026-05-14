@@ -12,10 +12,8 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> loadHome() async {
     emit(state.copyWith(status: HomeStatus.loading));
     try {
-      final collections = await _getHomeFeedUseCase(const NoParams());
-      emit(
-        state.copyWith(status: HomeStatus.success, collections: collections),
-      );
+      final feed = await _getHomeFeedUseCase(const NoParams());
+      emit(state.copyWith(status: HomeStatus.success, feed: feed));
     } catch (_) {
       emit(
         state.copyWith(

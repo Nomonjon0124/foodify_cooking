@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
-import '../data/home_sample_data.dart';
+import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
 
 class PopularRecipesSection extends StatefulWidget {
-  const PopularRecipesSection({super.key});
+  const PopularRecipesSection({required this.recipes, super.key});
+
+  final List<HomeRecipe> recipes;
 
   @override
   State<PopularRecipesSection> createState() => _PopularRecipesSectionState();
@@ -24,8 +27,6 @@ class _PopularRecipesSectionState extends State<PopularRecipesSection> {
 
   @override
   Widget build(BuildContext context) {
-    const recipes = popularRecipes;
-
     return Container(
       key: const Key('home_popular_section'),
       color: const Color(0xFFF6FBF4),
@@ -46,14 +47,17 @@ class _PopularRecipesSectionState extends State<PopularRecipesSection> {
                 scrollDirection: Axis.horizontal,
                 padding: EdgeInsets.only(left: 0, right: 20.w),
                 physics: const BouncingScrollPhysics(),
-                itemCount: recipes.length,
+                itemCount: widget.recipes.length,
                 separatorBuilder: (_, _) => SizedBox(width: 8.w),
                 itemBuilder: (context, index) {
-                  final recipe = recipes[index];
+                  final recipe = widget.recipes[index];
                   return FoodifyPopularCard(
                     title: recipe.title,
-                    rating: recipe.rating,
-                    imagePath: Image.asset(recipe.imagePath, fit: BoxFit.cover),
+                    rating: recipe.topRatingLabel,
+                    imagePath: FoodifyImage(
+                      recipe.coverImageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
               ),
