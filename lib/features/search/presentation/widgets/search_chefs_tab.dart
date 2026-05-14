@@ -18,10 +18,8 @@ class SearchChefsTab extends StatelessWidget {
       child: ListView.builder(
         padding: EdgeInsets.fromLTRB(0, 16.h, 0, 118.h),
         itemCount: _mockChefs.length,
-        itemBuilder: (context, index) => _ChefItem(
-          chef: _mockChefs[index],
-          isHighlighted: index == 2,
-        ),
+        itemBuilder: (context, index) =>
+            _ChefItem(chef: _mockChefs[index], isHighlighted: index == 2),
       ),
     );
   }
@@ -38,11 +36,7 @@ class _ChefItem extends StatelessWidget {
     final row = Row(
       children: [
         ClipOval(
-          child: chef.image.image(
-            width: 48.r,
-            height: 48.r,
-            fit: BoxFit.cover,
-          ),
+          child: chef.image.image(width: 48.r, height: 48.r, fit: BoxFit.cover),
         ),
         SizedBox(width: 4.w),
         Expanded(
@@ -95,24 +89,15 @@ class _ChefSample {
 }
 
 final _mockChefs = [
-  _ChefSample(
-    name: 'Mark Salvador',
-    image: Assets.images.recipeCards.userPic,
-  ),
+  _ChefSample(name: 'Mark Salvador', image: Assets.images.recipeCards.userPic),
   _ChefSample(
     name: 'Martin Robert',
     image: Assets.images.recipeCards.userPicRick,
   ),
-  _ChefSample(
-    name: 'Melisa Anne',
-    image: Assets.images.recipeCards.userPic,
-  ),
+  _ChefSample(name: 'Melisa Anne', image: Assets.images.recipeCards.userPic),
   _ChefSample(
     name: 'Dave Robert',
     image: Assets.images.recipeCards.userPicDave,
   ),
-  _ChefSample(
-    name: 'Kelly Mayer',
-    image: Assets.images.recipeCards.userPic,
-  ),
+  _ChefSample(name: 'Kelly Mayer', image: Assets.images.recipeCards.userPic),
 ];

@@ -70,6 +70,9 @@ Cubits with **no** data dependencies (e.g. UI-only state) are instantiated direc
 | Accent orange (active nav dot) | `#FF6339` | Inline in components |
 | Tertiary yellow (filter btn) | `#DEE21B` | Inline in components |
 | Background tint | `#F6FBF4` | Inline in components |
+| Dark background (media screens) | `#0E0E0E` | Inline in components |
+| Dark surface / author card | `#353535` | Inline in components |
+| Teal (next action highlight) | `#05B5BF` | Inline in components |
 | `AppColors.*` | Green-based palette | `lib/config/theme/app_colors.dart` |
 
 `AppColors` defines the Material theme palette. The brand UI colors (`#4058A0`, etc.) are used directly as constants inside individual widgets — they are not in `AppColors`.
@@ -93,6 +96,26 @@ Two distinct result wrappers — use the right one per layer:
 - `Result<T>` (`lib/core/utils/result.dart`) — domain/presentation layer. Wraps a `String message`. Variants: `Success<T>(data)` / `Failure<T>(message)`. Use `.fold(onFailure, onSuccess)` to consume.
 
 Use cases with no parameters take `NoParams` from `lib/core/usecases/no_params.dart`.
+
+### Multi-phase cubit pattern
+
+For flows with distinct pre-form phases (e.g. photo picker → crop → multi-step form), add a `phase` enum alongside `status`. The page widget switches on `phase` to render entirely different screens. The `status` enum still tracks async load/success/failure within each phase.
+
+```dart
+enum AddNewPhase { photoPicker, cropPhoto, formSteps }
+// state holds both `phase` and `currentStep`
+// page builder: switch(state.phase) { ... }
+```
+
+See `lib/features/add_new/presentation/` for the reference implementation.
+
+### Bottom navigation suppression
+
+To hide the bottom nav bar for a specific shell tab, return `null` from `bottomNavigationBar` in `AppShellPage` based on `state.currentIndex`. Tab index 2 (Add New) hides the bar so full-screen dark UI is unobstructed.
+
+```dart
+bottomNavigationBar: state.currentIndex == 2 ? null : FoodifyBottomNavigationBar(...)
+```
 
 ### Cubit state pattern
 
@@ -121,3 +144,8 @@ class XxxState extends Equatable {
 ### Key shared widgets (additional notes)
 
 `FoodifyPopularCard.imagePath` is typed as `Widget?` (despite the name) — pass a pre-built `Image` widget, e.g. `Assets.images.foodifyComponents.popularCardCake.image(fit: BoxFit.cover)`.
+
+
+## Sub-Agent Routing
+- Use subagents for research tasks to preserve main context
+- Use /compact when context exceeds 70%

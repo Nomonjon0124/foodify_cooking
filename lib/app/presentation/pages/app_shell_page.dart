@@ -17,7 +17,9 @@ class AppShellPage extends StatelessWidget {
     if (shellCubit.state.currentIndex != navigationShell.currentIndex) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (context.mounted) {
-          context.read<AppShellCubit>().setCurrentIndex(navigationShell.currentIndex);
+          context.read<AppShellCubit>().setCurrentIndex(
+            navigationShell.currentIndex,
+          );
         }
       });
     }
@@ -28,13 +30,18 @@ class AppShellPage extends StatelessWidget {
           body: navigationShell,
           resizeToAvoidBottomInset: false,
           extendBody: true,
-          bottomNavigationBar: FoodifyBottomNavigationBar(
-            currentIndex: state.currentIndex,
-            onTap: (index) {
-              context.read<AppShellCubit>().setCurrentIndex(index);
-              navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
-            },
-          ),
+          bottomNavigationBar: state.currentIndex == 2
+              ? null
+              : FoodifyBottomNavigationBar(
+                  currentIndex: state.currentIndex,
+                  onTap: (index) {
+                    context.read<AppShellCubit>().setCurrentIndex(index);
+                    navigationShell.goBranch(
+                      index,
+                      initialLocation: index == navigationShell.currentIndex,
+                    );
+                  },
+                ),
         );
       },
     );

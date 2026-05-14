@@ -17,10 +17,8 @@ class SearchTagsTab extends StatelessWidget {
       child: ListView.builder(
         padding: EdgeInsets.fromLTRB(0, 16.h, 0, 118.h),
         itemCount: _mockTags.length,
-        itemBuilder: (context, index) => _TagItem(
-          tag: _mockTags[index],
-          isHighlighted: index == 2,
-        ),
+        itemBuilder: (context, index) =>
+            _TagItem(tag: _mockTags[index], isHighlighted: index == 2),
       ),
     );
   }

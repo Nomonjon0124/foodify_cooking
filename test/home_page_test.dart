@@ -28,14 +28,16 @@ void main() {
         splitScreenMode: true,
         builder: (context, _) {
           return const MaterialApp(
-            home: Column(
-              children: [
-                FoodifyAppBar.home(),
-                FoodifyAppBar.titleAction(
-                  title: 'New Recipe',
-                  actionText: 'Clear all',
-                ),
-              ],
+            home: Scaffold(
+              body: Column(
+                children: [
+                  FoodifyAppBar.home(),
+                  FoodifyAppBar.titleAction(
+                    title: 'New Recipe',
+                    actionText: 'Clear all',
+                  ),
+                ],
+              ),
             ),
           );
         },

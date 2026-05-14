@@ -5,7 +5,11 @@ import 'package:foodify_cooking/core/gen/assets.gen.dart';
 import '../../../core/gen/fonts.gen.dart';
 
 class FoodifyBottomNavigationBar extends StatelessWidget {
-  const FoodifyBottomNavigationBar({required this.currentIndex, required this.onTap, super.key});
+  const FoodifyBottomNavigationBar({
+    required this.currentIndex,
+    required this.onTap,
+    super.key,
+  });
 
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -95,7 +99,9 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
         top: false,
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final width = constraints.maxWidth.isFinite ? constraints.maxWidth : _designWidth.w;
+            final width = constraints.maxWidth.isFinite
+                ? constraints.maxWidth
+                : _designWidth.w;
             final activeCenterX = _scaledCenterX(width, activeIndex);
 
             return Material(
@@ -112,7 +118,10 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
                       top: 17.h,
                       height: 76.h,
                       child: DecoratedBox(
-                        decoration: BoxDecoration(color: _primaryColor, borderRadius: BorderRadius.circular(1.r)),
+                        decoration: BoxDecoration(
+                          color: _primaryColor,
+                          borderRadius: BorderRadius.circular(1.r),
+                        ),
                       ),
                     ),
                     AnimatedPositioned(
@@ -123,11 +132,16 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
                       top: 0,
                       width: 110.w,
                       height: 52.h,
-                      child: const CustomPaint(key: Key('bottom_nav_active_shape'), painter: _ActiveTabShapePainter()),
+                      child: const CustomPaint(
+                        key: Key('bottom_nav_active_shape'),
+                        painter: _ActiveTabShapePainter(),
+                      ),
                     ),
                     for (var index = 0; index < _items.length; index++)
                       Positioned(
-                        left: _scaledCenterX(width, index) - (_hitWidthForIndex(index) / 2),
+                        left:
+                            _scaledCenterX(width, index) -
+                            (_hitWidthForIndex(index) / 2),
                         top: 0,
                         width: _hitWidthForIndex(index),
                         height: 93.h,
@@ -190,7 +204,11 @@ class _ActiveTabShapePainter extends CustomPainter {
 }
 
 class _FoodifyBottomNavigationItemButton extends StatelessWidget {
-  const _FoodifyBottomNavigationItemButton({required this.item, required this.isSelected, required this.onTap});
+  const _FoodifyBottomNavigationItemButton({
+    required this.item,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   final _FoodifyBottomNavItem item;
   final bool isSelected;
@@ -234,7 +252,9 @@ class _FoodifyBottomNavigationItemButton extends StatelessWidget {
                       duration: const Duration(milliseconds: 180),
                       switchInCurve: Curves.easeOutCubic,
                       switchOutCurve: Curves.easeInCubic,
-                      child: isSelected ? item.selectedIcon : item.unselectedIcon,
+                      child: isSelected
+                          ? item.selectedIcon
+                          : item.unselectedIcon,
                     ),
                   ),
                   AnimatedPositioned(

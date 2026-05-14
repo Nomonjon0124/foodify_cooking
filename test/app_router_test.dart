@@ -47,17 +47,19 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_label_Search')));
     await tester.pumpAndSettle();
-    expect(find.text('TODO: Implement search flow'), findsOneWidget);
+    expect(find.text('Recipes'), findsOneWidget);
+    expect(find.text('Chefs'), findsOneWidget);
+    expect(find.text('Tags'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('bottom_nav_label_Add New')));
     await tester.pumpAndSettle();
-    expect(find.text('TODO: Implement add new flow'), findsOneWidget);
+    expect(find.text('Add a recipe Cover'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('bottom_nav_label_Save')));
+    AppRouter.router.go(RouteNames.save);
     await tester.pumpAndSettle();
     expect(find.text('TODO: Implement saved recipes flow'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('bottom_nav_label_Profile')));
+    AppRouter.router.go(RouteNames.profile);
     await tester.pumpAndSettle();
     expect(find.text('Guest mode: no profile loaded'), findsOneWidget);
   });

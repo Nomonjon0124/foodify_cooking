@@ -124,11 +124,8 @@ class _FoodifyButtonContent extends StatelessWidget {
       children: [
         Flexible(child: label),
         SizedBox(width: 12.r),
-        iconPath?? Assets.icons.foodifyComponents.documentCopy.svg(
-          width: 16.r,
-          height: 16.r,
-          color: style.foregroundColor,
-        ),
+        iconPath ??
+            Assets.icons.foodifyComponents.documentCopy.svg(width: 16.r, height: 16.r, color: style.foregroundColor),
       ],
     );
   }

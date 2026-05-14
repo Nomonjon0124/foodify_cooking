@@ -70,7 +70,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
         body: BlocBuilder<OnboardingCubit, OnboardingState>(
           builder: (context, state) {
             final page = _pages[state.currentIndex];
-            final bottomReservedHeight = OnboardingBottomPanel.responsiveHeight(context);
+            final bottomReservedHeight = OnboardingBottomPanel.responsiveHeight(
+              context,
+            );
 
             return Stack(
               children: [
@@ -117,7 +119,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
 }
 
 class _OnboardingPageData {
-  const _OnboardingPageData({required this.backgroundColor, required this.title, required this.images});
+  const _OnboardingPageData({
+    required this.backgroundColor,
+    required this.title,
+    required this.images,
+  });
 
   final Color backgroundColor;
   final String title;

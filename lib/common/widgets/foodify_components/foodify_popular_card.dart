@@ -7,13 +7,7 @@ import 'package:foodify_cooking/core/gen/assets.gen.dart';
 
 import '../../../core/gen/fonts.gen.dart';
 
-enum FoodifyPopularCardState {
-  defaultView,
-  toBeSelected,
-  selected,
-  toBeSaved,
-  saved,
-}
+enum FoodifyPopularCardState { defaultView, toBeSelected, selected, toBeSaved, saved }
 
 class FoodifyPopularCard extends StatelessWidget {
   const FoodifyPopularCard({
@@ -44,13 +38,8 @@ class FoodifyPopularCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final targetWidth = 156.r;
-        final maxWidth = constraints.hasBoundedWidth
-            ? constraints.maxWidth
-            : MediaQuery.sizeOf(context).width;
-        final cardWidth = math.min(
-          math.min(targetWidth, _maxResponsiveWidth.r),
-          maxWidth,
-        );
+        final maxWidth = constraints.hasBoundedWidth ? constraints.maxWidth : MediaQuery.sizeOf(context).width;
+        final cardWidth = math.min(math.min(targetWidth, _maxResponsiveWidth.r), maxWidth);
         final scale = cardWidth / _designWidth;
         final cardHeight = _designHeight * scale;
 
@@ -67,7 +56,7 @@ class FoodifyPopularCard extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  imagePath?? Assets.images.foodifyComponents.popularCardCake.image(),
+                  imagePath ?? Assets.images.foodifyComponents.popularCardCake.image(),
                   Positioned(
                     left: 0,
                     right: 0,
@@ -124,10 +113,7 @@ class _PopularCardCaption extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 8 * scale,
-              vertical: 12 * scale,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 8 * scale, vertical: 12 * scale),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -162,10 +148,7 @@ class _PopularCardRatingBadge extends StatelessWidget {
       key: const Key('foodify_popular_card_rating'),
       height: 18 * scale,
       padding: EdgeInsets.symmetric(horizontal: 5 * scale, vertical: 4 * scale),
-      decoration: BoxDecoration(
-        color: const Color(0xFF353535),
-        borderRadius: BorderRadius.circular(4 * scale),
-      ),
+      decoration: BoxDecoration(color: const Color(0xFF353535), borderRadius: BorderRadius.circular(4 * scale)),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -213,31 +196,15 @@ class _PopularCardStateAction extends StatelessWidget {
         isSelected: false,
         onPressed: onSelectPressed,
       ),
-      FoodifyPopularCardState.selected => _SelectCircle(
-        scale: scale,
-        isSelected: true,
-        onPressed: onSelectPressed,
-      ),
-      FoodifyPopularCardState.toBeSaved => _SaveIcon(
-        scale: scale,
-        isSaved: false,
-        onPressed: onSavePressed,
-      ),
-      FoodifyPopularCardState.saved => _SaveIcon(
-        scale: scale,
-        isSaved: true,
-        onPressed: onSavePressed,
-      ),
+      FoodifyPopularCardState.selected => _SelectCircle(scale: scale, isSelected: true, onPressed: onSelectPressed),
+      FoodifyPopularCardState.toBeSaved => _SaveIcon(scale: scale, isSaved: false, onPressed: onSavePressed),
+      FoodifyPopularCardState.saved => _SaveIcon(scale: scale, isSaved: true, onPressed: onSavePressed),
     };
   }
 }
 
 class _SelectCircle extends StatelessWidget {
-  const _SelectCircle({
-    required this.scale,
-    required this.isSelected,
-    required this.onPressed,
-  });
+  const _SelectCircle({required this.scale, required this.isSelected, required this.onPressed});
 
   final double scale;
   final bool isSelected;
@@ -255,18 +222,12 @@ class _SelectCircle extends StatelessWidget {
         color: isSelected ? const Color(0xFF05B5BF) : Colors.transparent,
         border: Border.all(color: Colors.white, width: 1 * scale),
       ),
-      child: isSelected
-          ? CustomPaint(painter: _SelectCheckPainter(scale: scale))
-          : null,
+      child: isSelected ? CustomPaint(painter: _SelectCheckPainter(scale: scale)) : null,
     );
 
     if (onPressed == null) return circle;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onPressed,
-      child: circle,
-    );
+    return GestureDetector(behavior: HitTestBehavior.opaque, onTap: onPressed, child: circle);
   }
 }
 
@@ -298,11 +259,7 @@ class _SelectCheckPainter extends CustomPainter {
 }
 
 class _SaveIcon extends StatelessWidget {
-  const _SaveIcon({
-    required this.scale,
-    required this.isSaved,
-    required this.onPressed,
-  });
+  const _SaveIcon({required this.scale, required this.isSaved, required this.onPressed});
 
   final double scale;
   final bool isSaved;
@@ -311,25 +268,21 @@ class _SaveIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final icon = isSaved
-          ? Assets.icons.foodifyComponents.archiveMinusBold.svg(
+        ? Assets.icons.foodifyComponents.archiveMinusBold.svg(
             key: const Key('foodify_popular_card_save_icon'),
-              width: 16 * scale,
-              height: 16 * scale,
-              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            )
-          : Assets.icons.foodifyComponents.archiveMinusOutline.svg(
-              width: 16 * scale,
-              key: const Key('foodify_popular_card_unsave_icon'),
-              height: 16 * scale,
-              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            );
+            width: 16 * scale,
+            height: 16 * scale,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          )
+        : Assets.icons.foodifyComponents.archiveMinusOutline.svg(
+            width: 16 * scale,
+            key: const Key('foodify_popular_card_unsave_icon'),
+            height: 16 * scale,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          );
 
     if (onPressed == null) return icon;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onPressed,
-      child: icon,
-    );
+    return GestureDetector(behavior: HitTestBehavior.opaque, onTap: onPressed, child: icon);
   }
 }
