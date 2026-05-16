@@ -89,14 +89,21 @@ class _OnboardingCtaButtonState extends State<OnboardingCtaButton> {
                     );
                   },
                   child: widget.isLastPage
-                      ? Text(
-                          widget.label,
+                      ? Padding(
                           key: const ValueKey<String>('go_label'),
-                          style: TextStyle(
-                            color: Color(0xFF0E0E0E),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat',
+                          padding: EdgeInsets.symmetric(horizontal: 7.r),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              widget.label,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Color(0xFF0E0E0E),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
                           ),
                         )
                       : const SizedBox.shrink(key: ValueKey<String>('empty')),

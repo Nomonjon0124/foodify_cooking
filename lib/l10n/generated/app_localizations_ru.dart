@@ -196,6 +196,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileMoreDetails => 'Подробнее';
 
   @override
+  String get profileEditAction => 'Изменить';
+
+  @override
   String get addNewTitle => 'Новый рецепт';
 
   @override

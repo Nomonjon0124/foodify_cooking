@@ -65,6 +65,9 @@ class OnboardingBottomPanel extends StatelessWidget {
             ? constraints.maxWidth
             : figmaPanelWidth + (horizontalMargin * 2);
         final metrics = _metricsForWidth(availableWidth);
+        final titleFontSize = (20.sp * metrics.scale)
+            .clamp(12.0, 20.0)
+            .toDouble();
 
         return SizedBox(
           height: metrics.widgetHeight,
@@ -84,15 +87,22 @@ class OnboardingBottomPanel extends StatelessWidget {
                 width: 285 * metrics.scale,
                 height: 90 * metrics.scale,
                 child: Center(
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.sp,
-                      height: 1.9,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: 'serif',
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8 * metrics.scale,
+                    ),
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: titleFontSize,
+                        height: 1.22,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'serif',
+                      ),
                     ),
                   ),
                 ),

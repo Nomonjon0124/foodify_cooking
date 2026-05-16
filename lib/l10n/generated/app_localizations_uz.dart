@@ -198,6 +198,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get profileMoreDetails => 'Batafsil';
 
   @override
+  String get profileEditAction => 'Tahrirlash';
+
+  @override
   String get addNewTitle => 'Yangi retsept';
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/foodify_components/foodify_button.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class ProfileInfoSection extends StatelessWidget {
   const ProfileInfoSection({
@@ -48,21 +49,32 @@ class ProfileInfoSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8.h),
-        SizedBox(
-          width: 277.w,
-          child: Text(
-            bio,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: const Color(0xFF4058A0),
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w300,
-              height: 1.2,
-              fontFamily: FontFamily.montserrat,
-            ),
-          ),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final availableWidth = constraints.maxWidth.isFinite
+                ? constraints.maxWidth
+                : MediaQuery.sizeOf(context).width;
+            final bioWidth = (availableWidth - 48.w)
+                .clamp(0.0, 277.w)
+                .toDouble();
+
+            return SizedBox(
+              width: bioWidth,
+              child: Text(
+                bio,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: const Color(0xFF4058A0),
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w300,
+                  height: 1.2,
+                  fontFamily: FontFamily.montserrat,
+                ),
+              ),
+            );
+          },
         ),
         // Always reserve the edit-button slot so the tab bar stays at a fixed position
         SizedBox(
@@ -71,7 +83,7 @@ class ProfileInfoSection extends StatelessWidget {
               ? Padding(
                   padding: EdgeInsets.only(top: 16.h),
                   child: FoodifyButton(
-                    text: 'Edit Profile',
+                    text: context.l10n.profileEditAction,
                     onPressed: () {},
                     size: FoodifyButtonSize.small,
                     variant: FoodifyButtonVariant.stroke,

@@ -195,6 +195,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileMoreDetails => 'More Details';
 
   @override
+  String get profileEditAction => 'Edit Profile';
+
+  @override
   String get addNewTitle => 'New Recipe';
 
   @override

@@ -460,6 +460,12 @@ abstract class AppLocalizations {
   /// **'More Details'**
   String get profileMoreDetails;
 
+  /// Profile action button for editing the current profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get profileEditAction;
+
   /// Add new recipe screen title.
   ///
   /// In en, this message translates to:

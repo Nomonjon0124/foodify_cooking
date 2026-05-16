@@ -258,6 +258,10 @@
   "@profileMoreDetails": {
     "description": "Profile tab for more detailed recipe cards."
   },
+  "profileEditAction": "Edit Profile",
+  "@profileEditAction": {
+    "description": "Profile action button for editing the current profile."
+  },
   "addNewTitle": "New Recipe",
   "@addNewTitle": {
     "description": "Add new recipe screen title."
