@@ -19,6 +19,9 @@ flutter test
 # Run a single test file
 flutter test test/path/to/test_file.dart
 
+# Regenerate localization files after editing lib/l10n/*.arb
+flutter gen-l10n
+
 # Regenerate assets/fonts after adding new files to assets/
 dart run build_runner build --delete-conflicting-outputs
 
@@ -63,6 +66,27 @@ Cubits with **no** data dependencies (e.g. UI-only state) are instantiated direc
 ### Navigation
 
 `GoRouter` with a `StatefulShellRoute` for the 5-tab bottom navigation shell (Home → Search → Add New → Save → Profile). The shell wraps all branch routes inside `AppShellPage`, which renders `FoodifyBottomNavigationBar`. Individual feature routes outside the shell (login, register, recipe detail, settings) are top-level `GoRoute`s. Route name constants live in `lib/config/routes/route_names.dart`.
+
+### Localization
+
+Flutter localization is enabled with `flutter.generate: true` and `l10n.yaml`.
+Supported locales are `uz`, `en`, and `ru`. The app defaults to Uzbek on first
+install; do not use device locale fallback for the initial language.
+
+Source ARB files live in `lib/l10n/`, and generated Dart files live in
+`lib/l10n/generated/`. Add new copy to `app_en.arb` with descriptions, then add
+matching `app_uz.arb` and `app_ru.arb` entries. Run `flutter gen-l10n` after
+every ARB change.
+
+Use `context.l10n` from `lib/l10n/l10n_extension.dart` in widgets. Root app
+locale is driven by `SettingsCubit`; user selection is saved through
+`StorageService` using `StorageKeys.languageCode`. Settings exposes explicit
+`uz`, `en`, and `ru` choices only.
+
+Do not translate API/backend content, user input, recipe titles from data
+sources, chef names, hashtags, asset names, or stable widget keys. For
+locale-independent state values such as Add New option chips, keep the stored
+value stable and localize only the displayed label.
 
 ### Design tokens
 
@@ -142,6 +166,15 @@ class XxxState extends Equatable {
 - `lib/core/resourse/` (typo folder) — use `lib/core/resource/`
 - `lib/core/constants/asset_constants.dart` — use `Assets.*` generated references instead
 - `RouteGenerator` — use `AppRouter.router` (GoRouter)
+
+## Completed Issue Notes
+
+- Localization issue `#1` is complete and closed by PR `#2`.
+- Continue from `dev` for all new work.
+- Do not reuse `issue-1-localization`; create a new issue branch from `dev` for
+  follow-up copy, language, or release fixes.
+- Next release step is a `dev -> pre-prod` PR, followed by pre-prod validation
+  and then `pre-prod -> prod`.
 
 ### Key shared widgets (additional notes)
 
