@@ -207,7 +207,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get addNewNext => 'Keyingi';
 
   @override
-  String get addNewClearAll => 'Hammasini tozalash';
+  String get addNewClearAll => 'Tozalash';
 
   @override
   String get addNewCoverTitle => 'Retsept rasmi qo\'shing';
