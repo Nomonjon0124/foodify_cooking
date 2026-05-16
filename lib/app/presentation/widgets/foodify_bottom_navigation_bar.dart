@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/assets.gen.dart';
 
 import '../../../core/gen/fonts.gen.dart';
+import '../../../l10n/l10n_extension.dart';
 
 class FoodifyBottomNavigationBar extends StatelessWidget {
   const FoodifyBottomNavigationBar({
@@ -20,78 +21,10 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
   static const _whiteColor = Colors.white;
   static const _designWidth = 360.0;
   static const _itemCenters = [59.0, 119.0, 178.0, 237.0, 296.0];
-  static final List<_FoodifyBottomNavItem> _items = [
-    _FoodifyBottomNavItem(
-      label: 'Home',
-      selectedIcon: Assets.icons.bottomNav.homeBold.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
-      ),
-      unselectedIcon: Assets.icons.bottomNav.homeOutline.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
-      ),
-    ),
-    _FoodifyBottomNavItem(
-      label: 'Search',
-      selectedIcon: Assets.icons.bottomNav.searchBold.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
-      ),
-      unselectedIcon: Assets.icons.bottomNav.searchOutline.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
-      ),
-    ),
-    _FoodifyBottomNavItem(
-      label: 'Add New',
-      selectedIcon: Assets.icons.bottomNav.addNewBold.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
-      ),
-      unselectedIcon: Assets.icons.bottomNav.addNewOutline.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
-      ),
-      labelWidth: 59,
-    ),
-    _FoodifyBottomNavItem(
-      label: 'Save',
-      selectedIcon: Assets.icons.bottomNav.saveBold.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
-      ),
-      unselectedIcon: Assets.icons.bottomNav.saveOutline.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
-      ),
-    ),
-    _FoodifyBottomNavItem(
-      label: 'Profile',
-      selectedIcon: Assets.icons.bottomNav.profileBold.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
-      ),
-      unselectedIcon: Assets.icons.bottomNav.profileOutline.svg(
-        width: 24.r,
-        height: 24.r,
-        colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
-      ),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final activeIndex = currentIndex.clamp(0, _items.length - 1);
+    final items = _itemsFor(context);
+    final activeIndex = currentIndex.clamp(0, items.length - 1);
 
     return Material(
       color: Colors.transparent,
@@ -137,7 +70,7 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
                         painter: _ActiveTabShapePainter(),
                       ),
                     ),
-                    for (var index = 0; index < _items.length; index++)
+                    for (var index = 0; index < items.length; index++)
                       Positioned(
                         left:
                             _scaledCenterX(width, index) -
@@ -146,7 +79,8 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
                         width: _hitWidthForIndex(index),
                         height: 93.h,
                         child: _FoodifyBottomNavigationItemButton(
-                          item: _items[index],
+                          item: items[index],
+                          itemKey: 'bottom_nav_item_${items[index].id}',
                           isSelected: index == activeIndex,
                           onTap: () => onTap(index),
                         ),
@@ -167,6 +101,85 @@ class FoodifyBottomNavigationBar extends StatelessWidget {
 
   static double _hitWidthForIndex(int index) {
     return index == 2 ? 70.w : 60.w;
+  }
+
+  static List<_FoodifyBottomNavItem> _itemsFor(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      _FoodifyBottomNavItem(
+        id: 'home',
+        label: l10n.navHome,
+        selectedIcon: Assets.icons.bottomNav.homeBold.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
+        ),
+        unselectedIcon: Assets.icons.bottomNav.homeOutline.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
+        ),
+      ),
+      _FoodifyBottomNavItem(
+        id: 'search',
+        label: l10n.navSearch,
+        selectedIcon: Assets.icons.bottomNav.searchBold.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
+        ),
+        unselectedIcon: Assets.icons.bottomNav.searchOutline.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
+        ),
+      ),
+      _FoodifyBottomNavItem(
+        id: 'add_new',
+        label: l10n.navAddNew,
+        selectedIcon: Assets.icons.bottomNav.addNewBold.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
+        ),
+        unselectedIcon: Assets.icons.bottomNav.addNewOutline.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
+        ),
+        labelWidth: 64,
+      ),
+      _FoodifyBottomNavItem(
+        id: 'save',
+        label: l10n.navSave,
+        selectedIcon: Assets.icons.bottomNav.saveBold.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
+        ),
+        unselectedIcon: Assets.icons.bottomNav.saveOutline.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
+        ),
+        labelWidth: 62,
+      ),
+      _FoodifyBottomNavItem(
+        id: 'profile',
+        label: l10n.navProfile,
+        selectedIcon: Assets.icons.bottomNav.profileBold.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_whiteColor, BlendMode.srcIn),
+        ),
+        unselectedIcon: Assets.icons.bottomNav.profileOutline.svg(
+          width: 24.r,
+          height: 24.r,
+          colorFilter: const ColorFilter.mode(_inactiveColor, BlendMode.srcIn),
+        ),
+        labelWidth: 62,
+      ),
+    ];
   }
 }
 
@@ -206,11 +219,13 @@ class _ActiveTabShapePainter extends CustomPainter {
 class _FoodifyBottomNavigationItemButton extends StatelessWidget {
   const _FoodifyBottomNavigationItemButton({
     required this.item,
+    required this.itemKey,
     required this.isSelected,
     required this.onTap,
   });
 
   final _FoodifyBottomNavItem item;
+  final String itemKey;
   final bool isSelected;
   final VoidCallback onTap;
 
@@ -229,6 +244,7 @@ class _FoodifyBottomNavigationItemButton extends StatelessWidget {
       selected: isSelected,
       label: item.label,
       child: GestureDetector(
+        key: Key(itemKey),
         behavior: HitTestBehavior.translucent,
         onTap: onTap,
         child: LayoutBuilder(
@@ -265,7 +281,7 @@ class _FoodifyBottomNavigationItemButton extends StatelessWidget {
                     width: labelWidth,
                     height: 18.h,
                     child: AnimatedDefaultTextStyle(
-                      key: Key('bottom_nav_label_style_${item.label}'),
+                      key: Key('${itemKey}_label_style'),
                       duration: const Duration(milliseconds: 180),
                       curve: Curves.easeOutCubic,
                       style: TextStyle(
@@ -275,11 +291,14 @@ class _FoodifyBottomNavigationItemButton extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontFamily: FontFamily.montserrat,
                       ),
-                      child: Text(
-                        item.label,
-                        key: Key('bottom_nav_label_${item.label}'),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          item.label,
+                          key: Key('${itemKey}_label'),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
                   ),
@@ -295,12 +314,14 @@ class _FoodifyBottomNavigationItemButton extends StatelessWidget {
 
 class _FoodifyBottomNavItem {
   const _FoodifyBottomNavItem({
+    required this.id,
     required this.label,
     required this.selectedIcon,
     required this.unselectedIcon,
-    this.labelWidth = 47,
+    this.labelWidth = 58,
   });
 
+  final String id;
   final String label;
   final Widget selectedIcon;
   final Widget unselectedIcon;

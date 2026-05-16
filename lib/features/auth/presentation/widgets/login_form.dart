@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/app_button.dart';
 import '../../../../common/widgets/app_text_field.dart';
-import '../../../../core/utils/validators.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({required this.isLoading, required this.onSubmit, super.key});
@@ -35,23 +35,23 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
           AppTextField(
             controller: _emailController,
-            label: 'Email',
+            label: l10n.loginEmail,
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
-              final requiredError = Validators.requiredField(
-                value,
-                fieldName: 'Email',
-              );
-              if (requiredError != null) return requiredError;
-              final email = value ?? '';
+              if (value == null || value.trim().isEmpty) {
+                return l10n.fieldRequired(l10n.loginEmail);
+              }
+              final email = value.trim();
               if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
-                return 'Invalid email';
+                return l10n.invalidEmail;
               }
               return null;
             },
@@ -59,14 +59,18 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 12.h),
           AppTextField(
             controller: _passwordController,
-            label: 'Password',
+            label: l10n.loginPassword,
             obscureText: true,
-            validator: (value) =>
-                Validators.requiredField(value, fieldName: 'Password'),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return l10n.fieldRequired(l10n.loginPassword);
+              }
+              return null;
+            },
           ),
           SizedBox(height: 16.h),
           AppButton(
-            text: 'Login',
+            text: l10n.loginTitle,
             isLoading: widget.isLoading,
             onPressed: _submit,
           ),

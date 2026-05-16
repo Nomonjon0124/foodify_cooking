@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app/cubit/app_shell_cubit.dart';
 import '../../app/cubit/app_start_cubit.dart';
+import '../constants/storage_keys.dart';
 import '../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../features/auth/data/data_sources/auth_remote_data_source.dart';
 import '../../features/auth/data/data_sources/profile_remote_data_source.dart';
@@ -51,7 +52,7 @@ final GetIt getIt = GetIt.instance;
 Future<void> configureDependencies({bool enableAuthFeature = true}) async {
   if (getIt.isRegistered<Dio>()) return;
 
-  _registerCoreDependencies();
+  await _registerCoreDependencies();
   _registerHomeDependencies();
   _registerOnboardingDependencies();
   _registerRecipeDependencies();
@@ -63,9 +64,13 @@ Future<void> configureDependencies({bool enableAuthFeature = true}) async {
   }
 }
 
-void _registerCoreDependencies() {
+Future<void> _registerCoreDependencies() async {
+  final storageService = await StorageService.persistent(
+    allowList: StorageKeys.all,
+  );
+
   getIt
-    ..registerLazySingleton<StorageService>(StorageService.new)
+    ..registerLazySingleton<StorageService>(() => storageService)
     ..registerLazySingleton<TokenService>(() => TokenService(getIt()))
     ..registerLazySingleton<LoggerService>(LoggerService.new)
     ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
@@ -123,7 +128,7 @@ void _registerSearchDependencies() {
 }
 
 void _registerSettingsDependencies() {
-  getIt.registerFactory<SettingsCubit>(SettingsCubit.new);
+  getIt.registerLazySingleton<SettingsCubit>(() => SettingsCubit(getIt()));
 }
 
 void _registerSplashDependencies() {

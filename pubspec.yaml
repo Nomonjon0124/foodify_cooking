@@ -27,6 +27,9 @@ dependencies:
   dio: ^5.9.2
   flutter_screenutil: ^5.9.3
   supabase_flutter: ^2.12.4
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +48,7 @@ flutter_gen:
     lottie: true
 
 flutter:
+  generate: true
 
   uses-material-design: true
 

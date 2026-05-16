@@ -88,6 +88,7 @@ Future<void> _pumpResponsiveOnboarding(WidgetTester tester, Size size) async {
                         currentIndex: 0,
                         totalPages: 3,
                         isLastPage: false,
+                        ctaLabel: 'Go',
                         pageColor: const Color(0xFF4058A0),
                         pageController: pageController,
                         onCtaPressed: () {},

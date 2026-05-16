@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/fonts.gen.dart';
+
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 
 class InstructionsFormStep extends StatelessWidget {
@@ -90,10 +92,10 @@ class _StepListItem extends StatelessWidget {
               fontSize: 12.sp,
               fontFamily: FontFamily.montserrat,
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
               isDense: true,
-              hintText: 'Add instruction step',
+              hintText: context.l10n.addNewHintInstruction,
             ),
           ),
         ),

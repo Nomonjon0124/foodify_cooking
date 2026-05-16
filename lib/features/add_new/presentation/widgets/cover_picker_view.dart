@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
 import '../cubit/add_new_cubit.dart';
 
@@ -22,7 +23,7 @@ class CoverPickerView extends StatelessWidget {
           children: [
             SizedBox(height: 20.h),
             Text(
-              'Add a recipe Cover',
+              context.l10n.addNewCoverTitle,
               style: TextStyle(
                 color: const Color(0xFFADADAD),
                 fontSize: 18.sp,
@@ -47,7 +48,7 @@ class CoverPickerView extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Recent',
+                    context.l10n.addNewRecent,
                     style: TextStyle(
                       color: const Color(0xFF0E0E0E),
                       fontSize: 14.sp,

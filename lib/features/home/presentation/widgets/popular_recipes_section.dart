@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
 
@@ -37,7 +38,7 @@ class _PopularRecipesSectionState extends State<PopularRecipesSection> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 24.w, top: 14.h),
-              child: const HomeSectionTitle('Popular Recipes'),
+              child: HomeSectionTitle(context.l10n.homePopularRecipes),
             ),
             SizedBox(height: 24.h),
             SizedBox(

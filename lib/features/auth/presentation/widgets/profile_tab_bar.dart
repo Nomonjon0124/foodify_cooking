@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class ProfileTabBar extends StatelessWidget {
   const ProfileTabBar({
@@ -17,7 +18,12 @@ class ProfileTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['$postsCount Post', 'Less Details', 'More Details'];
+    final l10n = context.l10n;
+    final tabs = [
+      l10n.profilePost(postsCount),
+      l10n.profileLessDetails,
+      l10n.profileMoreDetails,
+    ];
 
     return Container(
       width: 348.w,

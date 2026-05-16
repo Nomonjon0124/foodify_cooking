@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/recipe_cubit.dart';
 import '../cubit/recipe_state.dart';
 
@@ -16,13 +17,13 @@ class RecipePage extends StatelessWidget {
     return BlocProvider<RecipeCubit>(
       create: (_) => getIt<RecipeCubit>()..loadRecipes(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Recipes')),
+        appBar: AppBar(title: Text(context.l10n.recipesTitle)),
         body: BlocConsumer<RecipeCubit, RecipeState>(
           listener: (context, state) {
             if (state.status == RecipeStatus.failure) {
               AppSnackbar.show(
                 context,
-                state.errorMessage ?? 'Unable to load recipes',
+                state.errorMessage ?? context.l10n.recipesLoadFailure,
               );
             }
           },
@@ -32,7 +33,7 @@ class RecipePage extends StatelessWidget {
             }
 
             if (state.recipes.isEmpty) {
-              return const Center(child: Text('No recipes found'));
+              return Center(child: Text(context.l10n.recipesEmpty));
             }
 
             return ListView.separated(
@@ -43,7 +44,7 @@ class RecipePage extends StatelessWidget {
                 return Card(
                   child: ListTile(
                     title: Text(state.recipes[index]),
-                    subtitle: const Text('TODO: Open recipe details'),
+                    subtitle: Text(context.l10n.recipeDetailsTodo),
                   ),
                 );
               },

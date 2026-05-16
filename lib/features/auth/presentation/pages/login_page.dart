@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../config/routes/route_names.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/login_cubit.dart';
 import '../cubit/login_state.dart';
 import '../widgets/auth_header.dart';
@@ -18,15 +19,15 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!getIt.isRegistered<LoginCubit>()) {
-      return const Scaffold(
-        body: Center(child: Text('Auth module is disabled')),
+      return Scaffold(
+        body: Center(child: Text(context.l10n.authModuleDisabled)),
       );
     }
 
     return BlocProvider<LoginCubit>(
       create: (_) => getIt<LoginCubit>(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Login')),
+        appBar: AppBar(title: Text(context.l10n.loginTitle)),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16.r),
@@ -36,19 +37,16 @@ class LoginPage extends StatelessWidget {
                   context.push(RouteNames.profile);
                 }
                 if (state.status == LoginStatus.failure) {
-                  AppSnackbar.show(
-                    context,
-                    state.errorMessage ?? 'Login failed',
-                  );
+                  AppSnackbar.show(context, context.l10n.loginFailed);
                 }
               },
               builder: (context, state) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const AuthHeader(
-                      title: 'Welcome back',
-                      subtitle: 'Login to continue cooking',
+                    AuthHeader(
+                      title: context.l10n.loginWelcomeBack,
+                      subtitle: context.l10n.loginSubtitle,
                     ),
                     SizedBox(height: 16.h),
                     LoginForm(
@@ -67,7 +65,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         context.push(RouteNames.register);
                       },
-                      child: const Text('Create account'),
+                      child: Text(context.l10n.loginCreateAccount),
                     ),
                   ],
                 );

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/search_results.dart';
 
 class SearchRecipesTab extends StatelessWidget {
@@ -13,7 +14,7 @@ class SearchRecipesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (recipes.isEmpty) {
-      return const Center(child: Text('No recipes found'));
+      return Center(child: Text(context.l10n.searchNoRecipes));
     }
 
     return GridView.builder(

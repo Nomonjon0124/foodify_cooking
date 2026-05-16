@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class SettingsState extends Equatable {
-  const SettingsState({this.isDarkMode = false, this.languageCode = 'en'});
+  const SettingsState({this.isDarkMode = false, this.languageCode});
 
   final bool isDarkMode;
-  final String languageCode;
+  final String? languageCode;
 
   SettingsState copyWith({bool? isDarkMode, String? languageCode}) {
     return SettingsState(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
 import '../cubit/add_new_cubit.dart';
 
@@ -190,7 +191,9 @@ class PreviewHeaderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(4.r),
             ),
             child: Text(
-              state.previewTitle,
+              state.title.trim().isEmpty
+                  ? context.l10n.addNewRecipeTitleFallback
+                  : state.title.trim(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,

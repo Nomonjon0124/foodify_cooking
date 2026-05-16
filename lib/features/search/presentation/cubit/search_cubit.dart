@@ -47,12 +47,7 @@ class SearchCubit extends Cubit<SearchState> {
     } catch (_) {
       if (currentRequestId != _requestId) return;
 
-      emit(
-        state.copyWith(
-          status: SearchStatus.failure,
-          errorMessage: 'Failed to load search results',
-        ),
-      );
+      emit(state.copyWith(status: SearchStatus.failure));
     }
   }
 

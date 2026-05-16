@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/fonts.gen.dart';
+
+import '../../../../l10n/l10n_extension.dart';
+import '../add_new_l10n.dart';
 import '../cubit/add_new_cubit.dart';
 
 class RecipePreviewWidget extends StatefulWidget {
@@ -208,7 +211,9 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
               borderRadius: BorderRadius.circular(4.r),
             ),
             child: Text(
-              widget.state.title.isEmpty ? 'Recipe Title' : widget.state.title,
+              widget.state.title.isEmpty
+                  ? context.l10n.addNewRecipeTitleFallback
+                  : widget.state.title,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,
@@ -231,7 +236,10 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
                   Icons.trending_down,
                   '${widget.state.calories} Cal',
                 ),
-                _buildInfoPill(Icons.bolt, widget.state.difficulty),
+                _buildInfoPill(
+                  Icons.bolt,
+                  context.l10n.addNewDifficultyLabel(widget.state.difficulty),
+                ),
                 _buildInfoPill(
                   Icons.access_time,
                   '${widget.state.cookTime} Min',
@@ -276,11 +284,11 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       child: Row(
         children: [
-          _buildTabItem(0, 'Introduction'),
+          _buildTabItem(0, context.l10n.addNewPreviewIntroduction),
           SizedBox(width: 10.w),
-          _buildTabItem(1, 'Ingredients'),
+          _buildTabItem(1, context.l10n.addNewPreviewIngredients),
           SizedBox(width: 10.w),
-          _buildTabItem(2, 'Comments'),
+          _buildTabItem(2, context.l10n.addNewPreviewComments),
         ],
       ),
     );
@@ -333,7 +341,7 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
             children: [
               const Icon(Icons.arrow_drop_down, color: Color(0xFFFF6339)),
               Text(
-                '${widget.state.steps.length} Steps',
+                context.l10n.addNewStepsCount(widget.state.steps.length),
                 style: TextStyle(
                   fontSize: 18.sp,
                   color: const Color(0xFF0E0E0E),
@@ -370,7 +378,7 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
         clipBehavior: Clip.none,
         children: [
           Text(
-            text.isEmpty ? 'Instruction step content...' : text,
+            text.isEmpty ? context.l10n.addNewInstructionPlaceholder : text,
             style: TextStyle(
               color: const Color(0xFF353535),
               fontSize: 12.sp,
@@ -414,7 +422,9 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
             children: [
               const Icon(Icons.arrow_drop_down, color: Color(0xFFFF6339)),
               Text(
-                '${widget.state.ingredients.length} Ingredients',
+                context.l10n.addNewIngredientsCount(
+                  widget.state.ingredients.length,
+                ),
                 style: TextStyle(
                   fontSize: 18.sp,
                   color: const Color(0xFF0E0E0E),
@@ -447,7 +457,7 @@ class _RecipePreviewWidgetState extends State<RecipePreviewWidget> {
         clipBehavior: Clip.none,
         children: [
           Text(
-            text.isEmpty ? 'Ingredient name...' : text,
+            text.isEmpty ? context.l10n.addNewIngredientPlaceholder : text,
             style: TextStyle(
               color: const Color(0xFF353535),
               fontSize: 12.sp,

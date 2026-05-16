@@ -12,6 +12,7 @@ import 'package:foodify_cooking/features/home/domain/entities/home_feed.dart';
 import 'package:foodify_cooking/features/home/domain/repositories/home_repository.dart';
 import 'package:foodify_cooking/features/search/domain/entities/search_results.dart';
 import 'package:foodify_cooking/features/search/domain/repositories/search_repository.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   setUpAll(() async {
@@ -31,7 +32,14 @@ void main() {
   testWidgets('Router starts from splash and opens onboarding', (tester) async {
     AppRouter.router.go(RouteNames.splash);
     await tester.pumpWidget(
-      _withScreenUtil(MaterialApp.router(routerConfig: AppRouter.router)),
+      _withScreenUtil(
+        MaterialApp.router(
+          locale: testLocale,
+          localizationsDelegates: testLocalizationsDelegates,
+          supportedLocales: testSupportedLocales,
+          routerConfig: AppRouter.router,
+        ),
+      ),
     );
     await tester.pump();
 
@@ -46,24 +54,40 @@ void main() {
 
   testWidgets('Bottom navigation switches between tabs', (tester) async {
     await tester.pumpWidget(
-      _withScreenUtil(MaterialApp.router(routerConfig: AppRouter.router)),
+      _withScreenUtil(
+        MaterialApp.router(
+          locale: testLocale,
+          localizationsDelegates: testLocalizationsDelegates,
+          supportedLocales: testSupportedLocales,
+          routerConfig: AppRouter.router,
+        ),
+      ),
     );
     AppRouter.router.go(RouteNames.home);
     await tester.pumpAndSettle();
 
-    expect(find.byKey(const Key('bottom_nav_label_Home')), findsOneWidget);
-    expect(find.byKey(const Key('bottom_nav_label_Search')), findsOneWidget);
-    expect(find.byKey(const Key('bottom_nav_label_Add New')), findsOneWidget);
-    expect(find.byKey(const Key('bottom_nav_label_Save')), findsOneWidget);
-    expect(find.byKey(const Key('bottom_nav_label_Profile')), findsOneWidget);
+    expect(find.byKey(const Key('bottom_nav_item_home_label')), findsOneWidget);
+    expect(
+      find.byKey(const Key('bottom_nav_item_search_label')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const Key('bottom_nav_item_add_new_label')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('bottom_nav_item_save_label')), findsOneWidget);
+    expect(
+      find.byKey(const Key('bottom_nav_item_profile_label')),
+      findsOneWidget,
+    );
 
-    await tester.tap(find.byKey(const Key('bottom_nav_label_Search')));
+    await tester.tap(find.byKey(const Key('bottom_nav_item_search')));
     await tester.pumpAndSettle();
     expect(find.text('Recipes'), findsOneWidget);
     expect(find.text('Chefs'), findsOneWidget);
     expect(find.text('Tags'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('bottom_nav_label_Add New')));
+    await tester.tap(find.byKey(const Key('bottom_nav_item_add_new')));
     await tester.pumpAndSettle();
     expect(find.text('Add a recipe Cover'), findsOneWidget);
 

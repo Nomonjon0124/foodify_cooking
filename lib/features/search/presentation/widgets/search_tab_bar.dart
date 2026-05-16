@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class SearchTabBar extends StatelessWidget {
   const SearchTabBar({super.key});
@@ -13,6 +14,8 @@ class SearchTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Container(
       height: 29.r,
       decoration: BoxDecoration(
@@ -40,9 +43,9 @@ class SearchTabBar extends StatelessWidget {
         dividerColor: Colors.transparent,
         dividerHeight: 0,
         tabs: [
-          Tab(height: 29.r, text: 'Recipes'),
-          Tab(height: 29.r, text: 'Chefs'),
-          Tab(height: 29.r, text: 'Tags'),
+          Tab(height: 29.r, text: l10n.searchRecipesTab),
+          Tab(height: 29.r, text: l10n.searchChefsTab),
+          Tab(height: 29.r, text: l10n.searchTagsTab),
         ],
       ),
     );

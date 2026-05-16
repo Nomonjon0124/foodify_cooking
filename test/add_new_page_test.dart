@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodify_cooking/features/add_new/presentation/pages/add_new_page.dart';
 import 'package:foodify_cooking/features/add_new/presentation/widgets/ingredients_step.dart';
 import 'package:foodify_cooking/features/add_new/presentation/widgets/introduction_step.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   testWidgets('AddNewPage completes the local wizard flow', (tester) async {
@@ -18,7 +19,12 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, _) {
-          return const MaterialApp(home: AddNewPage());
+          return MaterialApp(
+            locale: testLocale,
+            localizationsDelegates: testLocalizationsDelegates,
+            supportedLocales: testSupportedLocales,
+            home: const AddNewPage(),
+          );
         },
       ),
     );

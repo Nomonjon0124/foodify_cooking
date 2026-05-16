@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
+import '../add_new_l10n.dart';
 
 class AddNewStepper extends StatelessWidget {
   const AddNewStepper({required this.currentStep, super.key});
@@ -11,6 +13,8 @@ class AddNewStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(28.w, 16.h, 20.w, 12.h),
       child: Row(
@@ -43,7 +47,7 @@ class AddNewStepper extends StatelessWidget {
                           SizedBox(width: 8.w),
                           Expanded(
                             child: Text(
-                              AddNewConstants.stepLabels[index],
+                              l10n.addNewStepLabel(index),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

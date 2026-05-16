@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 import 'numbered_input_tile.dart';
 
@@ -40,7 +41,7 @@ class IntroductionStep extends StatelessWidget {
                 key: ValueKey('step-tile-$index'),
                 index: index + 1,
                 initialValue: state.steps[index],
-                hintText: 'Add instruction step',
+                hintText: context.l10n.addNewHintInstruction,
                 isMultiline: true,
                 onChanged: (value) =>
                     context.read<AddNewCubit>().updateStep(index, value),

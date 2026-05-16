@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/route_names.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/onboarding_cubit.dart';
 import '../cubit/onboarding_state.dart';
 import '../widgets/onboarding_bottom_panel.dart';
@@ -19,36 +20,6 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   late final PageController _pageController;
-
-  static final _pages = <_OnboardingPageData>[
-    _OnboardingPageData(
-      backgroundColor: Color(0xFF4058A0),
-      title: 'Your personal guide to be a chef',
-      images: [
-        Assets.images.onboarding.onboarding11.path,
-        Assets.images.onboarding.onboarding12.path,
-        Assets.images.onboarding.onboarding13.path,
-      ],
-    ),
-    _OnboardingPageData(
-      backgroundColor: Color(0xFFFF6339),
-      title: 'Share the Love, Share the Recipe',
-      images: [
-        Assets.images.onboarding.onboarding21.path,
-        Assets.images.onboarding.onboarding22.path,
-        Assets.images.onboarding.onboarding23.path,
-      ],
-    ),
-    _OnboardingPageData(
-      backgroundColor: Color(0xFFDEE21B),
-      title: 'Foodify Your Global Kitchen',
-      images: [
-        Assets.images.onboarding.onboarding31.path,
-        Assets.images.onboarding.onboarding32.path,
-        Assets.images.onboarding.onboarding33.path,
-      ],
-    ),
-  ];
 
   @override
   void initState() {
@@ -69,7 +40,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
       child: Scaffold(
         body: BlocBuilder<OnboardingCubit, OnboardingState>(
           builder: (context, state) {
-            final page = _pages[state.currentIndex];
+            final pages = _pagesFor(context);
+            final page = pages[state.currentIndex];
             final bottomReservedHeight = OnboardingBottomPanel.responsiveHeight(
               context,
             );
@@ -78,10 +50,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
               children: [
                 PageView.builder(
                   controller: _pageController,
-                  itemCount: _pages.length,
+                  itemCount: pages.length,
                   onPageChanged: context.read<OnboardingCubit>().onPageChanged,
                   itemBuilder: (context, index) {
-                    final data = _pages[index];
+                    final data = pages[index];
                     return OnboardingPageContent(
                       backgroundColor: data.backgroundColor,
                       imagePaths: data.images,
@@ -99,6 +71,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     currentIndex: state.currentIndex,
                     totalPages: state.totalPages,
                     isLastPage: state.isLastPage,
+                    ctaLabel: context.l10n.onboardingGo,
                     pageColor: page.backgroundColor,
                     pageController: _pageController,
                     onCtaPressed: () {
@@ -115,6 +88,39 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
       ),
     );
+  }
+
+  List<_OnboardingPageData> _pagesFor(BuildContext context) {
+    final l10n = context.l10n;
+    return [
+      _OnboardingPageData(
+        backgroundColor: const Color(0xFF4058A0),
+        title: l10n.onboardingTitleChef,
+        images: [
+          Assets.images.onboarding.onboarding11.path,
+          Assets.images.onboarding.onboarding12.path,
+          Assets.images.onboarding.onboarding13.path,
+        ],
+      ),
+      _OnboardingPageData(
+        backgroundColor: const Color(0xFFFF6339),
+        title: l10n.onboardingTitleShare,
+        images: [
+          Assets.images.onboarding.onboarding21.path,
+          Assets.images.onboarding.onboarding22.path,
+          Assets.images.onboarding.onboarding23.path,
+        ],
+      ),
+      _OnboardingPageData(
+        backgroundColor: const Color(0xFFDEE21B),
+        title: l10n.onboardingTitleGlobalKitchen,
+        images: [
+          Assets.images.onboarding.onboarding31.path,
+          Assets.images.onboarding.onboarding32.path,
+          Assets.images.onboarding.onboarding33.path,
+        ],
+      ),
+    ];
   }
 }
 

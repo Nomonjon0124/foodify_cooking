@@ -27,6 +27,7 @@ void main() {
                   currentIndex: 0,
                   totalPages: 3,
                   isLastPage: false,
+                  ctaLabel: 'Go',
                   pageColor: const Color(0xFF4058A0),
                   pageController: pageController,
                   onCtaPressed: () => tapCount++,
@@ -72,6 +73,7 @@ void main() {
                   currentIndex: 2,
                   totalPages: 3,
                   isLastPage: true,
+                  ctaLabel: 'Go',
                   pageColor: const Color(0xFFDEE21B),
                   pageController: pageController,
                   onCtaPressed: () {},
@@ -111,6 +113,7 @@ void main() {
                         currentIndex: currentIndex,
                         totalPages: 3,
                         isLastPage: false,
+                        ctaLabel: 'Go',
                         pageColor: currentIndex == 0
                             ? const Color(0xFF4058A0)
                             : const Color(0xFFFF6339),
@@ -169,6 +172,7 @@ void main() {
                         currentIndex: 0,
                         totalPages: 3,
                         isLastPage: false,
+                        ctaLabel: 'Go',
                         pageColor: const Color(0xFF4058A0),
                         pageController: pageController,
                         onCtaPressed: () {},
