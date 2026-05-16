@@ -15,12 +15,7 @@ class RecipeCubit extends Cubit<RecipeState> {
       final recipes = await _getPopularRecipesUseCase(const NoParams());
       emit(state.copyWith(status: RecipeStatus.success, recipes: recipes));
     } catch (_) {
-      emit(
-        state.copyWith(
-          status: RecipeStatus.failure,
-          errorMessage: 'Failed to load recipes',
-        ),
-      );
+      emit(state.copyWith(status: RecipeStatus.failure));
     }
   }
 }

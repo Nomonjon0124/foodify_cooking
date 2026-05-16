@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/route_names.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 import '../widgets/add_new_flow_scaffold.dart';
 import '../widgets/add_new_header.dart';
@@ -89,7 +90,7 @@ class AddNewPage extends StatelessWidget {
               bottomBar: state.phase == AddNewPhase.photoPicker
                   ? null
                   : StepActionBar(
-                      label: 'Next',
+                      label: context.l10n.addNewNext,
                       isEnabled: cubit.canContinueCurrentStage(),
                       isLoading: state.isSubmitting,
                       onPressed: cubit.nextStage,
@@ -105,7 +106,7 @@ class AddNewPage extends StatelessWidget {
     final cubit = context.read<AddNewCubit>();
 
     return AddNewHeader(
-      title: 'New Recipe',
+      title: context.l10n.addNewTitle,
       leading: IconButton(
         key: const Key('add-new-back-button'),
         padding: EdgeInsets.zero,
@@ -128,7 +129,7 @@ class AddNewPage extends StatelessWidget {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               child: Text(
-                'Clear all',
+                context.l10n.addNewClearAll,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14.sp,

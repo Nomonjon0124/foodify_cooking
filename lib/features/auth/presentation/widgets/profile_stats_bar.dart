@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class ProfileStatsBar extends StatelessWidget {
   const ProfileStatsBar({
@@ -25,9 +26,9 @@ class ProfileStatsBar extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(width: 32.w),
-          _StatColumn(count: followers, label: 'Followers'),
+          _StatColumn(count: followers, label: context.l10n.profileFollowers),
           const Spacer(),
-          _StatColumn(count: following, label: 'Following'),
+          _StatColumn(count: following, label: context.l10n.profileFollowing),
           SizedBox(width: 20.w),
         ],
       ),

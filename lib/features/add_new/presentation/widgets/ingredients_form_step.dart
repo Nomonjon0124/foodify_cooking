@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/fonts.gen.dart';
+
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 
 class IngredientsFormStep extends StatelessWidget {
@@ -91,10 +93,10 @@ class _NumberedListItem extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontFamily: FontFamily.montserrat,
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(vertical: 12),
-              hintText: 'Add ingredient',
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              hintText: context.l10n.addNewHintIngredient,
             ),
           ),
         ),

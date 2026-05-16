@@ -15,12 +15,7 @@ class HomeCubit extends Cubit<HomeState> {
       final feed = await _getHomeFeedUseCase(const NoParams());
       emit(state.copyWith(status: HomeStatus.success, feed: feed));
     } catch (_) {
-      emit(
-        state.copyWith(
-          status: HomeStatus.failure,
-          errorMessage: 'Failed to load home feed',
-        ),
-      );
+      emit(state.copyWith(status: HomeStatus.failure));
     }
   }
 }

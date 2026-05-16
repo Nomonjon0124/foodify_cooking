@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
+import '../add_new_l10n.dart';
 import '../cubit/add_new_cubit.dart';
 
 class PreviewTabs extends StatelessWidget {
@@ -41,7 +43,7 @@ class PreviewTabs extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      _labelFor(tab),
+                      context.l10n.addNewPreviewTabLabel(tab),
                       style: TextStyle(
                         color: activeTab == tab
                             ? const Color(0xFF0E0E0E)
@@ -60,16 +62,5 @@ class PreviewTabs extends StatelessWidget {
           )
           .toList(),
     );
-  }
-
-  String _labelFor(RecipePreviewTab tab) {
-    switch (tab) {
-      case RecipePreviewTab.introduction:
-        return 'Introduction';
-      case RecipePreviewTab.ingredients:
-        return 'Ingredients';
-      case RecipePreviewTab.comments:
-        return 'Comments';
-    }
   }
 }

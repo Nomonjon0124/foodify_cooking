@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/search_results.dart';
 
 class SearchTagsTab extends StatelessWidget {
@@ -12,7 +13,7 @@ class SearchTagsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (tags.isEmpty) {
-      return const Center(child: Text('No tags found'));
+      return Center(child: Text(context.l10n.searchNoTags));
     }
 
     return Container(

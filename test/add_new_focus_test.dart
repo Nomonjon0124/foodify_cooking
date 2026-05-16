@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodify_cooking/features/add_new/presentation/cubit/add_new_cubit.dart';
 import 'package:foodify_cooking/features/add_new/presentation/widgets/ingredients_step.dart';
 import 'package:foodify_cooking/features/add_new/presentation/widgets/introduction_step.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   testWidgets('ingredient input keeps focus after bloc rebuild', (
@@ -24,6 +25,9 @@ void main() {
         splitScreenMode: true,
         builder: (context, _) {
           return MaterialApp(
+            locale: testLocale,
+            localizationsDelegates: testLocalizationsDelegates,
+            supportedLocales: testSupportedLocales,
             home: BlocProvider.value(
               value: cubit,
               child: const Scaffold(body: IngredientsStep()),
@@ -62,6 +66,9 @@ void main() {
         splitScreenMode: true,
         builder: (context, _) {
           return MaterialApp(
+            locale: testLocale,
+            localizationsDelegates: testLocalizationsDelegates,
+            supportedLocales: testSupportedLocales,
             home: BlocProvider.value(
               value: cubit,
               child: const Scaffold(body: IntroductionStep()),

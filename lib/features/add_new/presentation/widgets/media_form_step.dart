@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/fonts.gen.dart';
 
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 
 class MediaPickerView extends StatelessWidget {
@@ -36,7 +37,7 @@ class MediaPickerView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
               child: Center(
                 child: Text(
-                  'Add a recipe Cover',
+                  context.l10n.addNewCoverTitle,
                   style: TextStyle(
                     color: const Color(0xFFADADAD),
                     fontSize: 18.sp,
@@ -72,7 +73,7 @@ class MediaPickerView extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    'Recent',
+                    context.l10n.addNewRecent,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14.sp,

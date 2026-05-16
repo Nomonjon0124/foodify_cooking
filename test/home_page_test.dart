@@ -10,6 +10,7 @@ import 'package:foodify_cooking/core/di/injection_container.dart';
 import 'package:foodify_cooking/features/home/domain/entities/home_feed.dart';
 import 'package:foodify_cooking/features/home/domain/repositories/home_repository.dart';
 import 'package:foodify_cooking/features/home/presentation/pages/home_page.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   setUpAll(() async {
@@ -31,9 +32,12 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, _) {
-          return const MaterialApp(
+          return MaterialApp(
+            locale: testLocale,
+            localizationsDelegates: testLocalizationsDelegates,
+            supportedLocales: testSupportedLocales,
             home: Scaffold(
-              body: Column(
+              body: const Column(
                 children: [
                   FoodifyAppBar.home(),
                   FoodifyAppBar.titleAction(
@@ -62,7 +66,12 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, _) {
-          return const MaterialApp(home: HomePage());
+          return MaterialApp(
+            locale: testLocale,
+            localizationsDelegates: testLocalizationsDelegates,
+            supportedLocales: testSupportedLocales,
+            home: const HomePage(),
+          );
         },
       ),
     );

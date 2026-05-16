@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n_extension.dart';
+
 abstract final class AppDialog {
   static Future<void> showInfo(
     BuildContext context, {
@@ -14,7 +16,7 @@ abstract final class AppDialog {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: Text(context.l10n.ok),
           ),
         ],
       ),

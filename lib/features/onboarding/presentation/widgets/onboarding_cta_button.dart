@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class OnboardingCtaButton extends StatefulWidget {
   const OnboardingCtaButton({
     required this.isLastPage,
+    required this.label,
     required this.progress,
     required this.onPressed,
     required this.backgroundColor,
@@ -11,6 +12,7 @@ class OnboardingCtaButton extends StatefulWidget {
   });
 
   final bool isLastPage;
+  final String label;
   final double progress;
   final VoidCallback onPressed;
   final Color backgroundColor;
@@ -88,7 +90,7 @@ class _OnboardingCtaButtonState extends State<OnboardingCtaButton> {
                   },
                   child: widget.isLastPage
                       ? Text(
-                          'Go',
+                          widget.label,
                           key: const ValueKey<String>('go_label'),
                           style: TextStyle(
                             color: Color(0xFF0E0E0E),

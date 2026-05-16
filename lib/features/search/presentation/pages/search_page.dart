@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../common/widgets/foodify_app_bar.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/search_cubit.dart';
 import '../widgets/search_chefs_tab.dart';
 import '../widgets/search_recipes_tab.dart';
@@ -33,6 +34,7 @@ class _SearchView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: FoodifyAppBar.searchFilter(
+          hintText: context.l10n.searchHint,
           onChanged: (q) => context.read<SearchCubit>().updateQuery(q),
         ),
         body: Column(
@@ -62,7 +64,7 @@ class _SearchView extends StatelessWidget {
                 return Padding(
                   padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 0),
                   child: Text(
-                    state.errorMessage ?? 'Failed to load search results',
+                    state.errorMessage ?? context.l10n.searchLoadFailure,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.error,
                       fontSize: 12.sp,

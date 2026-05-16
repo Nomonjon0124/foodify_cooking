@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodify_cooking/core/gen/fonts.gen.dart';
+
+import '../../../../l10n/l10n_extension.dart';
+import '../add_new_constants.dart';
+import '../add_new_l10n.dart';
 import '../cubit/add_new_cubit.dart';
 import 'add_section_container.dart';
 
@@ -51,12 +55,14 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
   Widget build(BuildContext context) {
     return BlocBuilder<AddNewCubit, AddNewState>(
       builder: (context, state) {
+        final l10n = context.l10n;
+
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Column(
             children: [
               AddSectionContainer(
-                label: 'Name',
+                label: l10n.addNewFieldName,
                 child: TextField(
                   controller: _titleController,
                   onChanged: (val) =>
@@ -67,7 +73,7 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
                     fontFamily: FontFamily.montserrat,
                   ),
                   decoration: InputDecoration(
-                    hintText: 'Name your recipe',
+                    hintText: l10n.addNewHintRecipeName,
                     hintStyle: const TextStyle(color: Color(0xFFADADAD)),
                     filled: true,
                     fillColor: Colors.white,
@@ -84,11 +90,11 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Number',
+                label: l10n.addNewFieldNumber,
                 child: Row(
                   children: [
                     Text(
-                      'Serving for',
+                      l10n.addNewServingFor,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -133,7 +139,7 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
                     ),
                     const Spacer(),
                     Text(
-                      'People',
+                      l10n.addNewPeople,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -145,7 +151,7 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Cook Time',
+                label: l10n.addNewCookTime,
                 child: Row(
                   children: [
                     Expanded(
@@ -168,13 +174,13 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Difficulty',
+                label: l10n.addNewDifficulty,
                 child: Wrap(
                   spacing: 8.w,
-                  children: ['Easy', 'Medium', 'Hard'].map((d) {
+                  children: AddNewConstants.difficultyOptions.map((d) {
                     final isSelected = state.difficulty == d;
                     return _CustomChip(
-                      label: d,
+                      label: l10n.addNewDifficultyLabel(d),
                       isSelected: isSelected,
                       onTap: () =>
                           context.read<AddNewCubit>().updateDifficulty(d),
@@ -184,57 +190,40 @@ class _RecipeInfoFormStepState extends State<RecipeInfoFormStep> {
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Dish Type',
+                label: l10n.addNewDishType,
                 child: Wrap(
                   spacing: 8.w,
                   runSpacing: 8.h,
-                  children:
-                      [
-                        'Breakfast',
-                        'Lunch',
-                        'Snack',
-                        'Brunch',
-                        'Dessert',
-                        'Dinner',
-                        'Appetizers',
-                      ].map((c) {
-                        final isSelected = state.category == c;
-                        return _CustomChip(
-                          label: c,
-                          isSelected: isSelected,
-                          onTap: () =>
-                              context.read<AddNewCubit>().updateCategory(c),
-                        );
-                      }).toList(),
+                  children: AddNewConstants.dishTypeOptions.map((c) {
+                    final isSelected = state.category == c;
+                    return _CustomChip(
+                      label: l10n.addNewDishTypeLabel(c),
+                      isSelected: isSelected,
+                      onTap: () =>
+                          context.read<AddNewCubit>().updateCategory(c),
+                    );
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Suggested Dietary Target',
+                label: l10n.addNewDietaryTarget,
                 child: Wrap(
                   spacing: 8.w,
                   runSpacing: 8.h,
-                  children:
-                      [
-                        'Vegetarian',
-                        'High Fat',
-                        'Low Fat',
-                        'Sugar Free',
-                        'Lactose Free',
-                        'Gluten Free',
-                      ].map((t) {
-                        final isSelected = state.tags.contains(t);
-                        return _CustomChip(
-                          label: t,
-                          isSelected: isSelected,
-                          onTap: () => context.read<AddNewCubit>().toggleTag(t),
-                        );
-                      }).toList(),
+                  children: AddNewConstants.dietaryTargetOptions.map((t) {
+                    final isSelected = state.tags.contains(t);
+                    return _CustomChip(
+                      label: l10n.addNewDietaryTargetLabel(t),
+                      isSelected: isSelected,
+                      onTap: () => context.read<AddNewCubit>().toggleTag(t),
+                    );
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 20.h),
               AddSectionContainer(
-                label: 'Hashtags',
+                label: l10n.addNewHashtags,
                 child: TextField(
                   controller: _hashtagsController,
                   onChanged: (val) =>

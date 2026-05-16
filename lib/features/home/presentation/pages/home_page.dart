@@ -5,6 +5,7 @@ import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../common/widgets/foodify_app_bar.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 import '../widgets/home_feed_view.dart';
@@ -17,14 +18,14 @@ class HomePage extends StatelessWidget {
     return BlocProvider<HomeCubit>(
       create: (_) => getIt<HomeCubit>()..loadHome(),
       child: Scaffold(
-        appBar: const FoodifyAppBar.home(),
+        appBar: FoodifyAppBar.home(hintText: context.l10n.searchHint),
         backgroundColor: Colors.white,
         body: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {
             if (state.status == HomeStatus.failure) {
               AppSnackbar.show(
                 context,
-                state.errorMessage ?? 'Unable to load data',
+                state.errorMessage ?? context.l10n.homeLoadFailure,
               );
             }
           },
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
             return HomeFeedView(
               feed: state.feed,
               onRecipeActionPressed: () {
-                AppSnackbar.show(context, 'Recipe card action');
+                AppSnackbar.show(context, context.l10n.homeRecipeCardAction);
               },
             );
           },

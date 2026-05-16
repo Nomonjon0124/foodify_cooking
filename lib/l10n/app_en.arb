@@ -1,0 +1,507 @@
+{
+  "@@locale": "en",
+  "appTitle": "Milliy Taste",
+  "@appTitle": {
+    "description": "Application title shown to the OS and app shell."
+  },
+  "startupError": "Startup error",
+  "@startupError": {
+    "description": "Fallback startup error message."
+  },
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Bottom navigation item for the home tab."
+  },
+  "navSearch": "Search",
+  "@navSearch": {
+    "description": "Bottom navigation item for the search tab."
+  },
+  "navAddNew": "Add New",
+  "@navAddNew": {
+    "description": "Bottom navigation item for adding a new recipe."
+  },
+  "navSave": "Save",
+  "@navSave": {
+    "description": "Bottom navigation item for saved recipes."
+  },
+  "navProfile": "Profile",
+  "@navProfile": {
+    "description": "Bottom navigation item for the profile tab."
+  },
+  "onboardingTitleChef": "Your personal guide to be a chef",
+  "@onboardingTitleChef": {
+    "description": "First onboarding page title."
+  },
+  "onboardingTitleShare": "Share the Love, Share the Recipe",
+  "@onboardingTitleShare": {
+    "description": "Second onboarding page title."
+  },
+  "onboardingTitleGlobalKitchen": "Foodify Your Global Kitchen",
+  "@onboardingTitleGlobalKitchen": {
+    "description": "Third onboarding page title."
+  },
+  "onboardingNext": "Next",
+  "@onboardingNext": {
+    "description": "Onboarding button for moving to the next page."
+  },
+  "onboardingGo": "Go",
+  "@onboardingGo": {
+    "description": "Onboarding final button for entering the app."
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings screen app bar title."
+  },
+  "settingsDarkMode": "Dark mode",
+  "@settingsDarkMode": {
+    "description": "Settings switch title for dark mode."
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Settings language row title."
+  },
+  "settingsLanguageCurrent": "Current: {language}",
+  "@settingsLanguageCurrent": {
+    "description": "Settings language subtitle showing the current selected language.",
+    "placeholders": {
+      "language": {
+        "type": "String",
+        "example": "English"
+      }
+    }
+  },
+  "settingsUseSystemLanguage": "Use system language",
+  "@settingsUseSystemLanguage": {
+    "description": "Language selector option to follow the device locale."
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "English language name."
+  },
+  "languageUzbek": "Uzbek",
+  "@languageUzbek": {
+    "description": "Uzbek language name."
+  },
+  "languageRussian": "Russian",
+  "@languageRussian": {
+    "description": "Russian language name."
+  },
+  "settingsSignInTitle": "Sign in (optional)",
+  "@settingsSignInTitle": {
+    "description": "Settings row title for optional sign in."
+  },
+  "settingsSignInSubtitle": "Open auth flow only if user wants",
+  "@settingsSignInSubtitle": {
+    "description": "Settings row subtitle for optional sign in."
+  },
+  "fieldRequired": "{field} is required",
+  "@fieldRequired": {
+    "description": "Validation message for a required field.",
+    "placeholders": {
+      "field": {
+        "type": "String",
+        "example": "Email"
+      }
+    }
+  },
+  "invalidEmail": "Invalid email",
+  "@invalidEmail": {
+    "description": "Validation message for an invalid email."
+  },
+  "loginFailed": "Login failed",
+  "@loginFailed": {
+    "description": "Login failure snackbar fallback."
+  },
+  "searchHint": "Search",
+  "@searchHint": {
+    "description": "Generic search input placeholder."
+  },
+  "searchRecipesTab": "Recipes",
+  "@searchRecipesTab": {
+    "description": "Search tab for recipes."
+  },
+  "searchChefsTab": "Chefs",
+  "@searchChefsTab": {
+    "description": "Search tab for chefs."
+  },
+  "searchTagsTab": "Tags",
+  "@searchTagsTab": {
+    "description": "Search tab for tags."
+  },
+  "searchNoRecipes": "No recipes found",
+  "@searchNoRecipes": {
+    "description": "Empty state for search recipes."
+  },
+  "searchNoChefs": "No chefs found",
+  "@searchNoChefs": {
+    "description": "Empty state for search chefs."
+  },
+  "searchNoTags": "No tags found",
+  "@searchNoTags": {
+    "description": "Empty state for search tags."
+  },
+  "searchLoadFailure": "Failed to load search results",
+  "@searchLoadFailure": {
+    "description": "Search results load failure message."
+  },
+  "homePopularRecipes": "Popular Recipes",
+  "@homePopularRecipes": {
+    "description": "Home section title for popular recipes."
+  },
+  "homeLatestRecipes": "The Latest Recipes",
+  "@homeLatestRecipes": {
+    "description": "Home section title for latest recipes."
+  },
+  "homeLoadFailure": "Failed to load home feed",
+  "@homeLoadFailure": {
+    "description": "Home feed load failure message."
+  },
+  "homeRecipeCardAction": "Recipe card action",
+  "@homeRecipeCardAction": {
+    "description": "Temporary snackbar when a home recipe card action is pressed."
+  },
+  "loginTitle": "Login",
+  "@loginTitle": {
+    "description": "Login screen app bar title."
+  },
+  "loginWelcomeBack": "Welcome back",
+  "@loginWelcomeBack": {
+    "description": "Login screen header title."
+  },
+  "loginSubtitle": "Login to continue cooking",
+  "@loginSubtitle": {
+    "description": "Login screen header subtitle."
+  },
+  "loginEmail": "Email",
+  "@loginEmail": {
+    "description": "Email field label."
+  },
+  "loginPassword": "Password",
+  "@loginPassword": {
+    "description": "Password field label."
+  },
+  "loginCreateAccount": "Create account",
+  "@loginCreateAccount": {
+    "description": "Button to navigate to account creation."
+  },
+  "authModuleDisabled": "Auth module is disabled",
+  "@authModuleDisabled": {
+    "description": "Message shown when auth DI is disabled."
+  },
+  "registerTitle": "Register",
+  "@registerTitle": {
+    "description": "Register screen app bar title."
+  },
+  "registerTodo": "TODO: Implement registration flow",
+  "@registerTodo": {
+    "description": "Temporary placeholder for registration flow."
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Generic back button label."
+  },
+  "saveTitle": "Save",
+  "@saveTitle": {
+    "description": "Saved recipes screen title."
+  },
+  "saveTodo": "TODO: Implement saved recipes flow",
+  "@saveTodo": {
+    "description": "Temporary placeholder for saved recipes flow."
+  },
+  "recipesTitle": "Recipes",
+  "@recipesTitle": {
+    "description": "Recipe list screen title."
+  },
+  "recipesEmpty": "No recipes found",
+  "@recipesEmpty": {
+    "description": "Empty state for recipe list."
+  },
+  "recipeDetailsTodo": "TODO: Open recipe details",
+  "@recipeDetailsTodo": {
+    "description": "Temporary placeholder for recipe detail navigation."
+  },
+  "profileModuleDisabled": "Profile module is disabled",
+  "@profileModuleDisabled": {
+    "description": "Message shown when profile DI is disabled."
+  },
+  "profileLoadFailure": "Failed to load profile",
+  "@profileLoadFailure": {
+    "description": "Profile load failure message."
+  },
+  "profileRecipesEmpty": "No profile recipes found",
+  "@profileRecipesEmpty": {
+    "description": "Profile recipe empty state."
+  },
+  "profileFollowers": "Followers",
+  "@profileFollowers": {
+    "description": "Profile followers label."
+  },
+  "profileFollowing": "Following",
+  "@profileFollowing": {
+    "description": "Profile following label."
+  },
+  "profilePost": "{count} Post",
+  "@profilePost": {
+    "description": "Profile post count tab label.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "18"
+      }
+    }
+  },
+  "profileLessDetails": "Less Details",
+  "@profileLessDetails": {
+    "description": "Profile tab for less detailed recipe cards."
+  },
+  "profileMoreDetails": "More Details",
+  "@profileMoreDetails": {
+    "description": "Profile tab for more detailed recipe cards."
+  },
+  "addNewTitle": "New Recipe",
+  "@addNewTitle": {
+    "description": "Add new recipe screen title."
+  },
+  "addNewNext": "Next",
+  "@addNewNext": {
+    "description": "Add new recipe next button label."
+  },
+  "addNewClearAll": "Clear all",
+  "@addNewClearAll": {
+    "description": "Add new recipe clear draft action."
+  },
+  "addNewCoverTitle": "Add a recipe Cover",
+  "@addNewCoverTitle": {
+    "description": "Add new recipe cover picker title."
+  },
+  "addNewRecent": "Recent",
+  "@addNewRecent": {
+    "description": "Recent media section label in the cover picker."
+  },
+  "addNewEditCrop": "Edit Crop",
+  "@addNewEditCrop": {
+    "description": "Add new recipe cover edit crop action."
+  },
+  "addNewRemove": "Remove",
+  "@addNewRemove": {
+    "description": "Add new recipe cover remove action."
+  },
+  "addNewCropCancel": "Cancel",
+  "@addNewCropCancel": {
+    "description": "Crop photo cancel action."
+  },
+  "addNewCropDone": "Done",
+  "@addNewCropDone": {
+    "description": "Crop photo done action."
+  },
+  "addNewFieldName": "Name",
+  "@addNewFieldName": {
+    "description": "Recipe name field label."
+  },
+  "addNewHintRecipeName": "Name your recipe",
+  "@addNewHintRecipeName": {
+    "description": "Recipe name input placeholder."
+  },
+  "addNewFieldNumber": "Number",
+  "@addNewFieldNumber": {
+    "description": "Recipe servings field label."
+  },
+  "addNewServingFor": "Serving for",
+  "@addNewServingFor": {
+    "description": "Serving count prefix label."
+  },
+  "addNewPeople": "People",
+  "@addNewPeople": {
+    "description": "Serving count suffix label."
+  },
+  "addNewCookTime": "Cook Time",
+  "@addNewCookTime": {
+    "description": "Recipe cook time field label."
+  },
+  "addNewDifficulty": "Difficulty",
+  "@addNewDifficulty": {
+    "description": "Recipe difficulty field label."
+  },
+  "addNewDifficultySimple": "Simple",
+  "@addNewDifficultySimple": {
+    "description": "Simple recipe difficulty option."
+  },
+  "addNewDifficultyMedium": "Medium",
+  "@addNewDifficultyMedium": {
+    "description": "Medium recipe difficulty option."
+  },
+  "addNewDifficultyHard": "Hard",
+  "@addNewDifficultyHard": {
+    "description": "Hard recipe difficulty option."
+  },
+  "addNewDishType": "Dish Type",
+  "@addNewDishType": {
+    "description": "Recipe category field label."
+  },
+  "addNewDietaryTarget": "Suggested Dietary Target",
+  "@addNewDietaryTarget": {
+    "description": "Recipe dietary target field label."
+  },
+  "addNewHashtags": "Hashtags",
+  "@addNewHashtags": {
+    "description": "Recipe hashtags field label."
+  },
+  "addNewHintIngredient": "Add ingredient",
+  "@addNewHintIngredient": {
+    "description": "Ingredient input placeholder."
+  },
+  "addNewHintInstruction": "Add instruction step",
+  "@addNewHintInstruction": {
+    "description": "Instruction input placeholder."
+  },
+  "addNewSubmitSuccessTitle": "Recipe uploaded",
+  "@addNewSubmitSuccessTitle": {
+    "description": "Recipe submit success bottom sheet title."
+  },
+  "addNewSubmitSuccessSubtitle": "Your recipe has been added to your profile.",
+  "@addNewSubmitSuccessSubtitle": {
+    "description": "Recipe submit success bottom sheet subtitle."
+  },
+  "addNewCreateAnother": "Create another",
+  "@addNewCreateAnother": {
+    "description": "Recipe submit success action to create another recipe."
+  },
+  "recipesLoadFailure": "Unable to load recipes",
+  "@recipesLoadFailure": {
+    "description": "Recipe list load failure message."
+  },
+  "addNewStepRecipeInformation": "Recipe Information",
+  "@addNewStepRecipeInformation": {
+    "description": "Add new stepper label for recipe information."
+  },
+  "addNewStepIngredients": "Ingredients",
+  "@addNewStepIngredients": {
+    "description": "Add new stepper label for ingredients."
+  },
+  "addNewStepIntroduction": "Introduction",
+  "@addNewStepIntroduction": {
+    "description": "Add new stepper label for instructions/introduction."
+  },
+  "addNewStepPreview": "Preview",
+  "@addNewStepPreview": {
+    "description": "Add new stepper label for recipe preview."
+  },
+  "addNewDifficultyEasy": "Easy",
+  "@addNewDifficultyEasy": {
+    "description": "Easy recipe difficulty option."
+  },
+  "addNewDishBreakfast": "Breakfast",
+  "@addNewDishBreakfast": {
+    "description": "Breakfast dish type option."
+  },
+  "addNewDishLunch": "Lunch",
+  "@addNewDishLunch": {
+    "description": "Lunch dish type option."
+  },
+  "addNewDishSnack": "Snack",
+  "@addNewDishSnack": {
+    "description": "Snack dish type option."
+  },
+  "addNewDishBrunch": "Brunch",
+  "@addNewDishBrunch": {
+    "description": "Brunch dish type option."
+  },
+  "addNewDishDessert": "Dessert",
+  "@addNewDishDessert": {
+    "description": "Dessert dish type option."
+  },
+  "addNewDishDinner": "Dinner",
+  "@addNewDishDinner": {
+    "description": "Dinner dish type option."
+  },
+  "addNewDishAppetizers": "Appetizers",
+  "@addNewDishAppetizers": {
+    "description": "Appetizers dish type option."
+  },
+  "addNewDietVegetarian": "Vegetarian",
+  "@addNewDietVegetarian": {
+    "description": "Vegetarian dietary target option."
+  },
+  "addNewDietHighFat": "High Fat",
+  "@addNewDietHighFat": {
+    "description": "High fat dietary target option."
+  },
+  "addNewDietLowFat": "Low Fat",
+  "@addNewDietLowFat": {
+    "description": "Low fat dietary target option."
+  },
+  "addNewDietSugarFree": "Sugar Free",
+  "@addNewDietSugarFree": {
+    "description": "Sugar free dietary target option."
+  },
+  "addNewDietLactoseFree": "Lactose Free",
+  "@addNewDietLactoseFree": {
+    "description": "Lactose free dietary target option."
+  },
+  "addNewDietGlutenFree": "Gluten Free",
+  "@addNewDietGlutenFree": {
+    "description": "Gluten free dietary target option."
+  },
+  "addNewPreviewIntroduction": "Introduction",
+  "@addNewPreviewIntroduction": {
+    "description": "Recipe preview tab for introduction steps."
+  },
+  "addNewPreviewIngredients": "Ingredients",
+  "@addNewPreviewIngredients": {
+    "description": "Recipe preview tab for ingredients."
+  },
+  "addNewPreviewComments": "Comments",
+  "@addNewPreviewComments": {
+    "description": "Recipe preview tab for comments."
+  },
+  "addNewStepsCount": "{count} Steps",
+  "@addNewStepsCount": {
+    "description": "Recipe preview section headline for instruction step count.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "addNewIngredientsCount": "{count} Ingredients",
+  "@addNewIngredientsCount": {
+    "description": "Recipe preview section headline for ingredient count.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "6"
+      }
+    }
+  },
+  "addNewCommentsCount": "{count} Comments",
+  "@addNewCommentsCount": {
+    "description": "Recipe preview section headline for comment count.",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "addNewInstructionPlaceholder": "Instruction step content...",
+  "@addNewInstructionPlaceholder": {
+    "description": "Placeholder text for an empty instruction in recipe preview."
+  },
+  "addNewIngredientPlaceholder": "Ingredient name...",
+  "@addNewIngredientPlaceholder": {
+    "description": "Placeholder text for an empty ingredient in recipe preview."
+  },
+  "addNewRecipeTitleFallback": "Perfect homemade pancake",
+  "@addNewRecipeTitleFallback": {
+    "description": "Fallback title shown in recipe preview before user enters a title."
+  },
+  "addNewHeadlineTagFallback": "Low Calorie",
+  "@addNewHeadlineTagFallback": {
+    "description": "Fallback info tag shown in recipe preview."
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Generic OK dialog action."
+  }
+}

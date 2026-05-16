@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
+import '../add_new_l10n.dart';
 import '../cubit/add_new_cubit.dart';
 import 'preview_header_card.dart';
 import 'preview_tabs.dart';
@@ -45,7 +47,7 @@ class RecipePreviewStep extends StatelessWidget {
                             BlendMode.srcIn,
                           ),
                         ),
-                        label: state.headlineTag,
+                        label: _localizedHeadlineTag(context, state),
                       ),
                       _InfoPill(
                         icon: const Icon(
@@ -53,7 +55,9 @@ class RecipePreviewStep extends StatelessWidget {
                           size: 12,
                           color: Color(0xFF4058A0),
                         ),
-                        label: state.difficulty,
+                        label: context.l10n.addNewDifficultyLabel(
+                          state.difficulty,
+                        ),
                       ),
                       _InfoPill(
                         icon: const Icon(
@@ -107,7 +111,7 @@ class RecipePreviewStep extends StatelessWidget {
                             color: Color(0xFFFF6339),
                           ),
                           Text(
-                            _sectionHeadline(state),
+                            _sectionHeadline(context, state),
                             style: TextStyle(
                               color: const Color(0xFF0E0E0E),
                               fontSize: 18.sp,
@@ -118,7 +122,7 @@ class RecipePreviewStep extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 10.h),
-                      ..._buildContent(state),
+                      ..._buildContent(context, state),
                     ],
                   ),
                 ),
@@ -130,18 +134,29 @@ class RecipePreviewStep extends StatelessWidget {
     );
   }
 
-  String _sectionHeadline(AddNewState state) {
+  String _sectionHeadline(BuildContext context, AddNewState state) {
     switch (state.previewTab) {
       case RecipePreviewTab.introduction:
-        return '${state.steps.length} Steps';
+        return context.l10n.addNewStepsCount(state.steps.length);
       case RecipePreviewTab.ingredients:
-        return '${state.ingredients.length} Ingredients';
+        return context.l10n.addNewIngredientsCount(state.ingredients.length);
       case RecipePreviewTab.comments:
-        return '${state.mockComments.length} Comments';
+        return context.l10n.addNewCommentsCount(state.mockComments.length);
     }
   }
 
-  List<Widget> _buildContent(AddNewState state) {
+  String _localizedHeadlineTag(BuildContext context, AddNewState state) {
+    final l10n = context.l10n;
+    if (state.tags.isNotEmpty) {
+      return l10n.addNewDietaryTargetLabel(state.tags.first);
+    }
+    if (state.category.trim().isNotEmpty) {
+      return l10n.addNewDishTypeLabel(state.category.trim());
+    }
+    return l10n.addNewHeadlineTagFallback;
+  }
+
+  List<Widget> _buildContent(BuildContext context, AddNewState state) {
     switch (state.previewTab) {
       case RecipePreviewTab.introduction:
         return List.generate(
@@ -149,7 +164,7 @@ class RecipePreviewStep extends StatelessWidget {
           (index) => _PreviewCard(
             index: index + 1,
             text: state.steps[index].trim().isEmpty
-                ? 'Instruction step content...'
+                ? context.l10n.addNewInstructionPlaceholder
                 : state.steps[index].trim(),
             isHighlighted: index == state.steps.length - 1,
           ),
@@ -160,7 +175,7 @@ class RecipePreviewStep extends StatelessWidget {
           (index) => _PreviewCard(
             index: index + 1,
             text: state.ingredients[index].trim().isEmpty
-                ? 'Ingredient name...'
+                ? context.l10n.addNewIngredientPlaceholder
                 : state.ingredients[index].trim(),
           ),
         );

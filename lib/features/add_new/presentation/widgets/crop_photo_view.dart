@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../l10n/l10n_extension.dart';
+
 class CropPhotoView extends StatelessWidget {
   const CropPhotoView({
     required this.imagePath,
@@ -39,18 +41,18 @@ class CropPhotoView extends StatelessWidget {
                   GestureDetector(
                     key: const Key('crop-cancel-button'),
                     onTap: onCancel,
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.white),
+                    child: Text(
+                      context.l10n.addNewCropCancel,
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   const Spacer(),
                   GestureDetector(
                     key: const Key('crop-done-button'),
                     onTap: onDone,
-                    child: const Text(
-                      'Done',
-                      style: TextStyle(color: Colors.white),
+                    child: Text(
+                      context.l10n.addNewCropDone,
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ],

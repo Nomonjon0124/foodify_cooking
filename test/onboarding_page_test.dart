@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:foodify_cooking/core/di/injection_container.dart';
 import 'package:foodify_cooking/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   setUpAll(() async {
@@ -18,7 +19,14 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      _withScreenUtil(const MaterialApp(home: OnboardingPage())),
+      _withScreenUtil(
+        MaterialApp(
+          locale: testLocale,
+          localizationsDelegates: testLocalizationsDelegates,
+          supportedLocales: testSupportedLocales,
+          home: const OnboardingPage(),
+        ),
+      ),
     );
     await tester.pumpAndSettle();
 

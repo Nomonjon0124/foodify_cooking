@@ -15,12 +15,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final profile = await _getDemoProfileUseCase(const NoParams());
       emit(state.copyWith(status: ProfileStatus.success, profile: profile));
     } catch (_) {
-      emit(
-        state.copyWith(
-          status: ProfileStatus.failure,
-          errorMessage: 'Failed to load profile',
-        ),
-      );
+      emit(state.copyWith(status: ProfileStatus.failure));
     }
   }
 }

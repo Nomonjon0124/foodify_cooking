@@ -21,7 +21,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1900));
     await tester.pumpAndSettle();
 
-    expect(find.text('Your personal guide to be a chef'), findsOneWidget);
+    expect(
+      find.text("Oshpaz bo'lishingiz uchun shaxsiy yo'lboshchi"),
+      findsOneWidget,
+    );
     expect(find.byType(PageView), findsOneWidget);
   });
 }

@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
+import '../add_new_l10n.dart';
 import '../cubit/add_new_cubit.dart';
 import 'section_card.dart';
 
@@ -53,15 +55,17 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
   Widget build(BuildContext context) {
     return BlocBuilder<AddNewCubit, AddNewState>(
       builder: (context, state) {
+        final l10n = context.l10n;
+
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(6.w, 0, 6.w, 4.h),
           child: Column(
             children: [
               SectionCard(
-                label: 'Name',
+                label: l10n.addNewFieldName,
                 child: _RecipeField(
                   controller: _titleController,
-                  hintText: 'Name your recipe',
+                  hintText: l10n.addNewHintRecipeName,
                   filled: true,
                   textColor: const Color(0xFF353535),
                   onChanged: context.read<AddNewCubit>().updateTitle,
@@ -69,10 +73,10 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Number',
+                label: l10n.addNewFieldNumber,
                 child: Row(
                   children: [
-                    _MetaText('Serving for'),
+                    _MetaText(l10n.addNewServingFor),
                     const Spacer(),
                     _AdjusterButton(
                       icon: Icons.remove_circle,
@@ -98,13 +102,13 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                       ),
                     ),
                     const Spacer(),
-                    _MetaText('People'),
+                    _MetaText(l10n.addNewPeople),
                   ],
                 ),
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Cook Time',
+                label: l10n.addNewCookTime,
                 child: Row(
                   children: [
                     Expanded(
@@ -127,14 +131,14 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Difficulty',
+                label: l10n.addNewDifficulty,
                 child: Wrap(
                   spacing: 8.w,
                   runSpacing: 8.h,
                   children: AddNewConstants.difficultyOptions
                       .map(
                         (option) => _OptionChip(
-                          label: option,
+                          label: l10n.addNewDifficultyLabel(option),
                           isSelected: state.difficulty == option,
                           onTap: () => context
                               .read<AddNewCubit>()
@@ -146,14 +150,14 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Dish Type',
+                label: l10n.addNewDishType,
                 child: Wrap(
                   spacing: 8.w,
                   runSpacing: 8.h,
                   children: AddNewConstants.dishTypeOptions
                       .map(
                         (option) => _OptionChip(
-                          label: option,
+                          label: l10n.addNewDishTypeLabel(option),
                           isSelected: state.category == option,
                           onTap: () => context
                               .read<AddNewCubit>()
@@ -165,7 +169,7 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Suggested Dietary Target',
+                label: l10n.addNewDietaryTarget,
                 labelWidth: 214,
                 child: Wrap(
                   spacing: 8.w,
@@ -173,7 +177,7 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                   children: AddNewConstants.dietaryTargetOptions
                       .map(
                         (option) => _OptionChip(
-                          label: option,
+                          label: l10n.addNewDietaryTargetLabel(option),
                           isSelected: state.tags.contains(option),
                           onTap: () =>
                               context.read<AddNewCubit>().toggleTag(option),
@@ -184,7 +188,7 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               ),
               SizedBox(height: 10.h),
               SectionCard(
-                label: 'Hashtags',
+                label: l10n.addNewHashtags,
                 child: _RecipeField(
                   controller: _hashtagsController,
                   hintText: '#egg #Vegan #Sugerfree #lowfat',

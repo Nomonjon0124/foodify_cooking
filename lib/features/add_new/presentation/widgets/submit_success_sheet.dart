@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/foodify_components/foodify_button.dart';
 import '../../../../common/widgets/foodify_components/foodify_logo.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 
 class SubmitSuccessSheet extends StatelessWidget {
   const SubmitSuccessSheet({required this.onCreateAnother, super.key});
@@ -24,7 +25,7 @@ class SubmitSuccessSheet extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            'Recipe draft created',
+            context.l10n.addNewSubmitSuccessTitle,
             style: TextStyle(
               color: const Color(0xFF0E0E0E),
               fontSize: 18.sp,
@@ -34,7 +35,7 @@ class SubmitSuccessSheet extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'Your Figma-inspired add new flow completed successfully.',
+            context.l10n.addNewSubmitSuccessSubtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: const Color(0xFF717171),
@@ -43,7 +44,10 @@ class SubmitSuccessSheet extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.h),
-          FoodifyButton(text: 'Create another', onPressed: onCreateAnother),
+          FoodifyButton(
+            text: context.l10n.addNewCreateAnother,
+            onPressed: onCreateAnother,
+          ),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/search_results.dart';
 
 class SearchChefsTab extends StatelessWidget {
@@ -13,7 +14,7 @@ class SearchChefsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (chefs.isEmpty) {
-      return const Center(child: Text('No chefs found'));
+      return Center(child: Text(context.l10n.searchNoChefs));
     }
 
     return Container(

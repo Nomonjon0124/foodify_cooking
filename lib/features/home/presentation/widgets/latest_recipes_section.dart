@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../common/widgets/recipe_cards/recipe_main_card.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
 
@@ -30,7 +31,7 @@ class LatestRecipesSection extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 4.w),
-              child: const HomeSectionTitle('The Latest Recipes'),
+              child: HomeSectionTitle(context.l10n.homeLatestRecipes),
             ),
             SizedBox(height: 24.h),
             ...recipes.asMap().entries.expand((entry) {

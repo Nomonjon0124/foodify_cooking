@@ -6,6 +6,7 @@ import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/profile_view.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
@@ -30,8 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     if (!getIt.isRegistered<ProfileCubit>()) {
-      return const Scaffold(
-        body: Center(child: Text('Profile module is disabled')),
+      return Scaffold(
+        body: Center(child: Text(context.l10n.profileModuleDisabled)),
       );
     }
 
@@ -45,7 +46,9 @@ class _ProfilePageState extends State<ProfilePage> {
             return Scaffold(
               backgroundColor: Colors.white,
               body: Center(
-                child: Text(state.errorMessage ?? 'Failed to load profile'),
+                child: Text(
+                  state.errorMessage ?? context.l10n.profileLoadFailure,
+                ),
               ),
             );
           }
@@ -64,9 +67,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 SliverToBoxAdapter(child: _buildHeader(profile)),
                 SliverToBoxAdapter(child: SizedBox(height: 24.h)),
                 if (_isMoreDetails)
-                  _buildMoreDetailsSliver(profile.recipes)
+                  _buildMoreDetailsSliver(context, profile.recipes)
                 else
-                  _buildLessDetailsSliver(profile.recipes),
+                  _buildLessDetailsSliver(context, profile.recipes),
                 SliverToBoxAdapter(
                   child: SizedBox(
                     height: MediaQuery.paddingOf(context).bottom + 93.h,
@@ -135,11 +138,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildLessDetailsSliver(List<ProfileRecipe> recipes) {
+  Widget _buildLessDetailsSliver(
+    BuildContext context,
+    List<ProfileRecipe> recipes,
+  ) {
     if (recipes.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
-        child: Center(child: Text('No profile recipes found')),
+        child: Center(child: Text(context.l10n.profileRecipesEmpty)),
       );
     }
 
@@ -164,11 +170,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildMoreDetailsSliver(List<ProfileRecipe> recipes) {
+  Widget _buildMoreDetailsSliver(
+    BuildContext context,
+    List<ProfileRecipe> recipes,
+  ) {
     if (recipes.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
-        child: Center(child: Text('No profile recipes found')),
+        child: Center(child: Text(context.l10n.profileRecipesEmpty)),
       );
     }
 

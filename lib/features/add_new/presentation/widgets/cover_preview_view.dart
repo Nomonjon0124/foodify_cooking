@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 
 class CoverPreviewView extends StatelessWidget {
@@ -30,7 +31,7 @@ class CoverPreviewView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _SmallPillButton(
-                      label: 'Edit Crop',
+                      label: context.l10n.addNewEditCrop,
                       textColor: const Color(0xFFADADAD),
                       borderColor: const Color(0xFFADADAD),
                       onTap: context.read<AddNewCubit>().editCrop,
@@ -39,7 +40,7 @@ class CoverPreviewView extends StatelessWidget {
                   SizedBox(width: 15.w),
                   Expanded(
                     child: _SmallPillButton(
-                      label: 'Remove',
+                      label: context.l10n.addNewRemove,
                       textColor: const Color(0xFF353535),
                       borderColor: const Color(0xFF353535),
                       onTap: context.read<AddNewCubit>().removeCover,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:foodify_cooking/app/presentation/widgets/foodify_bottom_navigation_bar.dart';
+import 'helpers/localized_app.dart';
 
 void main() {
   testWidgets(
@@ -33,8 +34,8 @@ void main() {
     expect(tester.widget<CustomPaint>(activeShapeFinder).painter, isNotNull);
     expect(tester.getSize(activeShapeFinder), const Size(110, 52));
 
-    final activeTextStyle = _labelStyle(tester, 'Home');
-    final inactiveTextStyle = _labelStyle(tester, 'Search');
+    final activeTextStyle = _labelStyle(tester, 'home');
+    final inactiveTextStyle = _labelStyle(tester, 'search');
     expect(activeTextStyle.color, Colors.white);
     expect(inactiveTextStyle.color, const Color(0xFFCBCBCB));
   });
@@ -50,13 +51,13 @@ void main() {
     );
 
     for (final entry in <String, int>{
-      'Home': 0,
-      'Search': 1,
-      'Add New': 2,
-      'Save': 3,
-      'Profile': 4,
+      'home': 0,
+      'search': 1,
+      'add_new': 2,
+      'save': 3,
+      'profile': 4,
     }.entries) {
-      await tester.tap(find.text(entry.key));
+      await tester.tap(find.byKey(Key('bottom_nav_item_${entry.key}')));
       await tester.pumpAndSettle();
       expect(selectedIndex, entry.value);
     }
@@ -83,10 +84,10 @@ void main() {
   });
 }
 
-TextStyle _labelStyle(WidgetTester tester, String label) {
+TextStyle _labelStyle(WidgetTester tester, String id) {
   return tester
       .widget<AnimatedDefaultTextStyle>(
-        find.byKey(Key('bottom_nav_label_style_$label')),
+        find.byKey(Key('bottom_nav_item_${id}_label_style')),
       )
       .style;
 }
@@ -108,6 +109,9 @@ Future<void> _pumpNav(
       splitScreenMode: true,
       builder: (context, _) {
         return MaterialApp(
+          locale: testLocale,
+          localizationsDelegates: testLocalizationsDelegates,
+          supportedLocales: testSupportedLocales,
           home: Scaffold(
             bottomNavigationBar: FoodifyBottomNavigationBar(
               currentIndex: currentIndex,

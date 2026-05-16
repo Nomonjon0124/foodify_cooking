@@ -12,6 +12,7 @@ class OnboardingBottomPanel extends StatelessWidget {
     required this.currentIndex,
     required this.totalPages,
     required this.isLastPage,
+    required this.ctaLabel,
     required this.pageColor,
     required this.pageController,
     required this.onCtaPressed,
@@ -22,6 +23,7 @@ class OnboardingBottomPanel extends StatelessWidget {
   final int currentIndex;
   final int totalPages;
   final bool isLastPage;
+  final String ctaLabel;
   final Color pageColor;
   final PageController pageController;
   final VoidCallback onCtaPressed;
@@ -106,6 +108,7 @@ class OnboardingBottomPanel extends StatelessWidget {
                       child: OnboardingCtaButton(
                         key: const Key('onboarding_cta'),
                         isLastPage: isLastPage,
+                        label: ctaLabel,
                         progress: (currentIndex + 1) / totalPages,
                         onPressed: onCtaPressed,
                         backgroundColor: pageColor,
