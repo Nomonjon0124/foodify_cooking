@@ -6,14 +6,22 @@ import 'package:foodify_cooking/features/splash/presentation/widgets/splash_load
 
 import 'package:foodify_cooking/config/routes/app_router.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
+import 'package:foodify_cooking/features/auth/domain/entities/profile_view.dart';
+import 'package:foodify_cooking/features/auth/domain/repositories/profile_repository.dart';
 import 'package:foodify_cooking/features/home/domain/entities/home_feed.dart';
 import 'package:foodify_cooking/features/home/domain/repositories/home_repository.dart';
+import 'package:foodify_cooking/features/search/domain/entities/search_results.dart';
+import 'package:foodify_cooking/features/search/domain/repositories/search_repository.dart';
 
 void main() {
   setUpAll(() async {
     await configureDependencies();
     await getIt.unregister<HomeRepository>();
+    await getIt.unregister<SearchRepository>();
+    await getIt.unregister<ProfileRepository>();
     getIt.registerLazySingleton<HomeRepository>(_FakeHomeRepository.new);
+    getIt.registerLazySingleton<SearchRepository>(_FakeSearchRepository.new);
+    getIt.registerLazySingleton<ProfileRepository>(_FakeProfileRepository.new);
   });
 
   tearDownAll(() async {
@@ -73,6 +81,56 @@ class _FakeHomeRepository implements HomeRepository {
   @override
   Future<HomeFeed> getHomeFeed() async {
     return const HomeFeed.empty();
+  }
+}
+
+class _FakeSearchRepository implements SearchRepository {
+  @override
+  Future<SearchResults> search(String query) async {
+    return const SearchResults(
+      recipes: [
+        SearchRecipe(
+          id: 'recipe-1',
+          title: 'chocolate cake with buttercream frosting',
+          ratingLabel: '4.8',
+          imageUrl: '',
+        ),
+      ],
+      chefs: [SearchChef(id: 'chef-1', name: 'Kelly Mayer', avatarUrl: '')],
+      tags: [SearchTag(id: 'tag-1', displayName: '#egg')],
+    );
+  }
+}
+
+class _FakeProfileRepository implements ProfileRepository {
+  @override
+  Future<ProfileView> getDemoProfile() async {
+    return const ProfileView(
+      id: 'profile-1',
+      displayName: 'Mark Salvador',
+      location: 'New York, USA',
+      bio:
+          'To cook is to see how simple ingredients can create magic on the plate.',
+      avatarUrl: '',
+      coverImageUrl: '',
+      ratingLabel: '5.0',
+      followersLabel: '357K',
+      followingLabel: '24',
+      postsCount: 18,
+      recipes: [
+        ProfileRecipe(
+          id: 'recipe-1',
+          title: 'chocolate cake with buttercream frosting',
+          chefName: 'Mark Salvador',
+          ratingLabel: '4.8',
+          durationLabel: '30 Min',
+          difficultyLabel: 'Medium',
+          description: 'A rich chocolate cake.',
+          imageUrl: '',
+          chefAvatarUrl: '',
+        ),
+      ],
+    );
   }
 }
 

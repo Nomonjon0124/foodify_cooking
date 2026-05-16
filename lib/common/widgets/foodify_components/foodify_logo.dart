@@ -40,7 +40,11 @@ class FoodifyLogo extends StatelessWidget {
         border: _borderFor(spec, isFill),
       ),
       clipBehavior: Clip.antiAlias,
-      child: _LogoContent(spec: spec, markColor: _orange, wordmarkColor: wordmarkColor),
+      child: _LogoContent(
+        spec: spec,
+        markColor: _orange,
+        wordmarkColor: wordmarkColor,
+      ),
     );
   }
 
@@ -56,7 +60,11 @@ class FoodifyLogo extends StatelessWidget {
 }
 
 class _LogoContent extends StatelessWidget {
-  const _LogoContent({required this.spec, required this.markColor, required this.wordmarkColor});
+  const _LogoContent({
+    required this.spec,
+    required this.markColor,
+    required this.wordmarkColor,
+  });
 
   final _FoodifyLogoSpec spec;
   final Color markColor;
@@ -129,7 +137,10 @@ class _FoodifyLogoSpec {
   final Widget markAsset;
   final FoodifyLogoText text;
 
-  static _FoodifyLogoSpec resolve({required FoodifyLogoSize size, required FoodifyLogoText text}) {
+  static _FoodifyLogoSpec resolve({
+    required FoodifyLogoSize size,
+    required FoodifyLogoText text,
+  }) {
     if (text == FoodifyLogoText.none) {
       return _FoodifyLogoSpec(
         width: 24,
@@ -140,7 +151,10 @@ class _FoodifyLogoSpec {
         markHeight: 9.622,
         wordmarkWidth: 0,
         wordmarkHeight: 0,
-        markAsset: Assets.icons.foodifyComponents.logoMarkSmall.svg(width: 10.103, height: 9.622),
+        markAsset: Assets.icons.foodifyComponents.logoMarkSmall.svg(
+          width: 10.103,
+          height: 9.622,
+        ),
         text: FoodifyLogoText.none,
       );
     }
@@ -155,7 +169,10 @@ class _FoodifyLogoSpec {
         markHeight: 30.303,
         wordmarkWidth: 38,
         wordmarkHeight: 11.75,
-        markAsset: Assets.icons.foodifyComponents.logoMarkHorizontal.svg(width: 31.818, height: 30.303),
+        markAsset: Assets.icons.foodifyComponents.logoMarkHorizontal.svg(
+          width: 31.818,
+          height: 30.303,
+        ),
         text: FoodifyLogoText.horizontal,
       );
     }
@@ -170,7 +187,10 @@ class _FoodifyLogoSpec {
         markHeight: 23.891,
         wordmarkWidth: 28.7,
         wordmarkHeight: 8.96,
-        markAsset: Assets.icons.foodifyComponents.logoMarkMediumVertical.svg(width: 25.086, height: 23.891),
+        markAsset: Assets.icons.foodifyComponents.logoMarkMediumVertical.svg(
+          width: 25.086,
+          height: 23.891,
+        ),
         text: FoodifyLogoText.vertical,
       );
     }
@@ -184,7 +204,10 @@ class _FoodifyLogoSpec {
       markHeight: 51.197,
       wordmarkWidth: 61.44,
       wordmarkHeight: 19.2,
-      markAsset: Assets.icons.foodifyComponents.logoMarkLarge.svg(width: 53.757, height: 51.197),
+      markAsset: Assets.icons.foodifyComponents.logoMarkLarge.svg(
+        width: 53.757,
+        height: 51.197,
+      ),
       text: FoodifyLogoText.vertical,
     );
   }

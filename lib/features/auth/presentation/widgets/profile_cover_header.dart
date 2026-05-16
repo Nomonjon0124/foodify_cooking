@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../common/widgets/foodify_image.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
 
 class ProfileCoverHeader extends StatelessWidget {
-  const ProfileCoverHeader({super.key});
+  const ProfileCoverHeader({
+    super.key,
+    required this.coverImageUrl,
+    required this.rating,
+  });
+
+  final String coverImageUrl;
+  final String rating;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +25,10 @@ class ProfileCoverHeader extends StatelessWidget {
           // Cover background (placeholder — swap for real image later)
           ClipRRect(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(8.r)),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               height: 128.h,
-              color: const Color(0xFF353535),
+              child: FoodifyImage(coverImageUrl, fit: BoxFit.cover),
             ),
           ),
           // Bottom gradient overlay
@@ -47,7 +55,7 @@ class ProfileCoverHeader extends StatelessWidget {
           Positioned(
             left: 24.w,
             top: 100.h,
-            child: const _RatingChip(rating: '5.0'),
+            child: _RatingChip(rating: rating),
           ),
           // Share / export icon
           Positioned(
@@ -60,11 +68,7 @@ class ProfileCoverHeader extends StatelessWidget {
             ),
           ),
           // Menu button — top-right
-          Positioned(
-            right: 20.w,
-            top: 37.h,
-            child: const _MenuButton(),
-          ),
+          Positioned(right: 20.w, top: 37.h, child: const _MenuButton()),
         ],
       ),
     );
@@ -88,10 +92,7 @@ class _RatingChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Assets.icons.recipeCards.starDark.svg(
-            width: 12.r,
-            height: 12.r,
-          ),
+          Assets.icons.recipeCards.starDark.svg(width: 12.r, height: 12.r),
           SizedBox(width: 4.w),
           Text(
             rating,

@@ -15,7 +15,10 @@ class FoodifyInfoPill extends StatelessWidget {
       key: const Key('foodify_info_pill'),
       height: 23.r,
       padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 4.r),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.r)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4.r),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -23,7 +26,10 @@ class FoodifyInfoPill extends StatelessWidget {
           Assets.icons.foodifyComponents.trendDown.svg(
             width: 12.r,
             height: 12.r,
-            colorFilter: const ColorFilter.mode(Color(0xFF4058A0), BlendMode.srcIn),
+            colorFilter: const ColorFilter.mode(
+              Color(0xFF4058A0),
+              BlendMode.srcIn,
+            ),
           ),
           SizedBox(width: 4.r),
           Text(

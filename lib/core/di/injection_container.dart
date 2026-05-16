@@ -6,13 +6,18 @@ import '../../app/cubit/app_shell_cubit.dart';
 import '../../app/cubit/app_start_cubit.dart';
 import '../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../features/auth/data/data_sources/auth_remote_data_source.dart';
+import '../../features/auth/data/data_sources/profile_remote_data_source.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/data/repositories/profile_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
+import '../../features/auth/domain/repositories/profile_repository.dart';
 import '../../features/auth/domain/usecases/get_current_user_usecase.dart';
+import '../../features/auth/domain/usecases/get_demo_profile_usecase.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/domain/usecases/logout_usecase.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/login_cubit.dart';
+import '../../features/auth/presentation/cubit/profile_cubit.dart';
 import '../../features/home/data/data_sources/home_remote_data_source.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
@@ -23,6 +28,10 @@ import '../../features/recipe/data/repositories/recipe_repository_impl.dart';
 import '../../features/recipe/domain/repositories/recipe_repository.dart';
 import '../../features/recipe/domain/usecases/get_popular_recipes_usecase.dart';
 import '../../features/recipe/presentation/cubit/recipe_cubit.dart';
+import '../../features/search/data/data_sources/search_remote_data_source.dart';
+import '../../features/search/data/repositories/search_repository_impl.dart';
+import '../../features/search/domain/repositories/search_repository.dart';
+import '../../features/search/presentation/cubit/search_cubit.dart';
 import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/splash/presentation/cubit/splash_cubit.dart';
 import '../network/dio_client.dart';
@@ -46,6 +55,7 @@ Future<void> configureDependencies({bool enableAuthFeature = true}) async {
   _registerHomeDependencies();
   _registerOnboardingDependencies();
   _registerRecipeDependencies();
+  _registerSearchDependencies();
   _registerSettingsDependencies();
   _registerSplashDependencies();
   if (enableAuthFeature) {
@@ -101,6 +111,17 @@ void _registerRecipeDependencies() {
     ..registerFactory<RecipeCubit>(() => RecipeCubit(getIt()));
 }
 
+void _registerSearchDependencies() {
+  getIt
+    ..registerLazySingleton<SearchRemoteDataSource>(
+      () => SupabaseSearchRemoteDataSource(() => getIt<SupabaseClient>()),
+    )
+    ..registerLazySingleton<SearchRepository>(
+      () => SearchRepositoryImpl(getIt()),
+    )
+    ..registerFactory<SearchCubit>(() => SearchCubit(getIt()));
+}
+
 void _registerSettingsDependencies() {
   getIt.registerFactory<SettingsCubit>(SettingsCubit.new);
 }
@@ -130,7 +151,17 @@ void _registerAuthDependencies() {
     ..registerLazySingleton<GetCurrentUserUseCase>(
       () => GetCurrentUserUseCase(getIt()),
     )
+    ..registerLazySingleton<ProfileRemoteDataSource>(
+      () => SupabaseProfileRemoteDataSource(() => getIt<SupabaseClient>()),
+    )
+    ..registerLazySingleton<ProfileRepository>(
+      () => ProfileRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<GetDemoProfileUseCase>(
+      () => GetDemoProfileUseCase(getIt()),
+    )
     ..registerFactory<LoginCubit>(() => LoginCubit(getIt()))
+    ..registerFactory<ProfileCubit>(() => ProfileCubit(getIt()))
     ..registerFactory<AuthCubit>(
       () => AuthCubit(getCurrentUserUseCase: getIt(), logoutUseCase: getIt()),
     );

@@ -39,12 +39,17 @@ class FoodifyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = _FoodifyButtonStyle.resolve(variant: variant, isDisabled: isDisabled || onPressed == null);
+    final style = _FoodifyButtonStyle.resolve(
+      variant: variant,
+      isDisabled: isDisabled || onPressed == null,
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final targetWidth = (size == FoodifyButtonSize.large ? 320 : 128).r;
-        final width = constraints.hasBoundedWidth ? math.min(targetWidth, constraints.maxWidth) : targetWidth;
+        final width = constraints.hasBoundedWidth
+            ? math.min(targetWidth, constraints.maxWidth)
+            : targetWidth;
 
         return Semantics(
           button: true,
@@ -62,14 +67,19 @@ class FoodifyButton extends StatelessWidget {
               decoration: BoxDecoration(
                 color: style.backgroundColor,
                 borderRadius: BorderRadius.circular(48.r),
-                border: style.borderColor == null ? null : Border.all(color: style.borderColor!, width: 1.r),
+                border: style.borderColor == null
+                    ? null
+                    : Border.all(color: style.borderColor!, width: 1.r),
               ),
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 160),
                 switchInCurve: Curves.easeOutCubic,
                 switchOutCurve: Curves.easeInCubic,
                 child: isLoading
-                    ? _FoodifyButtonLoader(key: const Key('foodify_button_loader'), color: style.foregroundColor)
+                    ? _FoodifyButtonLoader(
+                        key: const Key('foodify_button_loader'),
+                        color: style.foregroundColor,
+                      )
                     : _FoodifyButtonContent(
                         key: ValueKey('foodify_button_content_${variant.name}'),
                         text: text,
@@ -125,7 +135,11 @@ class _FoodifyButtonContent extends StatelessWidget {
         Flexible(child: label),
         SizedBox(width: 12.r),
         iconPath ??
-            Assets.icons.foodifyComponents.documentCopy.svg(width: 16.r, height: 16.r, color: style.foregroundColor),
+            Assets.icons.foodifyComponents.documentCopy.svg(
+              width: 16.r,
+              height: 16.r,
+              color: style.foregroundColor,
+            ),
       ],
     );
   }
@@ -142,20 +156,30 @@ class _FoodifyButtonLoader extends StatelessWidget {
       child: SizedBox(
         width: 18.r,
         height: 18.r,
-        child: CircularProgressIndicator(strokeWidth: 2.r, valueColor: AlwaysStoppedAnimation<Color>(color)),
+        child: CircularProgressIndicator(
+          strokeWidth: 2.r,
+          valueColor: AlwaysStoppedAnimation<Color>(color),
+        ),
       ),
     );
   }
 }
 
 class _FoodifyButtonStyle {
-  const _FoodifyButtonStyle({required this.backgroundColor, required this.foregroundColor, this.borderColor});
+  const _FoodifyButtonStyle({
+    required this.backgroundColor,
+    required this.foregroundColor,
+    this.borderColor,
+  });
 
   final Color backgroundColor;
   final Color foregroundColor;
   final Color? borderColor;
 
-  static _FoodifyButtonStyle resolve({required FoodifyButtonVariant variant, required bool isDisabled}) {
+  static _FoodifyButtonStyle resolve({
+    required FoodifyButtonVariant variant,
+    required bool isDisabled,
+  }) {
     if (isDisabled) {
       return const _FoodifyButtonStyle(
         backgroundColor: Colors.transparent,

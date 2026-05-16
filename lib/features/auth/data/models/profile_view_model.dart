@@ -1,0 +1,117 @@
+import '../../domain/entities/profile_view.dart';
+
+class ProfileViewModel extends ProfileView {
+  const ProfileViewModel({
+    required super.id,
+    required super.displayName,
+    required super.location,
+    required super.bio,
+    required super.avatarUrl,
+    required super.coverImageUrl,
+    required super.ratingLabel,
+    required super.followersLabel,
+    required super.followingLabel,
+    required super.postsCount,
+    required super.recipes,
+  });
+
+  factory ProfileViewModel.fromJson({
+    required Map<String, dynamic> profileJson,
+    required List<dynamic> recipesJson,
+  }) {
+    final displayName = _stringValue(profileJson['display_name']);
+    final avatarUrl = _stringValue(profileJson['avatar_url']);
+
+    return ProfileViewModel(
+      id: _stringValue(profileJson['id']),
+      displayName: displayName,
+      location: _stringValue(profileJson['location']),
+      bio: _stringValue(profileJson['bio']),
+      avatarUrl: avatarUrl,
+      coverImageUrl: _stringValue(profileJson['cover_image_url']),
+      ratingLabel: _ratingLabel(profileJson['rating']),
+      followersLabel: _compactCount(profileJson['followers_count']),
+      followingLabel: _compactCount(profileJson['following_count']),
+      postsCount: _intValue(profileJson['posts_count']),
+      recipes: recipesJson
+          .whereType<Map<String, dynamic>>()
+          .map(
+            (json) => ProfileRecipeModel.fromJson(
+              json,
+              chefName: displayName,
+              chefAvatarUrl: avatarUrl,
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class ProfileRecipeModel extends ProfileRecipe {
+  const ProfileRecipeModel({
+    required super.id,
+    required super.title,
+    required super.chefName,
+    required super.ratingLabel,
+    required super.durationLabel,
+    required super.difficultyLabel,
+    required super.description,
+    required super.imageUrl,
+    required super.chefAvatarUrl,
+  });
+
+  factory ProfileRecipeModel.fromJson(
+    Map<String, dynamic> json, {
+    required String chefName,
+    required String chefAvatarUrl,
+  }) {
+    return ProfileRecipeModel(
+      id: _stringValue(json['id']),
+      title: _stringValue(json['title']),
+      chefName: chefName,
+      ratingLabel: _ratingLabel(json['rating']),
+      durationLabel: _durationLabel(json['duration_minutes']),
+      difficultyLabel: _stringValue(json['difficulty']),
+      description: _stringValue(json['description']),
+      imageUrl: _stringValue(json['cover_image_url']),
+      chefAvatarUrl: chefAvatarUrl,
+    );
+  }
+}
+
+String _stringValue(Object? value) => value?.toString() ?? '';
+
+int _intValue(Object? value) {
+  if (value is int) return value;
+  if (value is num) return value.round();
+  return int.tryParse(value?.toString() ?? '') ?? 0;
+}
+
+String _ratingLabel(Object? value) {
+  final rating = switch (value) {
+    num() => value,
+    String() => num.tryParse(value),
+    _ => null,
+  };
+
+  return rating == null ? '0.0' : rating.toStringAsFixed(1);
+}
+
+String _durationLabel(Object? value) {
+  final minutes = _intValue(value);
+  return minutes <= 0 ? '' : '$minutes Min';
+}
+
+String _compactCount(Object? value) {
+  final count = _intValue(value);
+  if (count >= 1000000) {
+    return '${(count / 1000000).toStringAsFixed(1)}M';
+  }
+  if (count >= 1000) {
+    final formatted = count % 1000 == 0
+        ? (count ~/ 1000).toString()
+        : (count / 1000).toStringAsFixed(1);
+    return '${formatted}K';
+  }
+  return count.toString();
+}

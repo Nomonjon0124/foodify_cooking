@@ -10,13 +10,18 @@ import 'foodify_components/foodify_search_field.dart';
 enum _FoodifyAppBarVariant { home, searchFilter, titleAction }
 
 class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const FoodifyAppBar.home({super.key, this.controller, this.hintText = 'Search', this.onChanged, this.onFilterTap})
-    : _variant = _FoodifyAppBarVariant.home,
-      initialText = null,
-      title = null,
-      actionText = null,
-      onBackTap = null,
-      onActionTap = null;
+  const FoodifyAppBar.home({
+    super.key,
+    this.controller,
+    this.hintText = 'Search',
+    this.onChanged,
+    this.onFilterTap,
+  }) : _variant = _FoodifyAppBarVariant.home,
+       initialText = null,
+       title = null,
+       actionText = null,
+       onBackTap = null,
+       onActionTap = null;
 
   const FoodifyAppBar.searchFilter({
     super.key,
@@ -31,13 +36,18 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
        onBackTap = null,
        onActionTap = null;
 
-  const FoodifyAppBar.titleAction({required this.title, super.key, this.onBackTap, this.actionText, this.onActionTap})
-    : _variant = _FoodifyAppBarVariant.titleAction,
-      controller = null,
-      initialText = null,
-      hintText = 'Search',
-      onChanged = null,
-      onFilterTap = null;
+  const FoodifyAppBar.titleAction({
+    required this.title,
+    super.key,
+    this.onBackTap,
+    this.actionText,
+    this.onActionTap,
+  }) : _variant = _FoodifyAppBarVariant.titleAction,
+       controller = null,
+       initialText = null,
+       hintText = 'Search',
+       onChanged = null,
+       onFilterTap = null;
 
   final _FoodifyAppBarVariant _variant;
   final TextEditingController? controller;
@@ -64,9 +74,18 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   _FoodifyAppBarSpec get _spec {
     return switch (_variant) {
-      _FoodifyAppBarVariant.home => const _FoodifyAppBarSpec(height: 131, bottomRadius: 12),
-      _FoodifyAppBarVariant.searchFilter => const _FoodifyAppBarSpec(height: 98, bottomRadius: 12),
-      _FoodifyAppBarVariant.titleAction => const _FoodifyAppBarSpec(height: 80, bottomRadius: 20),
+      _FoodifyAppBarVariant.home => const _FoodifyAppBarSpec(
+        height: 131,
+        bottomRadius: 12,
+      ),
+      _FoodifyAppBarVariant.searchFilter => const _FoodifyAppBarSpec(
+        height: 98,
+        bottomRadius: 12,
+      ),
+      _FoodifyAppBarVariant.titleAction => const _FoodifyAppBarSpec(
+        height: 80,
+        bottomRadius: 20,
+      ),
     };
   }
 
@@ -75,9 +94,14 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final spec = _spec;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light.copyWith(statusBarColor: _primary, systemNavigationBarColor: Colors.white),
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: _primary,
+        systemNavigationBarColor: Colors.white,
+      ),
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(spec.bottomRadius.r)),
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(spec.bottomRadius.r),
+        ),
         child: DecoratedBox(
           decoration: const BoxDecoration(color: _primary),
           child: SafeArea(
@@ -161,7 +185,11 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
             key: const Key('foodify_app_bar_back'),
             padding: EdgeInsets.zero,
             splashRadius: 22.r,
-            icon: Icon(Icons.chevron_left_rounded, color: Colors.white, size: 28.r),
+            icon: Icon(
+              Icons.chevron_left_rounded,
+              color: Colors.white,
+              size: 28.r,
+            ),
             onPressed: onBackTap ?? () => Navigator.of(context).maybePop(),
           ),
         ),
@@ -209,7 +237,10 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  static TextStyle _headlineStyle({required double fontSize, required Color color}) {
+  static TextStyle _headlineStyle({
+    required double fontSize,
+    required Color color,
+  }) {
     return TextStyle(
       color: color,
       fontSize: fontSize,

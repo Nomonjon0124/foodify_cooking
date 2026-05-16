@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/gen/assets.gen.dart';
+import '../../../../common/widgets/foodify_image.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../domain/entities/search_results.dart';
 
 class SearchChefsTab extends StatelessWidget {
-  const SearchChefsTab({super.key});
+  const SearchChefsTab({super.key, required this.chefs});
+
+  final List<SearchChef> chefs;
 
   @override
   Widget build(BuildContext context) {
+    if (chefs.isEmpty) {
+      return const Center(child: Text('No chefs found'));
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
@@ -17,9 +24,9 @@ class SearchChefsTab extends StatelessWidget {
       ),
       child: ListView.builder(
         padding: EdgeInsets.fromLTRB(0, 16.h, 0, 118.h),
-        itemCount: _mockChefs.length,
+        itemCount: chefs.length,
         itemBuilder: (context, index) =>
-            _ChefItem(chef: _mockChefs[index], isHighlighted: index == 2),
+            _ChefItem(chef: chefs[index], isHighlighted: index == 2),
       ),
     );
   }
@@ -28,7 +35,7 @@ class SearchChefsTab extends StatelessWidget {
 class _ChefItem extends StatelessWidget {
   const _ChefItem({required this.chef, this.isHighlighted = false});
 
-  final _ChefSample chef;
+  final SearchChef chef;
   final bool isHighlighted;
 
   @override
@@ -36,7 +43,12 @@ class _ChefItem extends StatelessWidget {
     final row = Row(
       children: [
         ClipOval(
-          child: chef.image.image(width: 48.r, height: 48.r, fit: BoxFit.cover),
+          child: FoodifyImage(
+            chef.avatarUrl,
+            width: 48.r,
+            height: 48.r,
+            fit: BoxFit.cover,
+          ),
         ),
         SizedBox(width: 4.w),
         Expanded(
@@ -80,24 +92,3 @@ class _ChefItem extends StatelessWidget {
     );
   }
 }
-
-class _ChefSample {
-  const _ChefSample({required this.name, required this.image});
-
-  final String name;
-  final AssetGenImage image;
-}
-
-final _mockChefs = [
-  _ChefSample(name: 'Mark Salvador', image: Assets.images.recipeCards.userPic),
-  _ChefSample(
-    name: 'Martin Robert',
-    image: Assets.images.recipeCards.userPicRick,
-  ),
-  _ChefSample(name: 'Melisa Anne', image: Assets.images.recipeCards.userPic),
-  _ChefSample(
-    name: 'Dave Robert',
-    image: Assets.images.recipeCards.userPicDave,
-  ),
-  _ChefSample(name: 'Kelly Mayer', image: Assets.images.recipeCards.userPic),
-];

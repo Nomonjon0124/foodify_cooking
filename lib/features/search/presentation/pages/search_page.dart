@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../common/widgets/foodify_app_bar.dart';
+import '../../../../core/di/injection_container.dart';
 import '../cubit/search_cubit.dart';
 import '../widgets/search_chefs_tab.dart';
 import '../widgets/search_recipes_tab.dart';
@@ -16,7 +17,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SearchCubit(),
+      create: (_) => getIt<SearchCubit>()..loadInitial(),
       child: const _SearchView(),
     );
   }
@@ -42,14 +43,46 @@ class _SearchView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: const SearchTabBar(),
             ),
+            BlocBuilder<SearchCubit, SearchState>(
+              builder: (context, state) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 160),
+                  child: state.status == SearchStatus.loading
+                      ? const LinearProgressIndicator(minHeight: 2)
+                      : const SizedBox(height: 2),
+                );
+              },
+            ),
+            BlocBuilder<SearchCubit, SearchState>(
+              builder: (context, state) {
+                if (state.status != SearchStatus.failure) {
+                  return const SizedBox.shrink();
+                }
+
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 0),
+                  child: Text(
+                    state.errorMessage ?? 'Failed to load search results',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                );
+              },
+            ),
             Gap(8.h),
-            const Expanded(
-              child: TabBarView(
-                children: [
-                  SearchRecipesTab(),
-                  SearchChefsTab(),
-                  SearchTagsTab(),
-                ],
+            Expanded(
+              child: BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  return TabBarView(
+                    children: [
+                      SearchRecipesTab(recipes: state.results.recipes),
+                      SearchChefsTab(chefs: state.results.chefs),
+                      SearchTagsTab(tags: state.results.tags),
+                    ],
+                  );
+                },
               ),
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../common/widgets/foodify_image.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
 
@@ -13,6 +14,8 @@ class ProfileRecipeCard extends StatelessWidget {
     required this.cookTime,
     required this.difficulty,
     required this.description,
+    required this.imageUrl,
+    required this.chefAvatarUrl,
     this.imagePlaceholderColor = const Color(0xFF353535),
   });
 
@@ -22,6 +25,8 @@ class ProfileRecipeCard extends StatelessWidget {
   final String cookTime;
   final String difficulty;
   final String description;
+  final String imageUrl;
+  final String chefAvatarUrl;
   final Color imagePlaceholderColor;
 
   @override
@@ -42,6 +47,7 @@ class ProfileRecipeCard extends StatelessWidget {
             rating: rating,
             cookTime: cookTime,
             difficulty: difficulty,
+            imageUrl: imageUrl,
             placeholderColor: imagePlaceholderColor,
           ),
           SizedBox(width: 13.w),
@@ -52,6 +58,7 @@ class ProfileRecipeCard extends StatelessWidget {
               chefName: chefName,
               rating: rating,
               description: description,
+              chefAvatarUrl: chefAvatarUrl,
             ),
           ),
         ],
@@ -67,12 +74,14 @@ class _RecipeImage extends StatelessWidget {
     required this.rating,
     required this.cookTime,
     required this.difficulty,
+    required this.imageUrl,
     required this.placeholderColor,
   });
 
   final String rating;
   final String cookTime;
   final String difficulty;
+  final String imageUrl;
   final Color placeholderColor;
 
   @override
@@ -85,8 +94,10 @@ class _RecipeImage extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Food image placeholder
-            Container(color: placeholderColor),
+            if (imageUrl.isEmpty)
+              Container(color: placeholderColor)
+            else
+              FoodifyImage(imageUrl, fit: BoxFit.cover),
             // Dark rating badge — top-left
             Positioned(
               top: 8.h,
@@ -219,12 +230,14 @@ class _RecipeDetails extends StatelessWidget {
     required this.chefName,
     required this.rating,
     required this.description,
+    required this.chefAvatarUrl,
   });
 
   final String title;
   final String chefName;
   final String rating;
   final String description;
+  final String chefAvatarUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -251,9 +264,13 @@ class _RecipeDetails extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 18.5.r,
-                backgroundColor: const Color(0xFFCBCBCB),
+              ClipOval(
+                child: FoodifyImage(
+                  chefAvatarUrl,
+                  width: 37.r,
+                  height: 37.r,
+                  fit: BoxFit.cover,
+                ),
               ),
               SizedBox(width: 10.w),
               Column(
@@ -321,10 +338,7 @@ class _YellowRatingChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Assets.icons.recipeCards.starDark.svg(
-            width: 12.r,
-            height: 12.r,
-          ),
+          Assets.icons.recipeCards.starDark.svg(width: 12.r, height: 12.r),
           SizedBox(width: 4.w),
           Text(
             rating,

@@ -9,7 +9,8 @@ class ProfileInfoSection extends StatelessWidget {
     super.key,
     this.name = 'Mark Salvador',
     this.location = 'New York, USA',
-    this.bio = 'To cook is to see how simple ingredients can create magic on the plate.',
+    this.bio =
+        'To cook is to see how simple ingredients can create magic on the plate.',
     this.showEditButton = false,
   });
 

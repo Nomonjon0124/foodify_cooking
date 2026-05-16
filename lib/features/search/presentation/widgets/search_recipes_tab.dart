@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
-import '../../../../core/gen/assets.gen.dart';
+import '../../domain/entities/search_results.dart';
 
 class SearchRecipesTab extends StatelessWidget {
-  const SearchRecipesTab({super.key});
+  const SearchRecipesTab({super.key, required this.recipes});
+
+  final List<SearchRecipe> recipes;
 
   @override
   Widget build(BuildContext context) {
+    if (recipes.isEmpty) {
+      return const Center(child: Text('No recipes found'));
+    }
+
     return GridView.builder(
       padding: EdgeInsets.fromLTRB(19.w, 16.h, 21.w, 118.h),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -17,60 +24,15 @@ class SearchRecipesTab extends StatelessWidget {
         crossAxisSpacing: 8.r,
         childAspectRatio: 156 / 199,
       ),
-      itemCount: _mockRecipes.length,
+      itemCount: recipes.length,
       itemBuilder: (context, index) {
-        final recipe = _mockRecipes[index];
+        final recipe = recipes[index];
         return FoodifyPopularCard(
           title: recipe.title,
-          rating: recipe.rating,
-          imagePath: recipe.image.image(fit: BoxFit.cover),
+          rating: recipe.ratingLabel,
+          imagePath: FoodifyImage(recipe.imageUrl, fit: BoxFit.cover),
         );
       },
     );
   }
 }
-
-class _RecipeSample {
-  const _RecipeSample({
-    required this.title,
-    required this.rating,
-    required this.image,
-  });
-
-  final String title;
-  final String rating;
-  final AssetGenImage image;
-}
-
-final _mockRecipes = [
-  _RecipeSample(
-    title: 'chocolate cake with buttercream frosting',
-    rating: '4.8',
-    image: Assets.images.foodifyComponents.popularCardCake,
-  ),
-  _RecipeSample(
-    title: 'chocolate ice cream fruit smoothie',
-    rating: '4.6',
-    image: Assets.images.foodifyComponents.popularCardIcecream,
-  ),
-  _RecipeSample(
-    title: 'Italian pineapple pizza',
-    rating: '4.5',
-    image: Assets.images.foodifyComponents.popularCardPizza,
-  ),
-  _RecipeSample(
-    title: 'chocolate cake with buttercream frosting',
-    rating: '4.8',
-    image: Assets.images.foodifyComponents.popularCardCake,
-  ),
-  _RecipeSample(
-    title: 'chocolate ice cream fruit smoothie',
-    rating: '4.7',
-    image: Assets.images.foodifyComponents.popularCardIcecream,
-  ),
-  _RecipeSample(
-    title: 'Italian pineapple pizza',
-    rating: '4.9',
-    image: Assets.images.foodifyComponents.popularCardPizza,
-  ),
-];

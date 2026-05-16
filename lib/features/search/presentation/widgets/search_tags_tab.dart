@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/gen/fonts.gen.dart';
+import '../../domain/entities/search_results.dart';
 
 class SearchTagsTab extends StatelessWidget {
-  const SearchTagsTab({super.key});
+  const SearchTagsTab({super.key, required this.tags});
+
+  final List<SearchTag> tags;
 
   @override
   Widget build(BuildContext context) {
+    if (tags.isEmpty) {
+      return const Center(child: Text('No tags found'));
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
@@ -16,9 +23,9 @@ class SearchTagsTab extends StatelessWidget {
       ),
       child: ListView.builder(
         padding: EdgeInsets.fromLTRB(0, 16.h, 0, 118.h),
-        itemCount: _mockTags.length,
+        itemCount: tags.length,
         itemBuilder: (context, index) =>
-            _TagItem(tag: _mockTags[index], isHighlighted: index == 2),
+            _TagItem(tag: tags[index], isHighlighted: index == 2),
       ),
     );
   }
@@ -27,7 +34,7 @@ class SearchTagsTab extends StatelessWidget {
 class _TagItem extends StatelessWidget {
   const _TagItem({required this.tag, this.isHighlighted = false});
 
-  final String tag;
+  final SearchTag tag;
   final bool isHighlighted;
 
   @override
@@ -40,7 +47,7 @@ class _TagItem extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Text(
-              tag,
+              tag.displayName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -105,11 +112,3 @@ class _TagIcon extends StatelessWidget {
     );
   }
 }
-
-const _mockTags = [
-  '#egg',
-  '#eggrecipe',
-  '#eggfast',
-  '#eggsandvich',
-  '#eggrolls',
-];

@@ -8,15 +8,17 @@ class ProfileTabBar extends StatelessWidget {
     super.key,
     required this.selectedIndex,
     required this.onTabChanged,
+    this.postsCount = 18,
   });
 
   final int selectedIndex;
   final ValueChanged<int> onTabChanged;
-
-  static const _tabs = ['18 Post', 'Less Details', 'More Details'];
+  final int postsCount;
 
   @override
   Widget build(BuildContext context) {
+    final tabs = ['$postsCount Post', 'Less Details', 'More Details'];
+
     return Container(
       width: 348.w,
       height: 29.h,
@@ -25,7 +27,7 @@ class ProfileTabBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.r),
       ),
       child: Row(
-        children: List.generate(_tabs.length, (i) {
+        children: List.generate(tabs.length, (i) {
           final isSelected = i == selectedIndex;
           return Expanded(
             child: GestureDetector(
@@ -45,14 +47,13 @@ class ProfileTabBar extends StatelessWidget {
                       )
                     : null,
                 child: Text(
-                  _tabs[i],
+                  tabs[i],
                   style: TextStyle(
                     color: isSelected
                         ? const Color(0xFF353535)
                         : const Color(0xFF717171),
                     fontSize: 12.sp,
-                    fontWeight:
-                        isSelected ? FontWeight.w700 : FontWeight.w400,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
                     height: 1.2,
                     fontFamily: FontFamily.montserrat,
                   ),
