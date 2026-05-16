@@ -85,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildHeader(ProfileView profile) {
     return SizedBox(
-      height: 392.h,
+      height: 407.h,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -182,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return SliverPadding(
-      padding: EdgeInsets.only(left: 20.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       sliver: SliverList.separated(
         itemCount: recipes.length,
         separatorBuilder: (_, _) => SizedBox(height: 12.h),

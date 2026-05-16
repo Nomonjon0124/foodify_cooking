@@ -460,6 +460,12 @@ abstract class AppLocalizations {
   /// **'More Details'**
   String get profileMoreDetails;
 
+  /// Profile action button for editing the current profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get profileEditAction;
+
   /// Add new recipe screen title.
   ///
   /// In en, this message translates to:
@@ -490,6 +496,18 @@ abstract class AppLocalizations {
   /// **'Recent'**
   String get addNewRecent;
 
+  /// Tooltip and accessibility label for choosing a cover image from the gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get addNewGalleryAction;
+
+  /// Tooltip and accessibility label for taking a new cover photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get addNewCameraAction;
+
   /// Add new recipe cover edit crop action.
   ///
   /// In en, this message translates to:
@@ -513,6 +531,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get addNewCropDone;
+
+  /// Tooltip and accessibility label for rotating the crop photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Rotate photo'**
+  String get addNewCropRotate;
 
   /// Recipe name field label.
   ///

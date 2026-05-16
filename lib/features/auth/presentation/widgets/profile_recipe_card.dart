@@ -31,43 +31,55 @@ class ProfileRecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 320.w,
-      height: 187.h,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF6FBF4),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      padding: EdgeInsets.all(6.r),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Left — food image with overlays
-          _RecipeImage(
-            rating: rating,
-            cookTime: cookTime,
-            difficulty: difficulty,
-            imageUrl: imageUrl,
-            placeholderColor: imagePlaceholderColor,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : 320.w;
+        final imageWidth = (availableWidth * 0.42)
+            .clamp(104.w, 138.w)
+            .toDouble();
+        final imageHeight = (imageWidth * 175 / 138)
+            .clamp(132.h, 175.h)
+            .toDouble();
+
+        return Container(
+          width: double.infinity,
+          constraints: BoxConstraints(minHeight: 187.h),
+          padding: EdgeInsets.all(6.r),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF6FBF4),
+            borderRadius: BorderRadius.circular(8.r),
           ),
-          SizedBox(width: 13.w),
-          // Right — text content
-          Expanded(
-            child: _RecipeDetails(
-              title: title,
-              chefName: chefName,
-              rating: rating,
-              description: description,
-              chefAvatarUrl: chefAvatarUrl,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _RecipeImage(
+                rating: rating,
+                cookTime: cookTime,
+                difficulty: difficulty,
+                imageUrl: imageUrl,
+                placeholderColor: imagePlaceholderColor,
+                width: imageWidth,
+                height: imageHeight,
+              ),
+              SizedBox(width: 13.w),
+              Expanded(
+                child: _RecipeDetails(
+                  title: title,
+                  chefName: chefName,
+                  rating: rating,
+                  description: description,
+                  chefAvatarUrl: chefAvatarUrl,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
-
-// ─── Left image section ────────────────────────────────────────────────────
 
 class _RecipeImage extends StatelessWidget {
   const _RecipeImage({
@@ -76,6 +88,8 @@ class _RecipeImage extends StatelessWidget {
     required this.difficulty,
     required this.imageUrl,
     required this.placeholderColor,
+    required this.width,
+    required this.height,
   });
 
   final String rating;
@@ -83,14 +97,16 @@ class _RecipeImage extends StatelessWidget {
   final String difficulty;
   final String imageUrl;
   final Color placeholderColor;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.r),
       child: SizedBox(
-        width: 138.w,
-        height: 175.h,
+        width: width,
+        height: height,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -98,18 +114,16 @@ class _RecipeImage extends StatelessWidget {
               Container(color: placeholderColor)
             else
               FoodifyImage(imageUrl, fit: BoxFit.cover),
-            // Dark rating badge — top-left
             Positioned(
               top: 8.h,
               left: 8.w,
               child: _DarkRatingBadge(rating: rating),
             ),
-            // Bottom gradient + time / difficulty
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
-              height: 101.h,
+              height: height * 0.58,
               child: _TimeDifficultyOverlay(
                 cookTime: cookTime,
                 difficulty: difficulty,
@@ -147,6 +161,8 @@ class _DarkRatingBadge extends StatelessWidget {
           SizedBox(width: 4.w),
           Text(
             rating,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: Colors.white,
               fontSize: 11.sp,
@@ -183,35 +199,43 @@ class _TimeDifficultyOverlay extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
+          padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 16.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                cookTime,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: FontFamily.montserrat,
+              Flexible(
+                child: Text(
+                  cookTime,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontFamily.montserrat,
+                  ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 9.w),
+                padding: EdgeInsets.symmetric(horizontal: 7.w),
                 child: Container(
                   width: 1.w,
                   height: 13.h,
                   color: Colors.white54,
                 ),
               ),
-              Text(
-                difficulty,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: FontFamily.montserrat,
+              Flexible(
+                child: Text(
+                  difficulty,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: FontFamily.montserrat,
+                  ),
                 ),
               ),
             ],
@@ -221,8 +245,6 @@ class _TimeDifficultyOverlay extends StatelessWidget {
     );
   }
 }
-
-// ─── Right details section ─────────────────────────────────────────────────
 
 class _RecipeDetails extends StatelessWidget {
   const _RecipeDetails({
@@ -244,9 +266,9 @@ class _RecipeDetails extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 3.h),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Recipe title
           Text(
             title,
             maxLines: 2,
@@ -260,7 +282,6 @@ class _RecipeDetails extends StatelessWidget {
             ),
           ),
           SizedBox(height: 6.h),
-          // Chef row
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -273,27 +294,33 @@ class _RecipeDetails extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 10.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    chefName,
-                    style: TextStyle(
-                      color: const Color(0xFF717171),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                      height: 1,
-                      fontFamily: FontFamily.montserrat,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      chefName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: const Color(0xFF717171),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                        height: 1,
+                        fontFamily: FontFamily.montserrat,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 3.h),
-                  _YellowRatingChip(rating: rating),
-                ],
+                    SizedBox(height: 3.h),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: _YellowRatingChip(rating: rating),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           SizedBox(height: 6.h),
-          // Description + send button
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -342,6 +369,8 @@ class _YellowRatingChip extends StatelessWidget {
           SizedBox(width: 4.w),
           Text(
             rating,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: const Color(0xFF353535),
               fontSize: 11.sp,

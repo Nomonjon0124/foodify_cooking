@@ -66,7 +66,7 @@ class _NumberedInputTileState extends State<NumberedInputTile> {
           constraints: BoxConstraints(
             minHeight: widget.isMultiline ? 57.h : 47.h,
           ),
-          padding: EdgeInsets.fromLTRB(34.w, 12.h, 40.w, 12.h),
+          padding: EdgeInsets.fromLTRB(34.w, 12.h, 56.w, 12.h),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.r),
@@ -123,11 +123,23 @@ class _NumberedInputTileState extends State<NumberedInputTile> {
         ),
         if (widget.onDelete != null)
           Positioned(
-            right: 12.w,
-            bottom: widget.isMultiline ? 12.h : 14.h,
-            child: GestureDetector(
-              onTap: widget.onDelete,
-              child: const Icon(Icons.remove_circle, color: Color(0xFFADADAD)),
+            right: 6.w,
+            bottom: widget.isMultiline ? 6.h : 4.h,
+            child: Semantics(
+              button: true,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: widget.onDelete,
+                child: SizedBox(
+                  width: 40.r,
+                  height: 40.r,
+                  child: Icon(
+                    Icons.remove_circle,
+                    color: const Color(0xFFADADAD),
+                    size: 24.r,
+                  ),
+                ),
+              ),
             ),
           ),
       ],

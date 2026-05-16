@@ -198,19 +198,28 @@ class AppLocalizationsUz extends AppLocalizations {
   String get profileMoreDetails => 'Batafsil';
 
   @override
+  String get profileEditAction => 'Tahrirlash';
+
+  @override
   String get addNewTitle => 'Yangi retsept';
 
   @override
   String get addNewNext => 'Keyingi';
 
   @override
-  String get addNewClearAll => 'Hammasini tozalash';
+  String get addNewClearAll => 'Tozalash';
 
   @override
   String get addNewCoverTitle => 'Retsept rasmi qo\'shing';
 
   @override
   String get addNewRecent => 'So\'nggilar';
+
+  @override
+  String get addNewGalleryAction => 'Galereyadan tanlash';
+
+  @override
+  String get addNewCameraAction => 'Rasmga olish';
 
   @override
   String get addNewEditCrop => 'Kesishni tahrirlash';
@@ -223,6 +232,9 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get addNewCropDone => 'Tayyor';
+
+  @override
+  String get addNewCropRotate => 'Rasmni aylantirish';
 
   @override
   String get addNewFieldName => 'Nomi';

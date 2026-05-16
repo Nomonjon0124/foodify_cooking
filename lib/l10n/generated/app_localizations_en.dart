@@ -195,6 +195,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileMoreDetails => 'More Details';
 
   @override
+  String get profileEditAction => 'Edit Profile';
+
+  @override
   String get addNewTitle => 'New Recipe';
 
   @override
@@ -210,6 +213,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addNewRecent => 'Recent';
 
   @override
+  String get addNewGalleryAction => 'Choose from gallery';
+
+  @override
+  String get addNewCameraAction => 'Take a photo';
+
+  @override
   String get addNewEditCrop => 'Edit Crop';
 
   @override
@@ -220,6 +229,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addNewCropDone => 'Done';
+
+  @override
+  String get addNewCropRotate => 'Rotate photo';
 
   @override
   String get addNewFieldName => 'Name';

@@ -258,6 +258,10 @@
   "@profileMoreDetails": {
     "description": "Profile tab for more detailed recipe cards."
   },
+  "profileEditAction": "Edit Profile",
+  "@profileEditAction": {
+    "description": "Profile action button for editing the current profile."
+  },
   "addNewTitle": "New Recipe",
   "@addNewTitle": {
     "description": "Add new recipe screen title."
@@ -278,6 +282,14 @@
   "@addNewRecent": {
     "description": "Recent media section label in the cover picker."
   },
+  "addNewGalleryAction": "Choose from gallery",
+  "@addNewGalleryAction": {
+    "description": "Tooltip and accessibility label for choosing a cover image from the gallery."
+  },
+  "addNewCameraAction": "Take a photo",
+  "@addNewCameraAction": {
+    "description": "Tooltip and accessibility label for taking a new cover photo."
+  },
   "addNewEditCrop": "Edit Crop",
   "@addNewEditCrop": {
     "description": "Add new recipe cover edit crop action."
@@ -293,6 +305,10 @@
   "addNewCropDone": "Done",
   "@addNewCropDone": {
     "description": "Crop photo done action."
+  },
+  "addNewCropRotate": "Rotate photo",
+  "@addNewCropRotate": {
+    "description": "Tooltip and accessibility label for rotating the crop photo."
   },
   "addNewFieldName": "Name",
   "@addNewFieldName": {

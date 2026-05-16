@@ -47,9 +47,12 @@ class AddNewPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          final resizesForKeyboard = state.phase == AddNewPhase.formSteps;
+
           if (state.phase == AddNewPhase.cropPhoto) {
             return Scaffold(
               backgroundColor: Colors.black,
+              resizeToAvoidBottomInset: false,
               body: CropPhotoView(
                 imagePath: state.coverImagePath,
                 quarterTurns: state.cropQuarterTurns,
@@ -63,10 +66,14 @@ class AddNewPage extends StatelessWidget {
           final cubit = context.read<AddNewCubit>();
           final showsStepper =
               state.phase == AddNewPhase.coverPreview ||
-              state.phase == AddNewPhase.formSteps;
+              state.phase == AddNewPhase.formSteps ||
+              state.phase == AddNewPhase.recipePreview;
+          final displayedStep = state.phase == AddNewPhase.recipePreview
+              ? 3
+              : _clampedStepperStep(state.currentStep);
 
           return Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: resizesForKeyboard,
             body: AddNewFlowScaffold(
               backgroundColor: state.phase == AddNewPhase.recipePreview
                   ? Colors.white
@@ -76,15 +83,13 @@ class AddNewPage extends StatelessWidget {
                   : _buildHeader(context, state),
               body: Column(
                 children: [
-                  if (showsStepper)
-                    AddNewStepper(
-                      currentStep: state.currentStep < 0
-                          ? 0
-                          : state.currentStep > 3
-                          ? 3
-                          : state.currentStep,
+                  if (showsStepper) AddNewStepper(currentStep: displayedStep),
+                  Expanded(
+                    child: _AnimatedAddNewBody(
+                      state: state,
+                      child: _buildBody(context, state),
                     ),
-                  Expanded(child: _buildBody(context, state)),
+                  ),
                 ],
               ),
               bottomBar: state.phase == AddNewPhase.photoPicker
@@ -165,5 +170,91 @@ class AddNewPage extends StatelessWidget {
           onBack: context.read<AddNewCubit>().handleBack,
         );
     }
+  }
+}
+
+int _clampedStepperStep(int step) {
+  if (step < 0) return 0;
+  if (step > 3) return 3;
+  return step;
+}
+
+class _AnimatedAddNewBody extends StatefulWidget {
+  const _AnimatedAddNewBody({required this.state, required this.child});
+
+  final AddNewState state;
+  final Widget child;
+
+  @override
+  State<_AnimatedAddNewBody> createState() => _AnimatedAddNewBodyState();
+}
+
+class _AnimatedAddNewBodyState extends State<_AnimatedAddNewBody> {
+  int _direction = 1;
+
+  @override
+  void didUpdateWidget(covariant _AnimatedAddNewBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final previousOrder = _bodyOrder(oldWidget.state);
+    final nextOrder = _bodyOrder(widget.state);
+    if (previousOrder != nextOrder) {
+      _direction = nextOrder > previousOrder ? 1 : -1;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final activeKey = ValueKey<String>(_bodyKey(widget.state));
+
+    return ClipRect(
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 220),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        layoutBuilder: (currentChild, previousChildren) {
+          return Stack(
+            fit: StackFit.expand,
+            children: [...previousChildren, ?currentChild],
+          );
+        },
+        transitionBuilder: (child, animation) {
+          final isIncoming = child.key == activeKey;
+          final beginOffset = Offset(
+            (isIncoming ? _direction : -_direction) * 0.06,
+            0,
+          );
+          final position = animation.drive(
+            Tween<Offset>(
+              begin: beginOffset,
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeOutCubic)),
+          );
+
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: position, child: child),
+          );
+        },
+        child: KeyedSubtree(key: activeKey, child: widget.child),
+      ),
+    );
+  }
+
+  int _bodyOrder(AddNewState state) {
+    return switch (state.phase) {
+      AddNewPhase.photoPicker => 0,
+      AddNewPhase.cropPhoto => 1,
+      AddNewPhase.coverPreview => 2,
+      AddNewPhase.formSteps => 3 + _clampedStepperStep(state.currentStep),
+      AddNewPhase.recipePreview => 6,
+    };
+  }
+
+  String _bodyKey(AddNewState state) {
+    return switch (state.phase) {
+      AddNewPhase.formSteps => 'form-${_clampedStepperStep(state.currentStep)}',
+      _ => state.phase.name,
+    };
   }
 }

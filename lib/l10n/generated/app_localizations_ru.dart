@@ -196,6 +196,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get profileMoreDetails => 'Подробнее';
 
   @override
+  String get profileEditAction => 'Изменить';
+
+  @override
   String get addNewTitle => 'Новый рецепт';
 
   @override
@@ -211,6 +214,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addNewRecent => 'Недавние';
 
   @override
+  String get addNewGalleryAction => 'Выбрать из галереи';
+
+  @override
+  String get addNewCameraAction => 'Сделать фото';
+
+  @override
   String get addNewEditCrop => 'Изменить кадрирование';
 
   @override
@@ -221,6 +230,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get addNewCropDone => 'Готово';
+
+  @override
+  String get addNewCropRotate => 'Повернуть фото';
 
   @override
   String get addNewFieldName => 'Название';

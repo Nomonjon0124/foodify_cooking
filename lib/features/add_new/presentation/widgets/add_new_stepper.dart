@@ -16,76 +16,141 @@ class AddNewStepper extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(28.w, 16.h, 20.w, 12.h),
-      child: Row(
-        children: List.generate(AddNewConstants.stepLabels.length, (index) {
-          final isActive = index == currentStep;
-          final isCompleted = index < currentStep;
-          final isLast = index == AddNewConstants.stepLabels.length - 1;
+      padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 12.h),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final stepCount = AddNewConstants.stepLabels.length;
+          final circleSize = 32.r;
+          final connectorWidth = (constraints.maxWidth * 0.06)
+              .clamp(10.r, 22.r)
+              .toDouble();
+          final inactiveWidth = circleSize * (stepCount - 1);
+          final connectorsWidth = connectorWidth * (stepCount - 1);
+          final activeWidth =
+              (constraints.maxWidth - inactiveWidth - connectorsWidth)
+                  .clamp(112.r, constraints.maxWidth)
+                  .toDouble();
 
-          return Expanded(
-            flex: isActive ? 6 : 2,
-            child: Row(
-              children: [
-                if (isActive)
-                  Expanded(
-                    child: Container(
-                      height: 32.h,
-                      padding: EdgeInsets.symmetric(horizontal: 4.w),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF353535),
-                        borderRadius: BorderRadius.circular(38.r),
-                      ),
-                      child: Row(
-                        children: [
-                          _StepCircle(
-                            label: '${index + 1}',
-                            color: const Color(0xFFDEE21B),
-                            backgroundColor: const Color(0xFF0E0E0E),
-                            isBold: true,
-                          ),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: Text(
-                              l10n.addNewStepLabel(index),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: const Color(0xFFDEE21B),
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: FontFamily.montserrat,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                else
-                  _StepCircle(
-                    label: '${index + 1}',
-                    color: isCompleted
-                        ? const Color(0xFFDEE21B)
-                        : const Color(0xFF717171),
-                    backgroundColor: const Color(0xFF353535),
-                    isBold: isCompleted,
-                  ),
-                if (!isLast)
-                  Expanded(
-                    child: Container(
-                      height: 2.h,
-                      margin: EdgeInsets.symmetric(horizontal: 4.w),
-                      color: index < currentStep
-                          ? const Color(0xFFDEE21B)
-                          : const Color(0xFF353535),
-                    ),
-                  ),
-              ],
-            ),
+          return Row(
+            children: List.generate(stepCount * 2 - 1, (position) {
+              if (position.isOdd) {
+                final connectorIndex = position ~/ 2;
+                return _StepConnector(
+                  width: connectorWidth,
+                  isCompleted: connectorIndex < currentStep,
+                );
+              }
+
+              final index = position ~/ 2;
+              final isActive = index == currentStep;
+              final isCompleted = index < currentStep;
+
+              return _StepSegment(
+                width: isActive ? activeWidth : circleSize,
+                label: l10n.addNewStepLabel(index),
+                number: '${index + 1}',
+                isActive: isActive,
+                isCompleted: isCompleted,
+              );
+            }),
           );
-        }),
+        },
       ),
+    );
+  }
+}
+
+class _StepSegment extends StatelessWidget {
+  const _StepSegment({
+    required this.width,
+    required this.label,
+    required this.number,
+    required this.isActive,
+    required this.isCompleted,
+  });
+
+  final double width;
+  final String label;
+  final String number;
+  final bool isActive;
+  final bool isCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    final foregroundColor = isActive || isCompleted
+        ? const Color(0xFFDEE21B)
+        : const Color(0xFF717171);
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOutCubic,
+      width: width,
+      height: isActive ? 40.r : 32.r,
+      padding: isActive
+          ? EdgeInsets.only(left: 4.r, right: 8.r)
+          : EdgeInsets.zero,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        color: const Color(0xFF353535),
+        borderRadius: BorderRadius.circular(38.r),
+      ),
+      child: isActive
+          ? FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _StepCircle(
+                    label: number,
+                    color: const Color(0xFFDEE21B),
+                    backgroundColor: const Color(0xFF0E0E0E),
+                    isBold: true,
+                  ),
+                  SizedBox(width: 6.w),
+                  Text(
+                    label,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                      color: const Color(0xFFDEE21B),
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: FontFamily.montserrat,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Center(
+              child: Text(
+                number,
+                style: TextStyle(
+                  color: foregroundColor,
+                  fontSize: 12.sp,
+                  fontWeight: isCompleted ? FontWeight.w600 : FontWeight.w400,
+                  fontFamily: FontFamily.montserrat,
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+class _StepConnector extends StatelessWidget {
+  const _StepConnector({required this.width, required this.isCompleted});
+
+  final double width;
+  final bool isCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOutCubic,
+      width: width,
+      height: 2.h,
+      color: isCompleted ? const Color(0xFFDEE21B) : const Color(0xFF353535),
     );
   }
 }

@@ -56,9 +56,11 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
     return BlocBuilder<AddNewCubit, AddNewState>(
       builder: (context, state) {
         final l10n = context.l10n;
+        final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
+        final bottomPadding = keyboardInset > 0 ? 112.h : 20.h;
 
         return SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(6.w, 0, 6.w, 4.h),
+          padding: EdgeInsets.fromLTRB(6.w, 0, 6.w, bottomPadding),
           child: Column(
             children: [
               SectionCard(
@@ -74,36 +76,16 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
               SizedBox(height: 10.h),
               SectionCard(
                 label: l10n.addNewFieldNumber,
-                child: Row(
-                  children: [
-                    _MetaText(l10n.addNewServingFor),
-                    const Spacer(),
-                    _AdjusterButton(
-                      icon: Icons.remove_circle,
-                      onTap: () => context.read<AddNewCubit>().updateServings(
-                        state.servings - 1,
-                      ),
-                    ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      '${state.servings}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontFamily.montserrat,
-                      ),
-                    ),
-                    SizedBox(width: 6.w),
-                    _AdjusterButton(
-                      icon: Icons.add_circle,
-                      onTap: () => context.read<AddNewCubit>().updateServings(
-                        state.servings + 1,
-                      ),
-                    ),
-                    const Spacer(),
-                    _MetaText(l10n.addNewPeople),
-                  ],
+                child: _ServingSelector(
+                  servingLabel: l10n.addNewServingFor,
+                  peopleLabel: l10n.addNewPeople,
+                  servings: state.servings,
+                  onDecrement: () => context.read<AddNewCubit>().updateServings(
+                    state.servings - 1,
+                  ),
+                  onIncrement: () => context.read<AddNewCubit>().updateServings(
+                    state.servings + 1,
+                  ),
                 ),
               ),
               SizedBox(height: 10.h),
@@ -113,6 +95,8 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                   children: [
                     Expanded(
                       child: _TimeInput(
+                        fieldKey: const Key('cook-time-hours-field'),
+                        textFieldKey: const Key('cook-time-hours-text-field'),
                         controller: _hoursController,
                         suffix: 'h',
                         onChanged: (_) => _updateCookTime(),
@@ -121,6 +105,8 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                     SizedBox(width: 10.w),
                     Expanded(
                       child: _TimeInput(
+                        fieldKey: const Key('cook-time-minutes-field'),
+                        textFieldKey: const Key('cook-time-minutes-text-field'),
                         controller: _minutesController,
                         suffix: 'm',
                         onChanged: (_) => _updateCookTime(),
@@ -225,6 +211,7 @@ class _RecipeField extends StatelessWidget {
     return TextField(
       controller: controller,
       onChanged: onChanged,
+      scrollPadding: EdgeInsets.only(bottom: 120.h),
       style: TextStyle(
         color: textColor,
         fontSize: 12.sp,
@@ -252,20 +239,87 @@ class _RecipeField extends StatelessWidget {
   }
 }
 
-class _MetaText extends StatelessWidget {
-  const _MetaText(this.label);
+class _ServingSelector extends StatelessWidget {
+  const _ServingSelector({
+    required this.servingLabel,
+    required this.peopleLabel,
+    required this.servings,
+    required this.onDecrement,
+    required this.onIncrement,
+  });
 
-  final String label;
+  final String servingLabel;
+  final String peopleLabel;
+  final int servings;
+  final VoidCallback onDecrement;
+  final VoidCallback onIncrement;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 12.sp,
-        fontWeight: FontWeight.w400,
-        fontFamily: FontFamily.montserrat,
+    return Row(
+      children: [
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: _MetaText(servingLabel, alignment: Alignment.centerLeft),
+          ),
+        ),
+        SizedBox(width: 8.w),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _AdjusterButton(icon: Icons.remove_circle, onTap: onDecrement),
+            SizedBox(
+              width: 24.w,
+              child: Text(
+                '$servings',
+                key: const Key('serving-count-label'),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: FontFamily.montserrat,
+                ),
+              ),
+            ),
+            _AdjusterButton(icon: Icons.add_circle, onTap: onIncrement),
+          ],
+        ),
+        SizedBox(width: 8.w),
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: _MetaText(peopleLabel, alignment: Alignment.centerRight),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MetaText extends StatelessWidget {
+  const _MetaText(this.label, {required this.alignment});
+
+  final String label;
+  final Alignment alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: alignment,
+      child: Text(
+        label,
+        maxLines: 1,
+        softWrap: false,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w400,
+          fontFamily: FontFamily.montserrat,
+        ),
       ),
     );
   }
@@ -279,20 +333,34 @@ class _AdjusterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(icon, color: Colors.white, size: 24.r),
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: SizedBox(
+          width: 40.r,
+          height: 40.r,
+          child: Center(
+            child: Icon(icon, color: Colors.white, size: 24.r),
+          ),
+        ),
+      ),
     );
   }
 }
 
 class _TimeInput extends StatelessWidget {
   const _TimeInput({
+    required this.fieldKey,
+    required this.textFieldKey,
     required this.controller,
     required this.suffix,
     this.onChanged,
   });
 
+  final Key fieldKey;
+  final Key textFieldKey;
   final TextEditingController controller;
   final String suffix;
   final ValueChanged<String>? onChanged;
@@ -300,26 +368,37 @@ class _TimeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40.h,
+      key: fieldKey,
+      height: 40.r,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xFFADADAD)),
         borderRadius: BorderRadius.circular(20.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: TextField(
+              key: textFieldKey,
               controller: controller,
               onChanged: onChanged,
               keyboardType: TextInputType.number,
+              scrollPadding: EdgeInsets.only(bottom: 120.h),
               textAlign: TextAlign.right,
+              textAlignVertical: TextAlignVertical.center,
+              maxLines: 1,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12.sp,
+                height: 1.2,
                 fontFamily: FontFamily.montserrat,
               ),
-              decoration: const InputDecoration(border: InputBorder.none),
+              decoration: const InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.zero,
+              ),
             ),
           ),
           SizedBox(width: 8.w),
@@ -363,6 +442,9 @@ class _OptionChip extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: isSelected ? const Color(0xFF0E0E0E) : Colors.white,
             fontSize: 11.sp,

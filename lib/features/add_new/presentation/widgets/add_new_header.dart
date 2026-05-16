@@ -45,6 +45,8 @@ class AddNewHeader extends StatelessWidget {
                 : Text(
                     title!,
                     textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14.sp,
@@ -59,7 +61,12 @@ class AddNewHeader extends StatelessWidget {
           ),
           SizedBox(
             width: 72.w,
-            child: Align(alignment: Alignment.centerRight, child: trailing),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: trailing == null
+                  ? null
+                  : FittedBox(fit: BoxFit.scaleDown, child: trailing),
+            ),
           ),
         ],
       ),
