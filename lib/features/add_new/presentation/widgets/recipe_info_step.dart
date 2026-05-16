@@ -76,8 +76,8 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                 label: l10n.addNewFieldNumber,
                 child: Row(
                   children: [
-                    _MetaText(l10n.addNewServingFor),
-                    const Spacer(),
+                    Flexible(child: _MetaText(l10n.addNewServingFor)),
+                    const Spacer(flex: 2),
                     _AdjusterButton(
                       icon: Icons.remove_circle,
                       onTap: () => context.read<AddNewCubit>().updateServings(
@@ -101,8 +101,8 @@ class _RecipeInfoStepState extends State<RecipeInfoStep> {
                         state.servings + 1,
                       ),
                     ),
-                    const Spacer(),
-                    _MetaText(l10n.addNewPeople),
+                    const Spacer(flex: 2),
+                    Flexible(child: _MetaText(l10n.addNewPeople)),
                   ],
                 ),
               ),
@@ -261,6 +261,8 @@ class _MetaText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: Colors.white,
         fontSize: 12.sp,
@@ -363,6 +365,9 @@ class _OptionChip extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: isSelected ? const Color(0xFF0E0E0E) : Colors.white,
             fontSize: 11.sp,

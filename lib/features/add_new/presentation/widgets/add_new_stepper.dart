@@ -16,7 +16,7 @@ class AddNewStepper extends StatelessWidget {
     final l10n = context.l10n;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(28.w, 16.h, 20.w, 12.h),
+      padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 12.h),
       child: Row(
         children: List.generate(AddNewConstants.stepLabels.length, (index) {
           final isActive = index == currentStep;
@@ -24,13 +24,13 @@ class AddNewStepper extends StatelessWidget {
           final isLast = index == AddNewConstants.stepLabels.length - 1;
 
           return Expanded(
-            flex: isActive ? 6 : 2,
+            flex: isActive ? 7 : 2,
             child: Row(
               children: [
                 if (isActive)
                   Expanded(
                     child: Container(
-                      height: 32.h,
+                      constraints: BoxConstraints(minHeight: 40.r),
                       padding: EdgeInsets.symmetric(horizontal: 4.w),
                       decoration: BoxDecoration(
                         color: const Color(0xFF353535),
@@ -44,7 +44,7 @@ class AddNewStepper extends StatelessWidget {
                             backgroundColor: const Color(0xFF0E0E0E),
                             isBold: true,
                           ),
-                          SizedBox(width: 8.w),
+                          SizedBox(width: 6.w),
                           Expanded(
                             child: Text(
                               l10n.addNewStepLabel(index),
@@ -52,7 +52,7 @@ class AddNewStepper extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: const Color(0xFFDEE21B),
-                                fontSize: 12.sp,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: FontFamily.montserrat,
                               ),

@@ -110,13 +110,17 @@ class RecipePreviewStep extends StatelessWidget {
                             Icons.arrow_drop_down,
                             color: Color(0xFFFF6339),
                           ),
-                          Text(
-                            _sectionHeadline(context, state),
-                            style: TextStyle(
-                              color: const Color(0xFF0E0E0E),
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: FontFamily.montserrat,
+                          Expanded(
+                            child: Text(
+                              _sectionHeadline(context, state),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: const Color(0xFF0E0E0E),
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: FontFamily.montserrat,
+                              ),
                             ),
                           ),
                         ],
@@ -196,7 +200,7 @@ class _InfoPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 23.h,
+      constraints: BoxConstraints(minHeight: 23.h, maxWidth: 180.w),
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -207,13 +211,17 @@ class _InfoPill extends StatelessWidget {
         children: [
           icon,
           SizedBox(width: 4.w),
-          Text(
-            label,
-            style: TextStyle(
-              color: const Color(0xFF353535),
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: FontFamily.montserrat,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: const Color(0xFF353535),
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w400,
+                fontFamily: FontFamily.montserrat,
+              ),
             ),
           ),
         ],

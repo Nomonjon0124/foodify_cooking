@@ -47,9 +47,12 @@ class AddNewPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          final resizesForKeyboard = state.phase == AddNewPhase.formSteps;
+
           if (state.phase == AddNewPhase.cropPhoto) {
             return Scaffold(
               backgroundColor: Colors.black,
+              resizeToAvoidBottomInset: false,
               body: CropPhotoView(
                 imagePath: state.coverImagePath,
                 quarterTurns: state.cropQuarterTurns,
@@ -66,7 +69,7 @@ class AddNewPage extends StatelessWidget {
               state.phase == AddNewPhase.formSteps;
 
           return Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: resizesForKeyboard,
             body: AddNewFlowScaffold(
               backgroundColor: state.phase == AddNewPhase.recipePreview
                   ? Colors.white

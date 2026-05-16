@@ -19,6 +19,11 @@ class PreviewHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final contentWidth = MediaQuery.sizeOf(
+      context,
+    ).width.clamp(0.0, 430.0).toDouble();
+    final headerHeight = (contentWidth * 0.62).clamp(220.h, 256.h).toDouble();
+
     return Column(
       children: [
         Stack(
@@ -31,7 +36,7 @@ class PreviewHeaderCard extends StatelessWidget {
               ),
               child: SizedBox(
                 width: double.infinity,
-                height: 256.h,
+                height: headerHeight,
                 child: Image.asset(state.coverImagePath, fit: BoxFit.cover),
               ),
             ),
@@ -153,6 +158,8 @@ class PreviewHeaderCard extends StatelessWidget {
                           Expanded(
                             child: Text(
                               AddNewConstants.authorName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14.sp,
@@ -194,6 +201,8 @@ class PreviewHeaderCard extends StatelessWidget {
               state.title.trim().isEmpty
                   ? context.l10n.addNewRecipeTitleFallback
                   : state.title.trim(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.sp,
@@ -237,6 +246,8 @@ class _RatingBadge extends StatelessWidget {
           SizedBox(width: 4.w),
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: labelColor,
               fontSize: 11.sp,

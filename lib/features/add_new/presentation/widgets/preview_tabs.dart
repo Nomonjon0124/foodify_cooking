@@ -29,7 +29,7 @@ class PreviewTabs extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => onChanged(tab),
                   child: Container(
-                    height: 37.h,
+                    constraints: BoxConstraints(minHeight: 40.r),
                     decoration: BoxDecoration(
                       color: activeTab == tab
                           ? Colors.white
@@ -42,13 +42,17 @@ class PreviewTabs extends StatelessWidget {
                       ),
                     ),
                     alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 4.w),
                     child: Text(
                       context.l10n.addNewPreviewTabLabel(tab),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: activeTab == tab
                             ? const Color(0xFF0E0E0E)
                             : const Color(0xFFADADAD),
-                        fontSize: 14.sp,
+                        fontSize: 12.sp,
                         fontWeight: activeTab == tab
                             ? FontWeight.w700
                             : FontWeight.w400,

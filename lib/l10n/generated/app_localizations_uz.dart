@@ -216,6 +216,12 @@ class AppLocalizationsUz extends AppLocalizations {
   String get addNewRecent => 'So\'nggilar';
 
   @override
+  String get addNewGalleryAction => 'Galereyadan tanlash';
+
+  @override
+  String get addNewCameraAction => 'Rasmga olish';
+
+  @override
   String get addNewEditCrop => 'Kesishni tahrirlash';
 
   @override
@@ -226,6 +232,9 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get addNewCropDone => 'Tayyor';
+
+  @override
+  String get addNewCropRotate => 'Rasmni aylantirish';
 
   @override
   String get addNewFieldName => 'Nomi';
