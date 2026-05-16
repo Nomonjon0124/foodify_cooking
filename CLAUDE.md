@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+For repository workflow, branch protection, issue branch, CI, and localization scope rules, also follow `AGENTS.md`.
+
 ## Commands
 
 ```bash
