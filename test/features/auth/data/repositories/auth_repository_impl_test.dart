@@ -6,11 +6,13 @@ import 'package:foodify_cooking/core/services/token_service.dart';
 import 'package:foodify_cooking/core/utils/result.dart';
 import 'package:foodify_cooking/features/auth/data/data_sources/auth_local_data_source.dart';
 import 'package:foodify_cooking/features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'package:foodify_cooking/features/auth/data/data_sources/register_remote_result.dart';
 import 'package:foodify_cooking/features/auth/data/models/auth_response_model.dart';
 import 'package:foodify_cooking/features/auth/data/models/login_request_model.dart';
 import 'package:foodify_cooking/features/auth/data/models/user_model.dart';
 import 'package:foodify_cooking/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:foodify_cooking/features/auth/domain/auth_failure_messages.dart';
+import 'package:foodify_cooking/features/auth/domain/entities/register_outcome.dart';
 import 'package:foodify_cooking/features/auth/domain/entities/user_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -95,6 +97,96 @@ void main() {
         expect(joinedLogs, isNot(contains('super-secret')));
       },
     );
+
+    test(
+      'register returns RegisterSignedIn when remote yields a session',
+      () async {
+        remoteDataSource.registerResult = const RegisterRemoteSignedIn(
+          AuthResponseModel(
+            token: 'tok',
+            user: _FakeAuthRemoteDataSource.user,
+          ),
+        );
+
+        final result = await repository.register(
+          name: 'Demo',
+          email: 'demo@example.com',
+          password: 'super-secret',
+        );
+
+        expect(result, isA<Success<RegisterOutcome>>());
+        final outcome = (result as Success<RegisterOutcome>).data;
+        expect(outcome, isA<RegisterSignedIn>());
+        expect((outcome as RegisterSignedIn).user.email, 'demo@example.com');
+        expect(localDataSource.cachedUser?.id, 'user-1');
+      },
+    );
+
+    test(
+      'register returns RegisterNeedsConfirmation when session is absent',
+      () async {
+        remoteDataSource.registerResult = const RegisterRemoteNeedsConfirmation(
+          'demo@example.com',
+        );
+
+        final result = await repository.register(
+          name: 'Demo',
+          email: 'demo@example.com',
+          password: 'super-secret',
+        );
+
+        expect(result, isA<Success<RegisterOutcome>>());
+        final outcome = (result as Success<RegisterOutcome>).data;
+        expect(outcome, isA<RegisterNeedsConfirmation>());
+        expect(
+          (outcome as RegisterNeedsConfirmation).email,
+          'demo@example.com',
+        );
+        expect(localDataSource.cachedUser, isNull);
+      },
+    );
+
+    test(
+      'resendConfirmation maps user_already_confirmed to a dedicated key',
+      () async {
+        remoteDataSource.resendError = const AuthException(
+          'User already confirmed',
+          statusCode: '422',
+          code: 'user_already_confirmed',
+        );
+
+        final result = await repository.resendConfirmation(
+          email: 'demo@example.com',
+        );
+
+        expect(result, isA<Failure<void>>());
+        expect(
+          (result as Failure<void>).message,
+          AuthFailureMessages.resendUserAlreadyConfirmed,
+        );
+      },
+    );
+
+    test(
+      'resendConfirmation maps rate-limit responses to resendRateLimited',
+      () async {
+        remoteDataSource.resendError = const AuthException(
+          'Email rate limit exceeded',
+          statusCode: '429',
+          code: 'over_email_send_rate_limit',
+        );
+
+        final result = await repository.resendConfirmation(
+          email: 'demo@example.com',
+        );
+
+        expect(result, isA<Failure<void>>());
+        expect(
+          (result as Failure<void>).message,
+          AuthFailureMessages.resendRateLimited,
+        );
+      },
+    );
   });
 }
 
@@ -107,6 +199,10 @@ class _FakeAuthRemoteDataSource implements AuthRemoteDataSource {
 
   AuthException? loginError;
   AuthException? googleError;
+  AuthException? resendError;
+  RegisterRemoteResult registerResult = const RegisterRemoteSignedIn(
+    AuthResponseModel(token: 'token', user: user),
+  );
 
   @override
   Stream<UserModel?> authStateChanges() => const Stream<UserModel?>.empty();
@@ -128,12 +224,18 @@ class _FakeAuthRemoteDataSource implements AuthRemoteDataSource {
   Future<void> logout() async {}
 
   @override
-  Future<AuthResponseModel> register({
+  Future<RegisterRemoteResult> register({
     required String name,
     required String email,
     required String password,
   }) async {
-    return const AuthResponseModel(token: 'token', user: user);
+    return registerResult;
+  }
+
+  @override
+  Future<void> resendConfirmation({required String email}) async {
+    final error = resendError;
+    if (error != null) throw error;
   }
 
   @override

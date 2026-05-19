@@ -268,6 +268,64 @@
   "@registerPasswordMinLength": {
     "description": "Validation message for too-short registration passwords."
   },
+  "verifyEmailTitle": "Verify email",
+  "@verifyEmailTitle": {
+    "description": "Verify email screen app bar title."
+  },
+  "verifyEmailHeading": "Check your inbox",
+  "@verifyEmailHeading": {
+    "description": "Verify email screen body heading."
+  },
+  "verifyEmailSubtitle": "We sent a confirmation link to {email}. Open the link on this device to finish creating your account.",
+  "@verifyEmailSubtitle": {
+    "description": "Verify email screen body copy with the recipient address.",
+    "placeholders": {
+      "email": {
+        "type": "String",
+        "example": "user@example.com"
+      }
+    }
+  },
+  "verifyEmailResendCta": "Resend email",
+  "@verifyEmailResendCta": {
+    "description": "Verify email screen action to request another confirmation email."
+  },
+  "verifyEmailResendSuccess": "Confirmation email sent again.",
+  "@verifyEmailResendSuccess": {
+    "description": "Snackbar shown after the confirmation email is resent."
+  },
+  "verifyEmailResendFailed": "Could not resend the confirmation email.",
+  "@verifyEmailResendFailed": {
+    "description": "Snackbar shown when resending the confirmation email fails."
+  },
+  "verifyEmailOpenMailApp": "Open mail app",
+  "@verifyEmailOpenMailApp": {
+    "description": "Verify email screen secondary action to open the default mail client."
+  },
+  "verifyEmailOpenMailAppFailed": "No mail app available on this device.",
+  "@verifyEmailOpenMailAppFailed": {
+    "description": "Snackbar shown when no email client can be launched."
+  },
+  "verifyEmailBackToLogin": "Back to login",
+  "@verifyEmailBackToLogin": {
+    "description": "Verify email screen tertiary action returning to the login page."
+  },
+  "authEmailConfirmationFailed": "Email confirmation failed. Please request a new link.",
+  "@authEmailConfirmationFailed": {
+    "description": "Error shown when the email confirmation deep link comes back with a failure."
+  },
+  "authResendRateLimited": "Please wait a moment before requesting another email.",
+  "@authResendRateLimited": {
+    "description": "Error shown when Supabase rate limits the resend confirmation request."
+  },
+  "authResendUserAlreadyConfirmed": "This email is already confirmed. Try signing in.",
+  "@authResendUserAlreadyConfirmed": {
+    "description": "Error shown when resend confirmation targets an already-confirmed user."
+  },
+  "authResendFailed": "Could not resend the confirmation email. Please try again.",
+  "@authResendFailed": {
+    "description": "Fallback error shown when resend confirmation fails for an unknown reason."
+  },
   "back": "Back",
   "@back": {
     "description": "Generic back button label."

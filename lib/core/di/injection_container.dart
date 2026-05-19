@@ -18,11 +18,13 @@ import '../../features/auth/domain/usecases/get_demo_profile_usecase.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/domain/usecases/logout_usecase.dart';
 import '../../features/auth/domain/usecases/register_usecase.dart';
+import '../../features/auth/domain/usecases/resend_confirmation_email_usecase.dart';
 import '../../features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/login_cubit.dart';
 import '../../features/auth/presentation/cubit/profile_cubit.dart';
 import '../../features/auth/presentation/cubit/register_cubit.dart';
+import '../../features/auth/presentation/cubit/verify_email_cubit.dart';
 import '../../features/home/data/data_sources/home_remote_data_source.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
@@ -170,6 +172,9 @@ void _registerAuthDependencies() {
     )
     ..registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()))
     ..registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(getIt()))
+    ..registerLazySingleton<ResendConfirmationEmailUseCase>(
+      () => ResendConfirmationEmailUseCase(getIt()),
+    )
     ..registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(getIt()))
     ..registerLazySingleton<SignInWithGoogleUseCase>(
       () => SignInWithGoogleUseCase(getIt()),
@@ -207,6 +212,7 @@ void _registerAuthDependencies() {
     )
     ..registerFactory<LoginCubit>(() => LoginCubit(getIt()))
     ..registerFactory<RegisterCubit>(() => RegisterCubit(getIt()))
+    ..registerFactory<VerifyEmailCubit>(() => VerifyEmailCubit(getIt()))
     ..registerFactory<ProfileCubit>(() => ProfileCubit(getIt()))
     ..registerLazySingleton<SavedRecipesCubit>(
       () => SavedRecipesCubit(

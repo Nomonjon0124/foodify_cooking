@@ -38,6 +38,8 @@ class RegisterPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(16.r),
             child: BlocConsumer<RegisterCubit, RegisterState>(
+              listenWhen: (previous, current) =>
+                  previous.status != current.status,
               listener: (context, state) async {
                 if (state.status == RegisterStatus.success) {
                   final router = GoRouter.of(context);
@@ -47,10 +49,15 @@ class RegisterPage extends StatelessWidget {
                   return;
                 }
                 if (state.status == RegisterStatus.confirmationRequired) {
-                  AppSnackbar.show(
-                    context,
-                    context.l10n.registerConfirmationRequired,
+                  final pendingEmail = state.pendingConfirmationEmail;
+                  if (pendingEmail == null || pendingEmail.isEmpty) return;
+                  context.pushReplacement(
+                    verifyEmailRouteFor(
+                      email: pendingEmail,
+                      returnTo: returnTo,
+                    ),
                   );
+                  return;
                 }
                 if (state.status == RegisterStatus.failure) {
                   AppSnackbar.show(

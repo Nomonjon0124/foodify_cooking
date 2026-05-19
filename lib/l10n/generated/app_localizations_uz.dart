@@ -217,6 +217,53 @@ class AppLocalizationsUz extends AppLocalizations {
       'Parol kamida 6 ta belgidan iborat bo\'lishi kerak';
 
   @override
+  String get verifyEmailTitle => 'Emailni tasdiqlash';
+
+  @override
+  String get verifyEmailHeading => 'Pochta qutingizni tekshiring';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return '$email manziliga tasdiqlash havolasini yubordik. Hisobni yakunlash uchun havolani shu qurilmada oching.';
+  }
+
+  @override
+  String get verifyEmailResendCta => 'Emailni qayta yuborish';
+
+  @override
+  String get verifyEmailResendSuccess => 'Tasdiqlash xati qayta yuborildi.';
+
+  @override
+  String get verifyEmailResendFailed =>
+      'Tasdiqlash xatini qayta yubora olmadik.';
+
+  @override
+  String get verifyEmailOpenMailApp => 'Pochta ilovasini ochish';
+
+  @override
+  String get verifyEmailOpenMailAppFailed =>
+      'Qurilmada pochta ilovasi topilmadi.';
+
+  @override
+  String get verifyEmailBackToLogin => 'Kirishga qaytish';
+
+  @override
+  String get authEmailConfirmationFailed =>
+      'Email tasdiqlanmadi. Yangi havola so\'rang.';
+
+  @override
+  String get authResendRateLimited =>
+      'Yana xat so\'rashdan oldin biroz kuting.';
+
+  @override
+  String get authResendUserAlreadyConfirmed =>
+      'Bu email allaqachon tasdiqlangan. Kiring.';
+
+  @override
+  String get authResendFailed =>
+      'Tasdiqlash xatini qayta yubora olmadik. Qayta urinib ko\'ring.';
+
+  @override
   String get back => 'Orqaga';
 
   @override

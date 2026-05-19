@@ -15,7 +15,18 @@ abstract final class AuthCallbackRoute {
         _parameter(uri, 'error_description') != null;
   }
 
-  static String failureMessage(Uri _) {
+  /// Detects whether the callback represents an email confirmation. Supabase
+  /// uses the `type=signup` (PKCE flow query param) or the fragment-style
+  /// `#type=signup&...` hash flow. Both are surfaced here.
+  static bool isEmailConfirmation(Uri uri) {
+    final type = _parameter(uri, 'type');
+    return type == 'signup' || type == 'email_change';
+  }
+
+  static String failureMessage(Uri uri) {
+    if (isEmailConfirmation(uri)) {
+      return AuthFailureMessages.emailConfirmationFailed;
+    }
     return AuthFailureMessages.googleCallbackFailed;
   }
 

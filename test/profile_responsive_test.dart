@@ -6,6 +6,7 @@ import 'package:foodify_cooking/core/di/injection_container.dart';
 import 'package:foodify_cooking/core/services/storage_service.dart';
 import 'package:foodify_cooking/core/utils/result.dart';
 import 'package:foodify_cooking/features/auth/domain/entities/profile_view.dart';
+import 'package:foodify_cooking/features/auth/domain/entities/register_outcome.dart';
 import 'package:foodify_cooking/features/auth/domain/entities/user_entity.dart';
 import 'package:foodify_cooking/features/auth/domain/repositories/profile_repository.dart';
 import 'package:foodify_cooking/features/auth/domain/repositories/auth_repository.dart';
@@ -134,12 +135,17 @@ class _AuthRepository implements AuthRepository {
   Future<Result<void>> logout() async => const Success<void>(null);
 
   @override
-  Future<Result<UserEntity>> register({
+  Future<Result<RegisterOutcome>> register({
     required String name,
     required String email,
     required String password,
   }) async {
-    return const Success<UserEntity>(_user);
+    return const Success<RegisterOutcome>(RegisterSignedIn(_user));
+  }
+
+  @override
+  Future<Result<void>> resendConfirmation({required String email}) async {
+    return const Success<void>(null);
   }
 
   @override

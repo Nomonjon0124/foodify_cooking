@@ -484,6 +484,84 @@ abstract class AppLocalizations {
   /// **'Password must be at least 6 characters'**
   String get registerPasswordMinLength;
 
+  /// Verify email screen app bar title.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify email'**
+  String get verifyEmailTitle;
+
+  /// Verify email screen body heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your inbox'**
+  String get verifyEmailHeading;
+
+  /// Verify email screen body copy with the recipient address.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a confirmation link to {email}. Open the link on this device to finish creating your account.'**
+  String verifyEmailSubtitle(String email);
+
+  /// Verify email screen action to request another confirmation email.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend email'**
+  String get verifyEmailResendCta;
+
+  /// Snackbar shown after the confirmation email is resent.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation email sent again.'**
+  String get verifyEmailResendSuccess;
+
+  /// Snackbar shown when resending the confirmation email fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not resend the confirmation email.'**
+  String get verifyEmailResendFailed;
+
+  /// Verify email screen secondary action to open the default mail client.
+  ///
+  /// In en, this message translates to:
+  /// **'Open mail app'**
+  String get verifyEmailOpenMailApp;
+
+  /// Snackbar shown when no email client can be launched.
+  ///
+  /// In en, this message translates to:
+  /// **'No mail app available on this device.'**
+  String get verifyEmailOpenMailAppFailed;
+
+  /// Verify email screen tertiary action returning to the login page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to login'**
+  String get verifyEmailBackToLogin;
+
+  /// Error shown when the email confirmation deep link comes back with a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Email confirmation failed. Please request a new link.'**
+  String get authEmailConfirmationFailed;
+
+  /// Error shown when Supabase rate limits the resend confirmation request.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait a moment before requesting another email.'**
+  String get authResendRateLimited;
+
+  /// Error shown when resend confirmation targets an already-confirmed user.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already confirmed. Try signing in.'**
+  String get authResendUserAlreadyConfirmed;
+
+  /// Fallback error shown when resend confirmation fails for an unknown reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not resend the confirmation email. Please try again.'**
+  String get authResendFailed;
+
   /// Generic back button label.
   ///
   /// In en, this message translates to:

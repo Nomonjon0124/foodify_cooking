@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:foodify_cooking/core/di/injection_container.dart';
 import 'package:foodify_cooking/core/utils/result.dart';
 import 'package:foodify_cooking/features/auth/domain/auth_failure_messages.dart';
+import 'package:foodify_cooking/features/auth/domain/entities/register_outcome.dart';
 import 'package:foodify_cooking/features/auth/domain/entities/user_entity.dart';
 import 'package:foodify_cooking/features/auth/domain/repositories/auth_repository.dart';
 import 'package:foodify_cooking/features/auth/domain/usecases/login_usecase.dart';
@@ -81,12 +82,17 @@ class _FailingAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<Result<UserEntity>> register({
+  Future<Result<RegisterOutcome>> register({
     required String name,
     required String email,
     required String password,
   }) async {
-    return const Failure<UserEntity>(AuthFailureMessages.registerFailed);
+    return const Failure<RegisterOutcome>(AuthFailureMessages.registerFailed);
+  }
+
+  @override
+  Future<Result<void>> resendConfirmation({required String email}) async {
+    return const Success<void>(null);
   }
 
   @override

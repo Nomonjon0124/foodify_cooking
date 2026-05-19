@@ -212,6 +212,53 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пароль должен быть не короче 6 символов';
 
   @override
+  String get verifyEmailTitle => 'Подтверждение email';
+
+  @override
+  String get verifyEmailHeading => 'Проверьте почту';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'Мы отправили письмо со ссылкой на $email. Откройте ссылку на этом устройстве, чтобы завершить регистрацию.';
+  }
+
+  @override
+  String get verifyEmailResendCta => 'Отправить ещё раз';
+
+  @override
+  String get verifyEmailResendSuccess =>
+      'Письмо подтверждения отправлено повторно.';
+
+  @override
+  String get verifyEmailResendFailed => 'Не удалось повторно отправить письмо.';
+
+  @override
+  String get verifyEmailOpenMailApp => 'Открыть почтовое приложение';
+
+  @override
+  String get verifyEmailOpenMailAppFailed =>
+      'На устройстве нет приложения почты.';
+
+  @override
+  String get verifyEmailBackToLogin => 'Вернуться ко входу';
+
+  @override
+  String get authEmailConfirmationFailed =>
+      'Не удалось подтвердить email. Запросите новую ссылку.';
+
+  @override
+  String get authResendRateLimited =>
+      'Подождите немного перед повторной отправкой письма.';
+
+  @override
+  String get authResendUserAlreadyConfirmed =>
+      'Этот email уже подтверждён. Войдите в аккаунт.';
+
+  @override
+  String get authResendFailed =>
+      'Не удалось повторно отправить письмо. Попробуйте снова.';
+
+  @override
   String get back => 'Назад';
 
   @override

@@ -102,6 +102,16 @@ String registerRouteForReturnTo(String returnTo) {
   ).toString();
 }
 
+String verifyEmailRouteFor({required String email, String? returnTo}) {
+  return Uri(
+    path: RouteNames.verifyEmail,
+    queryParameters: {
+      'email': email,
+      if (returnTo != null && returnTo.isNotEmpty) 'returnTo': returnTo,
+    },
+  ).toString();
+}
+
 String _loginRoute(String returnTo) {
   return Uri(
     path: RouteNames.login,

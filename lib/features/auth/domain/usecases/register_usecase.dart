@@ -2,16 +2,17 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../../../core/utils/result.dart';
-import '../entities/user_entity.dart';
+import '../entities/register_outcome.dart';
 import '../repositories/auth_repository.dart';
 
-class RegisterUseCase implements UseCase<Result<UserEntity>, RegisterParams> {
+class RegisterUseCase
+    implements UseCase<Result<RegisterOutcome>, RegisterParams> {
   RegisterUseCase(this._repository);
 
   final AuthRepository _repository;
 
   @override
-  Future<Result<UserEntity>> call(RegisterParams params) {
+  Future<Result<RegisterOutcome>> call(RegisterParams params) {
     return _repository.register(
       name: params.name,
       email: params.email,

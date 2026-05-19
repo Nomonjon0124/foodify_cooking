@@ -45,5 +45,29 @@ void main() {
         AuthFailureMessages.googleCallbackFailed,
       );
     });
+
+    test('detects email confirmation callbacks via type=signup query', () {
+      final uri = Uri.parse(
+        'foodify-cooking://login-callback/?type=signup&code=abc',
+      );
+
+      expect(AuthCallbackRoute.matches(uri), isTrue);
+      expect(AuthCallbackRoute.isEmailConfirmation(uri), isTrue);
+      expect(AuthCallbackRoute.hasFailure(uri), isFalse);
+    });
+
+    test('email confirmation failures surface a dedicated message', () {
+      final uri = Uri.parse(
+        'foodify-cooking://login-callback/?type=signup&'
+        'error=access_denied&error_code=otp_expired',
+      );
+
+      expect(AuthCallbackRoute.isEmailConfirmation(uri), isTrue);
+      expect(AuthCallbackRoute.hasFailure(uri), isTrue);
+      expect(
+        AuthCallbackRoute.failureMessage(uri),
+        AuthFailureMessages.emailConfirmationFailed,
+      );
+    });
   });
 }

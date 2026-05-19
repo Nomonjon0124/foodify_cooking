@@ -7,14 +7,16 @@ import '../auth_log_redactor.dart';
 import '../models/auth_response_model.dart';
 import '../models/login_request_model.dart';
 import '../models/user_model.dart';
+import 'register_remote_result.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<AuthResponseModel> login(LoginRequestModel request);
-  Future<AuthResponseModel> register({
+  Future<RegisterRemoteResult> register({
     required String name,
     required String email,
     required String password,
   });
+  Future<void> resendConfirmation({required String email});
   Future<UserModel?> getCurrentUser();
   Future<void> signInWithGoogle({required String redirectTo});
   Stream<UserModel?> authStateChanges();
@@ -29,7 +31,10 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
   final LoggerService _logger;
   final Dio _dio;
 
-  static const googleRedirectUrl = 'foodify-cooking://login-callback';
+  static const authCallbackUrl = 'foodify-cooking://login-callback';
+
+  // Kept for backwards compatibility with existing call sites.
+  static const googleRedirectUrl = authCallbackUrl;
 
   @override
   Future<AuthResponseModel> login(LoginRequestModel request) async {
@@ -62,7 +67,7 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<AuthResponseModel> register({
+  Future<RegisterRemoteResult> register({
     required String name,
     required String email,
     required String password,
@@ -74,16 +79,23 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
         email: email,
         password: password,
         data: {'name': name, 'full_name': name},
+        emailRedirectTo: kIsWeb ? null : authCallbackUrl,
       );
+      final hasUser = response.user != null;
+      final hasSession = response.session != null;
       _logger.log(
         'Auth signUp success email=$redactedEmail '
-        'user=${response.user == null ? 'absent' : 'present'} '
-        'session=${response.session == null ? 'absent' : 'present'}',
+        'user=${hasUser ? 'present' : 'absent'} '
+        'session=${hasSession ? 'present' : 'absent'} '
+        'status=${hasSession ? 'signed_in' : 'needs_confirmation'}',
       );
-      if (response.session == null) {
-        throw const AuthException('Confirm your email to finish registration.');
+      if (!hasUser) {
+        throw const AuthException('Authentication did not return a user.');
       }
-      return _authResponseFromSupabase(response);
+      if (!hasSession) {
+        return RegisterRemoteNeedsConfirmation(email);
+      }
+      return RegisterRemoteSignedIn(_authResponseFromSupabase(response));
     } on AuthException catch (error) {
       _logger.log(
         'Auth signUp failure email=$redactedEmail '
@@ -93,6 +105,32 @@ class SupabaseAuthRemoteDataSource implements AuthRemoteDataSource {
     } catch (error) {
       _logger.log(
         'Auth signUp failure email=$redactedEmail '
+        '${AuthLogRedactor.object(error)}',
+      );
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> resendConfirmation({required String email}) async {
+    final redactedEmail = AuthLogRedactor.email(email);
+    _logger.log('Auth resend start type=signup email=$redactedEmail');
+    try {
+      await _readClient().auth.resend(
+        type: OtpType.signup,
+        email: email,
+        emailRedirectTo: kIsWeb ? null : authCallbackUrl,
+      );
+      _logger.log('Auth resend success type=signup email=$redactedEmail');
+    } on AuthException catch (error) {
+      _logger.log(
+        'Auth resend failure type=signup email=$redactedEmail '
+        '${AuthLogRedactor.authException(error)}',
+      );
+      rethrow;
+    } catch (error) {
+      _logger.log(
+        'Auth resend failure type=signup email=$redactedEmail '
         '${AuthLogRedactor.object(error)}',
       );
       rethrow;

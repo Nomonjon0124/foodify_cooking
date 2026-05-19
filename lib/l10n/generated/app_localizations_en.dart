@@ -211,6 +211,53 @@ class AppLocalizationsEn extends AppLocalizations {
       'Password must be at least 6 characters';
 
   @override
+  String get verifyEmailTitle => 'Verify email';
+
+  @override
+  String get verifyEmailHeading => 'Check your inbox';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'We sent a confirmation link to $email. Open the link on this device to finish creating your account.';
+  }
+
+  @override
+  String get verifyEmailResendCta => 'Resend email';
+
+  @override
+  String get verifyEmailResendSuccess => 'Confirmation email sent again.';
+
+  @override
+  String get verifyEmailResendFailed =>
+      'Could not resend the confirmation email.';
+
+  @override
+  String get verifyEmailOpenMailApp => 'Open mail app';
+
+  @override
+  String get verifyEmailOpenMailAppFailed =>
+      'No mail app available on this device.';
+
+  @override
+  String get verifyEmailBackToLogin => 'Back to login';
+
+  @override
+  String get authEmailConfirmationFailed =>
+      'Email confirmation failed. Please request a new link.';
+
+  @override
+  String get authResendRateLimited =>
+      'Please wait a moment before requesting another email.';
+
+  @override
+  String get authResendUserAlreadyConfirmed =>
+      'This email is already confirmed. Try signing in.';
+
+  @override
+  String get authResendFailed =>
+      'Could not resend the confirmation email. Please try again.';
+
+  @override
   String get back => 'Back';
 
   @override

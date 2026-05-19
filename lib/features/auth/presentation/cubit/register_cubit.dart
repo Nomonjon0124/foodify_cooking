@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/auth_failure_messages.dart';
+import '../../domain/entities/register_outcome.dart';
 import '../../domain/usecases/register_usecase.dart';
 import 'register_state.dart';
 
@@ -23,21 +23,25 @@ class RegisterCubit extends Cubit<RegisterState> {
       ),
     );
     response.fold(
-      (message) {
-        final requiresConfirmation =
-            message == AuthFailureMessages.emailNotConfirmed ||
-            message.toLowerCase().contains('confirm');
-        emit(
-          state.copyWith(
-            status: requiresConfirmation
-                ? RegisterStatus.confirmationRequired
-                : RegisterStatus.failure,
-            errorMessage: message,
-          ),
-        );
+      (message) => emit(
+        state.copyWith(
+          status: RegisterStatus.failure,
+          errorMessage: message,
+        ),
+      ),
+      (outcome) {
+        switch (outcome) {
+          case RegisterSignedIn(:final user):
+            emit(state.copyWith(status: RegisterStatus.success, user: user));
+          case RegisterNeedsConfirmation(:final email):
+            emit(
+              state.copyWith(
+                status: RegisterStatus.confirmationRequired,
+                pendingConfirmationEmail: email,
+              ),
+            );
+        }
       },
-      (user) =>
-          emit(state.copyWith(status: RegisterStatus.success, user: user)),
     );
   }
 }

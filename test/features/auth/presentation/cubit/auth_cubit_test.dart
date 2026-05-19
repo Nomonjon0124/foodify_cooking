@@ -5,6 +5,7 @@ import 'package:foodify_cooking/core/constants/storage_keys.dart';
 import 'package:foodify_cooking/core/services/storage_service.dart';
 import 'package:foodify_cooking/core/utils/result.dart';
 import 'package:foodify_cooking/features/auth/domain/auth_failure_messages.dart';
+import 'package:foodify_cooking/features/auth/domain/entities/register_outcome.dart';
 import 'package:foodify_cooking/features/auth/domain/entities/user_entity.dart';
 import 'package:foodify_cooking/features/auth/domain/repositories/auth_repository.dart';
 import 'package:foodify_cooking/features/auth/domain/usecases/get_current_user_usecase.dart';
@@ -156,13 +157,18 @@ class _FakeAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<Result<UserEntity>> register({
+  Future<Result<RegisterOutcome>> register({
     required String name,
     required String email,
     required String password,
   }) async {
     currentUser = user;
-    return const Success<UserEntity>(user);
+    return const Success<RegisterOutcome>(RegisterSignedIn(user));
+  }
+
+  @override
+  Future<Result<void>> resendConfirmation({required String email}) async {
+    return const Success<void>(null);
   }
 
   @override

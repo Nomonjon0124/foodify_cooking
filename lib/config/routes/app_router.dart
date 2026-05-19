@@ -8,6 +8,7 @@ import '../../core/di/injection_container.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/profile_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/add_new/presentation/pages/add_new_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
@@ -126,6 +127,14 @@ abstract final class AppRouter {
         name: 'register',
         builder: (context, state) =>
             RegisterPage(returnTo: state.uri.queryParameters['returnTo']),
+      ),
+      GoRoute(
+        path: RouteNames.verifyEmail,
+        name: 'verify-email',
+        builder: (context, state) => VerifyEmailPage(
+          email: state.uri.queryParameters['email'] ?? '',
+          returnTo: state.uri.queryParameters['returnTo'],
+        ),
       ),
       GoRoute(
         path: RouteNames.recipes,

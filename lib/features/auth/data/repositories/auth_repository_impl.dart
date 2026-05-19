@@ -4,6 +4,7 @@ import '../../../../core/network/network_info.dart';
 import '../../../../core/services/logger_service.dart';
 import '../../../../core/services/token_service.dart';
 import '../../../../core/utils/result.dart';
+import '../../domain/entities/register_outcome.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/auth_failure_messages.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -11,6 +12,7 @@ import '../auth_error_mapper.dart';
 import '../auth_log_redactor.dart';
 import '../data_sources/auth_local_data_source.dart';
 import '../data_sources/auth_remote_data_source.dart';
+import '../data_sources/register_remote_result.dart';
 import '../models/login_request_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -80,7 +82,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<UserEntity>> register({
+  Future<Result<RegisterOutcome>> register({
     required String name,
     required String email,
     required String password,
@@ -91,17 +93,22 @@ class AuthRepositoryImpl implements AuthRepository {
           'Auth repository register blocked reason=network '
           'email=${AuthLogRedactor.email(email)}',
         );
-        return const Failure<UserEntity>(AuthFailureMessages.network);
+        return const Failure<RegisterOutcome>(AuthFailureMessages.network);
       }
 
-      final response = await _remoteDataSource.register(
+      final result = await _remoteDataSource.register(
         name: name,
         email: email,
         password: password,
       );
-      await _tokenService.saveToken(response.token);
-      await _localDataSource.cacheUser(response.user);
-      return Success<UserEntity>(response.user);
+      switch (result) {
+        case RegisterRemoteSignedIn(:final response):
+          await _tokenService.saveToken(response.token);
+          await _localDataSource.cacheUser(response.user);
+          return Success<RegisterOutcome>(RegisterSignedIn(response.user));
+        case RegisterRemoteNeedsConfirmation(:final email):
+          return Success<RegisterOutcome>(RegisterNeedsConfirmation(email));
+      }
     } on AuthException catch (error) {
       final mapped = AuthErrorMapper.mapAuthException(
         error,
@@ -113,7 +120,7 @@ class AuthRepositoryImpl implements AuthRepository {
         error: error,
         email: email,
       );
-      return Failure<UserEntity>(mapped);
+      return Failure<RegisterOutcome>(mapped);
     } catch (error) {
       final mapped = AuthErrorMapper.mapUnknown(
         error,
@@ -125,7 +132,47 @@ class AuthRepositoryImpl implements AuthRepository {
         error: error,
         email: email,
       );
-      return Failure<UserEntity>(mapped);
+      return Failure<RegisterOutcome>(mapped);
+    }
+  }
+
+  @override
+  Future<Result<void>> resendConfirmation({required String email}) async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        _logger.log(
+          'Auth repository resend blocked reason=network '
+          'email=${AuthLogRedactor.email(email)}',
+        );
+        return const Failure<void>(AuthFailureMessages.network);
+      }
+
+      await _remoteDataSource.resendConfirmation(email: email);
+      return const Success<void>(null);
+    } on AuthException catch (error) {
+      final mapped = AuthErrorMapper.mapAuthException(
+        error,
+        operation: AuthOperation.resendConfirmation,
+      );
+      _logAuthException(
+        operation: 'resendConfirmation',
+        mapped: mapped,
+        error: error,
+        email: email,
+      );
+      return Failure<void>(mapped);
+    } catch (error) {
+      final mapped = AuthErrorMapper.mapUnknown(
+        error,
+        operation: AuthOperation.resendConfirmation,
+      );
+      _logUnknownAuthFailure(
+        operation: 'resendConfirmation',
+        mapped: mapped,
+        error: error,
+        email: email,
+      );
+      return Failure<void>(mapped);
     }
   }
 

@@ -18,6 +18,12 @@ abstract final class AuthErrorL10n {
         l10n.authGoogleProviderDisabled,
       AuthFailureMessages.invalidCredentials => l10n.authInvalidCredentials,
       AuthFailureMessages.emailNotConfirmed => l10n.authEmailNotConfirmed,
+      AuthFailureMessages.emailConfirmationFailed =>
+        l10n.authEmailConfirmationFailed,
+      AuthFailureMessages.resendRateLimited => l10n.authResendRateLimited,
+      AuthFailureMessages.resendUserAlreadyConfirmed =>
+        l10n.authResendUserAlreadyConfirmed,
+      AuthFailureMessages.resendFailed => l10n.authResendFailed,
       AuthFailureMessages.rateLimited => l10n.authRateLimited,
       AuthFailureMessages.network => l10n.authNetworkFailure,
       AuthFailureMessages.loginFailed => l10n.loginFailed,
