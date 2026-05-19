@@ -18,9 +18,21 @@ class ProfileViewModel extends ProfileView {
   factory ProfileViewModel.fromJson({
     required Map<String, dynamic> profileJson,
     required List<dynamic> recipesJson,
+    bool useRecipesCountWhenPostsEmpty = false,
   }) {
     final displayName = _stringValue(profileJson['display_name']);
     final avatarUrl = _stringValue(profileJson['avatar_url']);
+    final recipes = recipesJson
+        .whereType<Map<String, dynamic>>()
+        .map(
+          (json) => ProfileRecipeModel.fromJson(
+            json,
+            fallbackChefName: displayName,
+            fallbackChefAvatarUrl: avatarUrl,
+          ),
+        )
+        .toList();
+    final postsCount = _intValue(profileJson['posts_count']);
 
     return ProfileViewModel(
       id: _stringValue(profileJson['id']),
@@ -32,17 +44,11 @@ class ProfileViewModel extends ProfileView {
       ratingLabel: _ratingLabel(profileJson['rating']),
       followersLabel: _compactCount(profileJson['followers_count']),
       followingLabel: _compactCount(profileJson['following_count']),
-      postsCount: _intValue(profileJson['posts_count']),
-      recipes: recipesJson
-          .whereType<Map<String, dynamic>>()
-          .map(
-            (json) => ProfileRecipeModel.fromJson(
-              json,
-              chefName: displayName,
-              chefAvatarUrl: avatarUrl,
-            ),
-          )
-          .toList(),
+      postsCount:
+          useRecipesCountWhenPostsEmpty && postsCount == 0 && recipes.isNotEmpty
+          ? recipes.length
+          : postsCount,
+      recipes: recipes,
     );
   }
 }
@@ -62,19 +68,23 @@ class ProfileRecipeModel extends ProfileRecipe {
 
   factory ProfileRecipeModel.fromJson(
     Map<String, dynamic> json, {
-    required String chefName,
-    required String chefAvatarUrl,
+    required String fallbackChefName,
+    required String fallbackChefAvatarUrl,
   }) {
     return ProfileRecipeModel(
       id: _stringValue(json['id']),
       title: _stringValue(json['title']),
-      chefName: chefName,
+      chefName: _stringValue(json['chef_name']).isEmpty
+          ? fallbackChefName
+          : _stringValue(json['chef_name']),
       ratingLabel: _ratingLabel(json['rating']),
       durationLabel: _durationLabel(json['duration_minutes']),
       difficultyLabel: _stringValue(json['difficulty']),
       description: _stringValue(json['description']),
       imageUrl: _stringValue(json['cover_image_url']),
-      chefAvatarUrl: chefAvatarUrl,
+      chefAvatarUrl: _stringValue(json['chef_avatar_url']).isEmpty
+          ? fallbackChefAvatarUrl
+          : _stringValue(json['chef_avatar_url']),
     );
   }
 }

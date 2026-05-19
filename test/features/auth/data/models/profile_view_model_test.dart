@@ -26,6 +26,8 @@ void main() {
             'duration_minutes': 30,
             'difficulty': 'Medium',
             'cover_image_url': 'https://example.com/recipe.png',
+            'chef_name': 'Chef Mark',
+            'chef_avatar_url': 'https://example.com/chef.png',
           },
         ],
       );
@@ -35,13 +37,47 @@ void main() {
       expect(model.followersLabel, '357K');
       expect(model.followingLabel, '24');
       expect(model.postsCount, 18);
-      expect(model.recipes.single.chefName, 'Mark Salvador');
+      expect(model.recipes.single.chefName, 'Chef Mark');
       expect(model.recipes.single.ratingLabel, '4.8');
       expect(model.recipes.single.durationLabel, '30 Min');
       expect(
         model.recipes.single.chefAvatarUrl,
-        'https://example.com/avatar.png',
+        'https://example.com/chef.png',
       );
+    });
+
+    test('uses fallback recipe count when real posts are empty', () {
+      final model = ProfileViewModel.fromJson(
+        profileJson: {
+          'id': 'profile-1',
+          'display_name': 'Nomonjon Toychiyev',
+          'posts_count': 0,
+        },
+        recipesJson: [
+          {'id': 'recipe-1', 'title': 'Egg rolls'},
+          {'id': 'recipe-2', 'title': 'Chicken bowl'},
+        ],
+        useRecipesCountWhenPostsEmpty: true,
+      );
+
+      expect(model.postsCount, 2);
+      expect(model.recipes, hasLength(2));
+    });
+
+    test('keeps real empty posts count when fallback count is disabled', () {
+      final model = ProfileViewModel.fromJson(
+        profileJson: {
+          'id': 'profile-1',
+          'display_name': 'Nomonjon Toychiyev',
+          'posts_count': 0,
+        },
+        recipesJson: [
+          {'id': 'recipe-1', 'title': 'Egg rolls'},
+        ],
+      );
+
+      expect(model.postsCount, 0);
+      expect(model.recipes, hasLength(1));
     });
   });
 }
