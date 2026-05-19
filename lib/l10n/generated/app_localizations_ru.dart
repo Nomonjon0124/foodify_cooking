@@ -143,13 +143,73 @@ class AppLocalizationsRu extends AppLocalizations {
   String get loginCreateAccount => 'Создать аккаунт';
 
   @override
+  String get authRequiredTitle => 'Требуется вход';
+
+  @override
+  String get authRequiredSubtitle =>
+      'Войдите, чтобы добавлять рецепты, сохранять избранное и управлять профилем.';
+
+  @override
+  String get authContinueWithGoogle => 'Продолжить с Google';
+
+  @override
+  String get authContinueWithEmail => 'Продолжить с email';
+
+  @override
   String get authModuleDisabled => 'Модуль авторизации отключен';
+
+  @override
+  String get authGoogleProviderDisabled => 'Вход через Google пока не настроен';
+
+  @override
+  String get authInvalidCredentials => 'Неверный email или пароль';
+
+  @override
+  String get authEmailNotConfirmed => 'Подтвердите email перед входом.';
+
+  @override
+  String get authRateLimited => 'Слишком много попыток. Попробуйте позже.';
+
+  @override
+  String get authNetworkFailure =>
+      'Проверьте подключение к интернету и попробуйте снова.';
+
+  @override
+  String get authGoogleSignInFailed => 'Не удалось начать вход через Google';
+
+  @override
+  String get authGoogleCallbackFailed =>
+      'Не удалось завершить вход через Google';
+
+  @override
+  String get authUnexpectedFailure => 'Не удалось выполнить вход';
 
   @override
   String get registerTitle => 'Регистрация';
 
   @override
-  String get registerTodo => 'TODO: Реализовать регистрацию';
+  String get registerWelcome => 'Создайте аккаунт';
+
+  @override
+  String get registerSubtitle =>
+      'Присоединяйтесь к Milliy Taste, чтобы сохранять рецепты и делиться ими.';
+
+  @override
+  String get registerName => 'Имя';
+
+  @override
+  String get registerAlreadyHaveAccount => 'Уже есть аккаунт?';
+
+  @override
+  String get registerFailed => 'Не удалось зарегистрироваться';
+
+  @override
+  String get registerConfirmationRequired =>
+      'Проверьте email, чтобы завершить регистрацию.';
+
+  @override
+  String get registerPasswordMinLength =>
+      'Пароль должен быть не короче 6 символов';
 
   @override
   String get back => 'Назад';
@@ -159,6 +219,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get saveTodo => 'TODO: Реализовать сохраненные рецепты';
+
+  @override
+  String get saveEmpty => 'Сохраненных рецептов пока нет';
+
+  @override
+  String get saveLoadFailure => 'Не удалось загрузить сохраненные рецепты';
+
+  @override
+  String get saveActionFailure => 'Не удалось обновить сохраненные рецепты';
 
   @override
   String get recipesTitle => 'Рецепты';
@@ -197,6 +266,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get profileEditAction => 'Изменить';
+
+  @override
+  String get profileLogout => 'Выйти';
 
   @override
   String get addNewTitle => 'Новый рецепт';

@@ -184,17 +184,89 @@
   "@loginCreateAccount": {
     "description": "Button to navigate to account creation."
   },
+  "authRequiredTitle": "Sign in required",
+  "@authRequiredTitle": {
+    "description": "Title shown when a guest user tries to use a protected action."
+  },
+  "authRequiredSubtitle": "Sign in to add recipes, save favorites, and manage your profile.",
+  "@authRequiredSubtitle": {
+    "description": "Subtitle shown when a guest user tries to use a protected action."
+  },
+  "authContinueWithGoogle": "Continue with Google",
+  "@authContinueWithGoogle": {
+    "description": "CTA for starting Google sign in."
+  },
+  "authContinueWithEmail": "Continue with email",
+  "@authContinueWithEmail": {
+    "description": "CTA for opening email login or registration."
+  },
   "authModuleDisabled": "Auth module is disabled",
   "@authModuleDisabled": {
     "description": "Message shown when auth DI is disabled."
+  },
+  "authGoogleProviderDisabled": "Google login is not configured yet",
+  "@authGoogleProviderDisabled": {
+    "description": "Error shown when Supabase Google OAuth provider is disabled or unsupported."
+  },
+  "authInvalidCredentials": "Invalid email or password",
+  "@authInvalidCredentials": {
+    "description": "Error shown when email login credentials are incorrect."
+  },
+  "authEmailNotConfirmed": "Check your email to confirm this account before signing in.",
+  "@authEmailNotConfirmed": {
+    "description": "Error shown when Supabase requires email confirmation before login."
+  },
+  "authRateLimited": "Too many attempts. Please try again later.",
+  "@authRateLimited": {
+    "description": "Error shown when Supabase auth rate limits the request."
+  },
+  "authNetworkFailure": "Check your internet connection and try again.",
+  "@authNetworkFailure": {
+    "description": "Error shown when an auth request cannot reach the network."
+  },
+  "authGoogleSignInFailed": "Unable to start Google sign in",
+  "@authGoogleSignInFailed": {
+    "description": "Fallback error shown when Google sign in fails for an unknown reason."
+  },
+  "authGoogleCallbackFailed": "Google sign in could not be completed",
+  "@authGoogleCallbackFailed": {
+    "description": "Error shown when Google OAuth returns to the app with a callback or code exchange failure."
+  },
+  "authUnexpectedFailure": "Authentication failed",
+  "@authUnexpectedFailure": {
+    "description": "Generic auth failure fallback used outside the login and register screens."
   },
   "registerTitle": "Register",
   "@registerTitle": {
     "description": "Register screen app bar title."
   },
-  "registerTodo": "TODO: Implement registration flow",
-  "@registerTodo": {
-    "description": "Temporary placeholder for registration flow."
+  "registerWelcome": "Create your account",
+  "@registerWelcome": {
+    "description": "Register screen header title."
+  },
+  "registerSubtitle": "Join Milliy Taste to save and share recipes.",
+  "@registerSubtitle": {
+    "description": "Register screen header subtitle."
+  },
+  "registerName": "Name",
+  "@registerName": {
+    "description": "Register form display name field label."
+  },
+  "registerAlreadyHaveAccount": "Already have an account?",
+  "@registerAlreadyHaveAccount": {
+    "description": "Button to navigate from register to login."
+  },
+  "registerFailed": "Registration failed",
+  "@registerFailed": {
+    "description": "Register failure snackbar fallback."
+  },
+  "registerConfirmationRequired": "Check your email to finish registration.",
+  "@registerConfirmationRequired": {
+    "description": "Message shown when Supabase requires email confirmation before sign in."
+  },
+  "registerPasswordMinLength": "Password must be at least 6 characters",
+  "@registerPasswordMinLength": {
+    "description": "Validation message for too-short registration passwords."
   },
   "back": "Back",
   "@back": {
@@ -207,6 +279,18 @@
   "saveTodo": "TODO: Implement saved recipes flow",
   "@saveTodo": {
     "description": "Temporary placeholder for saved recipes flow."
+  },
+  "saveEmpty": "No saved recipes yet",
+  "@saveEmpty": {
+    "description": "Empty state for the saved recipes screen."
+  },
+  "saveLoadFailure": "Unable to load saved recipes",
+  "@saveLoadFailure": {
+    "description": "Saved recipes load failure message."
+  },
+  "saveActionFailure": "Unable to update saved recipes",
+  "@saveActionFailure": {
+    "description": "Saved recipe save or unsave failure message."
   },
   "recipesTitle": "Recipes",
   "@recipesTitle": {
@@ -261,6 +345,10 @@
   "profileEditAction": "Edit Profile",
   "@profileEditAction": {
     "description": "Profile action button for editing the current profile."
+  },
+  "profileLogout": "Log out",
+  "@profileLogout": {
+    "description": "Profile action button for signing out."
   },
   "addNewTitle": "New Recipe",
   "@addNewTitle": {

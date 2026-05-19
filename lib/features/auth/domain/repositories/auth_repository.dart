@@ -7,7 +7,17 @@ abstract interface class AuthRepository {
     required String password,
   });
 
+  Future<Result<UserEntity>> register({
+    required String name,
+    required String email,
+    required String password,
+  });
+
+  Future<Result<void>> signInWithGoogle({required String redirectTo});
+
   Future<Result<void>> logout();
 
-  Future<Result<UserEntity>> getCurrentUser();
+  Future<Result<UserEntity?>> getCurrentUser();
+
+  Stream<UserEntity?> authStateChanges();
 }

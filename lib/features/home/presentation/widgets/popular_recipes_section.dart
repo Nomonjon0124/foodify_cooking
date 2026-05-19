@@ -7,9 +7,16 @@ import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
 
 class PopularRecipesSection extends StatefulWidget {
-  const PopularRecipesSection({required this.recipes, super.key});
+  const PopularRecipesSection({
+    required this.recipes,
+    required this.savedRecipeIds,
+    required this.onSavePressed,
+    super.key,
+  });
 
   final List<HomeRecipe> recipes;
+  final Set<String> savedRecipeIds;
+  final ValueChanged<HomeRecipe> onSavePressed;
 
   @override
   State<PopularRecipesSection> createState() => _PopularRecipesSectionState();
@@ -59,6 +66,10 @@ class _PopularRecipesSectionState extends State<PopularRecipesSection> {
                       recipe.coverImageUrl,
                       fit: BoxFit.cover,
                     ),
+                    state: widget.savedRecipeIds.contains(recipe.id)
+                        ? FoodifyPopularCardState.saved
+                        : FoodifyPopularCardState.toBeSaved,
+                    onSavePressed: () => widget.onSavePressed(recipe),
                   );
                 },
               ),

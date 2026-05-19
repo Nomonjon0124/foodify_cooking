@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,12 +16,31 @@ import '../../features/save/presentation/pages/save_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../app/cubit/app_shell_cubit.dart';
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/save/presentation/cubit/saved_recipes_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import 'auth_callback_route.dart';
 import 'route_names.dart';
 
 abstract final class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: RouteNames.splash,
+    redirect: (context, state) {
+      final uri = state.uri;
+      if (!AuthCallbackRoute.matches(uri)) return null;
+
+      if (AuthCallbackRoute.hasFailure(uri) &&
+          getIt.isRegistered<AuthCubit>()) {
+        final message = AuthCallbackRoute.failureMessage(uri);
+        scheduleMicrotask(() {
+          if (getIt.isRegistered<AuthCubit>()) {
+            unawaited(getIt<AuthCubit>().handleAuthCallbackFailure(message));
+          }
+        });
+      }
+
+      return AuthCallbackRoute.redirectLocation(uri);
+    },
     routes: [
       GoRoute(
         path: RouteNames.splash,
@@ -33,8 +54,16 @@ abstract final class AppRouter {
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
-          return BlocProvider<AppShellCubit>.value(
-            value: getIt<AppShellCubit>(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<AppShellCubit>.value(value: getIt<AppShellCubit>()),
+              if (getIt.isRegistered<AuthCubit>())
+                BlocProvider<AuthCubit>.value(value: getIt<AuthCubit>()),
+              if (getIt.isRegistered<SavedRecipesCubit>())
+                BlocProvider<SavedRecipesCubit>.value(
+                  value: getIt<SavedRecipesCubit>(),
+                ),
+            ],
             child: AppShellPage(navigationShell: navigationShell),
           );
         },
@@ -89,12 +118,14 @@ abstract final class AppRouter {
       GoRoute(
         path: RouteNames.login,
         name: 'login',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) =>
+            LoginPage(returnTo: state.uri.queryParameters['returnTo']),
       ),
       GoRoute(
         path: RouteNames.register,
         name: 'register',
-        builder: (context, state) => const RegisterPage(),
+        builder: (context, state) =>
+            RegisterPage(returnTo: state.uri.queryParameters['returnTo']),
       ),
       GoRoute(
         path: RouteNames.recipes,

@@ -10,5 +10,14 @@ abstract final class SupabaseService {
     );
   }
 
+  static bool get isInitialized {
+    try {
+      Supabase.instance.client;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static SupabaseClient get client => Supabase.instance.client;
 }

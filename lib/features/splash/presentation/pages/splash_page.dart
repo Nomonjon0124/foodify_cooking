@@ -6,7 +6,9 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/route_names.dart';
+import '../../../../core/constants/storage_keys.dart';
 import '../../../../core/di/injection_container.dart';
+import '../../../../core/services/storage_service.dart';
 import '../cubit/splash_cubit.dart';
 import '../cubit/splash_state.dart';
 import '../widgets/splash_loading_dots.dart';
@@ -22,7 +24,14 @@ class SplashPage extends StatelessWidget {
         listenWhen: (previous, current) =>
             previous.status != current.status &&
             current.status == SplashStatus.completed,
-        listener: (context, state) => context.go(RouteNames.onboarding),
+        listener: (context, state) {
+          final completed =
+              getIt<StorageService>().getString(
+                StorageKeys.onboardingCompleted,
+              ) ==
+              'true';
+          context.go(completed ? RouteNames.home : RouteNames.onboarding);
+        },
         child: const _SplashView(),
       ),
     );

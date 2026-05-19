@@ -142,13 +142,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginCreateAccount => 'Create account';
 
   @override
+  String get authRequiredTitle => 'Sign in required';
+
+  @override
+  String get authRequiredSubtitle =>
+      'Sign in to add recipes, save favorites, and manage your profile.';
+
+  @override
+  String get authContinueWithGoogle => 'Continue with Google';
+
+  @override
+  String get authContinueWithEmail => 'Continue with email';
+
+  @override
   String get authModuleDisabled => 'Auth module is disabled';
+
+  @override
+  String get authGoogleProviderDisabled => 'Google login is not configured yet';
+
+  @override
+  String get authInvalidCredentials => 'Invalid email or password';
+
+  @override
+  String get authEmailNotConfirmed =>
+      'Check your email to confirm this account before signing in.';
+
+  @override
+  String get authRateLimited => 'Too many attempts. Please try again later.';
+
+  @override
+  String get authNetworkFailure =>
+      'Check your internet connection and try again.';
+
+  @override
+  String get authGoogleSignInFailed => 'Unable to start Google sign in';
+
+  @override
+  String get authGoogleCallbackFailed =>
+      'Google sign in could not be completed';
+
+  @override
+  String get authUnexpectedFailure => 'Authentication failed';
 
   @override
   String get registerTitle => 'Register';
 
   @override
-  String get registerTodo => 'TODO: Implement registration flow';
+  String get registerWelcome => 'Create your account';
+
+  @override
+  String get registerSubtitle => 'Join Milliy Taste to save and share recipes.';
+
+  @override
+  String get registerName => 'Name';
+
+  @override
+  String get registerAlreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get registerFailed => 'Registration failed';
+
+  @override
+  String get registerConfirmationRequired =>
+      'Check your email to finish registration.';
+
+  @override
+  String get registerPasswordMinLength =>
+      'Password must be at least 6 characters';
 
   @override
   String get back => 'Back';
@@ -158,6 +218,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveTodo => 'TODO: Implement saved recipes flow';
+
+  @override
+  String get saveEmpty => 'No saved recipes yet';
+
+  @override
+  String get saveLoadFailure => 'Unable to load saved recipes';
+
+  @override
+  String get saveActionFailure => 'Unable to update saved recipes';
 
   @override
   String get recipesTitle => 'Recipes';
@@ -196,6 +265,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileEditAction => 'Edit Profile';
+
+  @override
+  String get profileLogout => 'Log out';
 
   @override
   String get addNewTitle => 'New Recipe';

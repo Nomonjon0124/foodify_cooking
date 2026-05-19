@@ -11,4 +11,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<ProfileView> getDemoProfile() {
     return _remoteDataSource.getProfileBySlug('mark-salvador');
   }
+
+  @override
+  Future<ProfileView> getCurrentProfile() {
+    return _remoteDataSource.getCurrentProfile();
+  }
 }
