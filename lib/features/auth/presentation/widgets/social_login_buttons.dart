@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../l10n/l10n_extension.dart';
+
 class SocialLoginButtons extends StatelessWidget {
-  const SocialLoginButtons({super.key});
+  const SocialLoginButtons({required this.onGooglePressed, super.key});
+
+  final VoidCallback onGooglePressed;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: OutlinedButton(
-            onPressed: () {
-              // TODO: Add Google sign-in.
-            },
-            child: const Text('Google'),
-          ),
+    return SizedBox(
+      width: double.infinity,
+      child: OutlinedButton(
+        key: const Key('google_sign_in_button'),
+        onPressed: onGooglePressed,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 2.h),
+          child: Text(context.l10n.authContinueWithGoogle),
         ),
-        SizedBox(width: 12.w),
-        Expanded(
-          child: OutlinedButton(
-            onPressed: () {
-              // TODO: Add Apple sign-in.
-            },
-            child: const Text('Apple'),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

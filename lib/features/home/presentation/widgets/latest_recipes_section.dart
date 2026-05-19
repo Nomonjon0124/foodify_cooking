@@ -13,7 +13,7 @@ class LatestRecipesSection extends StatelessWidget {
   });
 
   final List<HomeRecipe> recipes;
-  final VoidCallback onActionPressed;
+  final ValueChanged<HomeRecipe> onActionPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class LatestRecipesSection extends StatelessWidget {
                     authorImagePath: author?.avatarUrl ?? '',
                     topRating: recipe.topRatingLabel,
                     authorRating: author?.ratingLabel ?? '0.0',
-                    onActionPressed: onActionPressed,
+                    onActionPressed: () => onActionPressed(recipe),
                   ),
                 ),
                 if (entry.key != recipes.length - 1) SizedBox(height: 12.h),

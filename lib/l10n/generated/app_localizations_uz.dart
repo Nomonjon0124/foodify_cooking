@@ -145,13 +145,123 @@ class AppLocalizationsUz extends AppLocalizations {
   String get loginCreateAccount => 'Hisob yaratish';
 
   @override
+  String get authRequiredTitle => 'Kirish talab qilinadi';
+
+  @override
+  String get authRequiredSubtitle =>
+      'Retsept qo\'shish, saqlash va profilni boshqarish uchun kiring.';
+
+  @override
+  String get authContinueWithGoogle => 'Google orqali davom etish';
+
+  @override
+  String get authContinueWithEmail => 'Email orqali davom etish';
+
+  @override
   String get authModuleDisabled => 'Auth moduli o\'chirilgan';
+
+  @override
+  String get authGoogleProviderDisabled =>
+      'Google orqali kirish hali sozlanmagan';
+
+  @override
+  String get authInvalidCredentials => 'Email yoki parol noto\'g\'ri';
+
+  @override
+  String get authEmailNotConfirmed =>
+      'Kirishdan oldin emailingizni tasdiqlang.';
+
+  @override
+  String get authRateLimited =>
+      'Urinishlar soni ko\'p. Keyinroq qayta urinib ko\'ring.';
+
+  @override
+  String get authNetworkFailure =>
+      'Internet aloqasini tekshirib, qayta urinib ko\'ring.';
+
+  @override
+  String get authGoogleSignInFailed =>
+      'Google orqali kirishni boshlashning iloji bo\'lmadi';
+
+  @override
+  String get authGoogleCallbackFailed => 'Google orqali kirish yakunlanmadi';
+
+  @override
+  String get authUnexpectedFailure => 'Autentifikatsiya amalga oshmadi';
 
   @override
   String get registerTitle => 'Ro\'yxatdan o\'tish';
 
   @override
-  String get registerTodo => 'TODO: Ro\'yxatdan o\'tish oqimini qo\'shish';
+  String get registerWelcome => 'Hisob yarating';
+
+  @override
+  String get registerSubtitle =>
+      'Retseptlarni saqlash va ulashish uchun Milliy Taste\'ga qo\'shiling.';
+
+  @override
+  String get registerName => 'Ism';
+
+  @override
+  String get registerAlreadyHaveAccount => 'Allaqachon hisobingiz bormi?';
+
+  @override
+  String get registerFailed => 'Ro\'yxatdan o\'tib bo\'lmadi';
+
+  @override
+  String get registerConfirmationRequired =>
+      'Ro\'yxatdan o\'tishni yakunlash uchun emailingizni tekshiring.';
+
+  @override
+  String get registerPasswordMinLength =>
+      'Parol kamida 6 ta belgidan iborat bo\'lishi kerak';
+
+  @override
+  String get verifyEmailTitle => 'Emailni tasdiqlash';
+
+  @override
+  String get verifyEmailHeading => 'Pochta qutingizni tekshiring';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return '$email manziliga tasdiqlash havolasini yubordik. Hisobni yakunlash uchun havolani shu qurilmada oching.';
+  }
+
+  @override
+  String get verifyEmailResendCta => 'Emailni qayta yuborish';
+
+  @override
+  String get verifyEmailResendSuccess => 'Tasdiqlash xati qayta yuborildi.';
+
+  @override
+  String get verifyEmailResendFailed =>
+      'Tasdiqlash xatini qayta yubora olmadik.';
+
+  @override
+  String get verifyEmailOpenMailApp => 'Pochta ilovasini ochish';
+
+  @override
+  String get verifyEmailOpenMailAppFailed =>
+      'Qurilmada pochta ilovasi topilmadi.';
+
+  @override
+  String get verifyEmailBackToLogin => 'Kirishga qaytish';
+
+  @override
+  String get authEmailConfirmationFailed =>
+      'Email tasdiqlanmadi. Yangi havola so\'rang.';
+
+  @override
+  String get authResendRateLimited =>
+      'Yana xat so\'rashdan oldin biroz kuting.';
+
+  @override
+  String get authResendUserAlreadyConfirmed =>
+      'Bu email allaqachon tasdiqlangan. Kiring.';
+
+  @override
+  String get authResendFailed =>
+      'Tasdiqlash xatini qayta yubora olmadik. Qayta urinib ko\'ring.';
 
   @override
   String get back => 'Orqaga';
@@ -161,6 +271,15 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get saveTodo => 'TODO: Saqlangan retseptlar oqimini qo\'shish';
+
+  @override
+  String get saveEmpty => 'Hali saqlangan retseptlar yo\'q';
+
+  @override
+  String get saveLoadFailure => 'Saqlangan retseptlarni yuklab bo\'lmadi';
+
+  @override
+  String get saveActionFailure => 'Saqlangan retseptlarni yangilab bo\'lmadi';
 
   @override
   String get recipesTitle => 'Retseptlar';
@@ -199,6 +318,9 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get profileEditAction => 'Tahrirlash';
+
+  @override
+  String get profileLogout => 'Chiqish';
 
   @override
   String get addNewTitle => 'Yangi retsept';

@@ -13,12 +13,18 @@ import '../../features/auth/data/repositories/profile_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/repositories/profile_repository.dart';
 import '../../features/auth/domain/usecases/get_current_user_usecase.dart';
+import '../../features/auth/domain/usecases/get_current_profile_usecase.dart';
 import '../../features/auth/domain/usecases/get_demo_profile_usecase.dart';
 import '../../features/auth/domain/usecases/login_usecase.dart';
 import '../../features/auth/domain/usecases/logout_usecase.dart';
+import '../../features/auth/domain/usecases/register_usecase.dart';
+import '../../features/auth/domain/usecases/resend_confirmation_email_usecase.dart';
+import '../../features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/login_cubit.dart';
 import '../../features/auth/presentation/cubit/profile_cubit.dart';
+import '../../features/auth/presentation/cubit/register_cubit.dart';
+import '../../features/auth/presentation/cubit/verify_email_cubit.dart';
 import '../../features/home/data/data_sources/home_remote_data_source.dart';
 import '../../features/home/data/repositories/home_repository_impl.dart';
 import '../../features/home/domain/repositories/home_repository.dart';
@@ -33,6 +39,14 @@ import '../../features/search/data/data_sources/search_remote_data_source.dart';
 import '../../features/search/data/repositories/search_repository_impl.dart';
 import '../../features/search/domain/repositories/search_repository.dart';
 import '../../features/search/presentation/cubit/search_cubit.dart';
+import '../../features/save/data/data_sources/saved_recipes_remote_data_source.dart';
+import '../../features/save/data/repositories/saved_recipes_repository_impl.dart';
+import '../../features/save/domain/repositories/saved_recipes_repository.dart';
+import '../../features/save/domain/usecases/get_saved_recipe_ids_usecase.dart';
+import '../../features/save/domain/usecases/get_saved_recipes_usecase.dart';
+import '../../features/save/domain/usecases/save_recipe_usecase.dart';
+import '../../features/save/domain/usecases/unsave_recipe_usecase.dart';
+import '../../features/save/presentation/cubit/saved_recipes_cubit.dart';
 import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/splash/presentation/cubit/splash_cubit.dart';
 import '../network/dio_client.dart';
@@ -104,7 +118,7 @@ void _registerHomeDependencies() {
 }
 
 void _registerOnboardingDependencies() {
-  getIt.registerFactory<OnboardingCubit>(OnboardingCubit.new);
+  getIt.registerFactory<OnboardingCubit>(() => OnboardingCubit(getIt()));
 }
 
 void _registerRecipeDependencies() {
@@ -138,7 +152,11 @@ void _registerSplashDependencies() {
 void _registerAuthDependencies() {
   getIt
     ..registerLazySingleton<AuthRemoteDataSource>(
-      () => AuthRemoteDataSourceImpl(getIt()),
+      () => SupabaseAuthRemoteDataSource(
+        () => getIt<SupabaseClient>(),
+        getIt<LoggerService>(),
+        getIt<Dio>(),
+      ),
     )
     ..registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImpl(getIt()),
@@ -149,10 +167,18 @@ void _registerAuthDependencies() {
         localDataSource: getIt(),
         tokenService: getIt(),
         networkInfo: getIt(),
+        logger: getIt(),
       ),
     )
     ..registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()))
+    ..registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(getIt()))
+    ..registerLazySingleton<ResendConfirmationEmailUseCase>(
+      () => ResendConfirmationEmailUseCase(getIt()),
+    )
     ..registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(getIt()))
+    ..registerLazySingleton<SignInWithGoogleUseCase>(
+      () => SignInWithGoogleUseCase(getIt()),
+    )
     ..registerLazySingleton<GetCurrentUserUseCase>(
       () => GetCurrentUserUseCase(getIt()),
     )
@@ -165,9 +191,44 @@ void _registerAuthDependencies() {
     ..registerLazySingleton<GetDemoProfileUseCase>(
       () => GetDemoProfileUseCase(getIt()),
     )
+    ..registerLazySingleton<GetCurrentProfileUseCase>(
+      () => GetCurrentProfileUseCase(getIt()),
+    )
+    ..registerLazySingleton<SavedRecipesRemoteDataSource>(
+      () => SupabaseSavedRecipesRemoteDataSource(() => getIt<SupabaseClient>()),
+    )
+    ..registerLazySingleton<SavedRecipesRepository>(
+      () => SavedRecipesRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<GetSavedRecipesUseCase>(
+      () => GetSavedRecipesUseCase(getIt()),
+    )
+    ..registerLazySingleton<GetSavedRecipeIdsUseCase>(
+      () => GetSavedRecipeIdsUseCase(getIt()),
+    )
+    ..registerLazySingleton<SaveRecipeUseCase>(() => SaveRecipeUseCase(getIt()))
+    ..registerLazySingleton<UnsaveRecipeUseCase>(
+      () => UnsaveRecipeUseCase(getIt()),
+    )
     ..registerFactory<LoginCubit>(() => LoginCubit(getIt()))
+    ..registerFactory<RegisterCubit>(() => RegisterCubit(getIt()))
+    ..registerFactory<VerifyEmailCubit>(() => VerifyEmailCubit(getIt()))
     ..registerFactory<ProfileCubit>(() => ProfileCubit(getIt()))
-    ..registerFactory<AuthCubit>(
-      () => AuthCubit(getCurrentUserUseCase: getIt(), logoutUseCase: getIt()),
+    ..registerLazySingleton<SavedRecipesCubit>(
+      () => SavedRecipesCubit(
+        getSavedRecipesUseCase: getIt(),
+        getSavedRecipeIdsUseCase: getIt(),
+        saveRecipeUseCase: getIt(),
+        unsaveRecipeUseCase: getIt(),
+      ),
+    )
+    ..registerLazySingleton<AuthCubit>(
+      () => AuthCubit(
+        authRepository: getIt(),
+        getCurrentUserUseCase: getIt(),
+        logoutUseCase: getIt(),
+        signInWithGoogleUseCase: getIt(),
+        storageService: getIt(),
+      ),
     );
 }

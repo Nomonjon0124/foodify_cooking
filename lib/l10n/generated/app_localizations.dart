@@ -358,11 +358,83 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get loginCreateAccount;
 
+  /// Title shown when a guest user tries to use a protected action.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in required'**
+  String get authRequiredTitle;
+
+  /// Subtitle shown when a guest user tries to use a protected action.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to add recipes, save favorites, and manage your profile.'**
+  String get authRequiredSubtitle;
+
+  /// CTA for starting Google sign in.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authContinueWithGoogle;
+
+  /// CTA for opening email login or registration.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with email'**
+  String get authContinueWithEmail;
+
   /// Message shown when auth DI is disabled.
   ///
   /// In en, this message translates to:
   /// **'Auth module is disabled'**
   String get authModuleDisabled;
+
+  /// Error shown when Supabase Google OAuth provider is disabled or unsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Google login is not configured yet'**
+  String get authGoogleProviderDisabled;
+
+  /// Error shown when email login credentials are incorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password'**
+  String get authInvalidCredentials;
+
+  /// Error shown when Supabase requires email confirmation before login.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email to confirm this account before signing in.'**
+  String get authEmailNotConfirmed;
+
+  /// Error shown when Supabase auth rate limits the request.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please try again later.'**
+  String get authRateLimited;
+
+  /// Error shown when an auth request cannot reach the network.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your internet connection and try again.'**
+  String get authNetworkFailure;
+
+  /// Fallback error shown when Google sign in fails for an unknown reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to start Google sign in'**
+  String get authGoogleSignInFailed;
+
+  /// Error shown when Google OAuth returns to the app with a callback or code exchange failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in could not be completed'**
+  String get authGoogleCallbackFailed;
+
+  /// Generic auth failure fallback used outside the login and register screens.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication failed'**
+  String get authUnexpectedFailure;
 
   /// Register screen app bar title.
   ///
@@ -370,11 +442,125 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get registerTitle;
 
-  /// Temporary placeholder for registration flow.
+  /// Register screen header title.
   ///
   /// In en, this message translates to:
-  /// **'TODO: Implement registration flow'**
-  String get registerTodo;
+  /// **'Create your account'**
+  String get registerWelcome;
+
+  /// Register screen header subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join Milliy Taste to save and share recipes.'**
+  String get registerSubtitle;
+
+  /// Register form display name field label.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get registerName;
+
+  /// Button to navigate from register to login.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get registerAlreadyHaveAccount;
+
+  /// Register failure snackbar fallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed'**
+  String get registerFailed;
+
+  /// Message shown when Supabase requires email confirmation before sign in.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email to finish registration.'**
+  String get registerConfirmationRequired;
+
+  /// Validation message for too-short registration passwords.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get registerPasswordMinLength;
+
+  /// Verify email screen app bar title.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify email'**
+  String get verifyEmailTitle;
+
+  /// Verify email screen body heading.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your inbox'**
+  String get verifyEmailHeading;
+
+  /// Verify email screen body copy with the recipient address.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a confirmation link to {email}. Open the link on this device to finish creating your account.'**
+  String verifyEmailSubtitle(String email);
+
+  /// Verify email screen action to request another confirmation email.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend email'**
+  String get verifyEmailResendCta;
+
+  /// Snackbar shown after the confirmation email is resent.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmation email sent again.'**
+  String get verifyEmailResendSuccess;
+
+  /// Snackbar shown when resending the confirmation email fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not resend the confirmation email.'**
+  String get verifyEmailResendFailed;
+
+  /// Verify email screen secondary action to open the default mail client.
+  ///
+  /// In en, this message translates to:
+  /// **'Open mail app'**
+  String get verifyEmailOpenMailApp;
+
+  /// Snackbar shown when no email client can be launched.
+  ///
+  /// In en, this message translates to:
+  /// **'No mail app available on this device.'**
+  String get verifyEmailOpenMailAppFailed;
+
+  /// Verify email screen tertiary action returning to the login page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to login'**
+  String get verifyEmailBackToLogin;
+
+  /// Error shown when the email confirmation deep link comes back with a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Email confirmation failed. Please request a new link.'**
+  String get authEmailConfirmationFailed;
+
+  /// Error shown when Supabase rate limits the resend confirmation request.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait a moment before requesting another email.'**
+  String get authResendRateLimited;
+
+  /// Error shown when resend confirmation targets an already-confirmed user.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already confirmed. Try signing in.'**
+  String get authResendUserAlreadyConfirmed;
+
+  /// Fallback error shown when resend confirmation fails for an unknown reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not resend the confirmation email. Please try again.'**
+  String get authResendFailed;
 
   /// Generic back button label.
   ///
@@ -393,6 +579,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'TODO: Implement saved recipes flow'**
   String get saveTodo;
+
+  /// Empty state for the saved recipes screen.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved recipes yet'**
+  String get saveEmpty;
+
+  /// Saved recipes load failure message.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load saved recipes'**
+  String get saveLoadFailure;
+
+  /// Saved recipe save or unsave failure message.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to update saved recipes'**
+  String get saveActionFailure;
 
   /// Recipe list screen title.
   ///
@@ -465,6 +669,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Profile'**
   String get profileEditAction;
+
+  /// Profile action button for signing out.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get profileLogout;
 
   /// Add new recipe screen title.
   ///

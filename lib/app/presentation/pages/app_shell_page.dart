@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import '../../cubit/app_shell_cubit.dart';
 import '../../cubit/app_shell_state.dart';
 import '../widgets/foodify_bottom_navigation_bar.dart';
+import '../../../config/routes/route_names.dart';
+import '../../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../../features/auth/presentation/widgets/auth_required_prompt.dart';
 
 class AppShellPage extends StatelessWidget {
   const AppShellPage({required this.navigationShell, super.key});
@@ -35,6 +38,18 @@ class AppShellPage extends StatelessWidget {
               : FoodifyBottomNavigationBar(
                   currentIndex: state.currentIndex,
                   onTap: (index) {
+                    final authCubit = context.read<AuthCubit>();
+                    final isProtected = index == 2 || index == 3;
+                    if (isProtected && !authCubit.state.isAuthenticated) {
+                      showAuthRequiredSheet(
+                        context,
+                        returnTo: index == 2
+                            ? RouteNames.addNew
+                            : RouteNames.save,
+                      );
+                      return;
+                    }
+
                     context.read<AppShellCubit>().setCurrentIndex(index);
                     navigationShell.goBranch(
                       index,

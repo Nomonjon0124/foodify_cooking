@@ -89,15 +89,48 @@ void main() {
 
     await tester.tap(find.byKey(const Key('bottom_nav_item_add_new')));
     await tester.pumpAndSettle();
-    expect(find.text('Add a recipe Cover'), findsOneWidget);
+    expect(find.text('Sign in required'), findsOneWidget);
+    expect(find.text('Add a recipe Cover'), findsNothing);
+
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
 
     AppRouter.router.go(RouteNames.save);
     await tester.pumpAndSettle();
-    expect(find.text('TODO: Implement saved recipes flow'), findsOneWidget);
+    expect(find.text('Sign in required'), findsOneWidget);
 
     AppRouter.router.go(RouteNames.profile);
     await tester.pumpAndSettle();
-    expect(find.text('Mark Salvador'), findsOneWidget);
+    expect(find.text('Sign in required'), findsOneWidget);
+  });
+
+  testWidgets('Google auth callback redirects home instead of 404', (
+    tester,
+  ) async {
+    AppRouter.router.go(
+      'foodify-cooking://login-callback/?'
+      'error=server_error&'
+      'error_code=unexpected_failure&'
+      'error_description=Unable+to+exchange+external+code%3A+4%2FOA',
+    );
+    await tester.pumpWidget(
+      _withScreenUtil(
+        MaterialApp.router(
+          locale: testLocale,
+          localizationsDelegates: testLocalizationsDelegates,
+          supportedLocales: testSupportedLocales,
+          routerConfig: AppRouter.router,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Page Not Found'), findsNothing);
+    expect(find.byKey(const Key('bottom_nav_item_home_label')), findsOneWidget);
+    expect(
+      AppRouter.router.routerDelegate.currentConfiguration.uri.path,
+      RouteNames.home,
+    );
   });
 }
 
@@ -128,7 +161,7 @@ class _FakeSearchRepository implements SearchRepository {
 
 class _FakeProfileRepository implements ProfileRepository {
   @override
-  Future<ProfileView> getDemoProfile() async {
+  Future<ProfileView> getCurrentProfile() async {
     return const ProfileView(
       id: 'profile-1',
       displayName: 'Mark Salvador',
@@ -156,6 +189,9 @@ class _FakeProfileRepository implements ProfileRepository {
       ],
     );
   }
+
+  @override
+  Future<ProfileView> getDemoProfile() => getCurrentProfile();
 }
 
 Widget _withScreenUtil(Widget child) {

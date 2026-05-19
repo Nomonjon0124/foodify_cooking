@@ -6,12 +6,14 @@ import '../widgets/latest_recipes_section.dart';
 class HomeFeedView extends StatelessWidget {
   const HomeFeedView({
     required this.feed,
+    required this.savedRecipeIds,
     required this.onRecipeActionPressed,
     super.key,
   });
 
   final HomeFeed feed;
-  final VoidCallback onRecipeActionPressed;
+  final Set<String> savedRecipeIds;
+  final ValueChanged<HomeRecipe> onRecipeActionPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,11 @@ class HomeFeedView extends StatelessWidget {
       padding: const .only(bottom: 118),
       children: [
         const SizedBox(height: 13),
-        PopularRecipesSection(recipes: feed.popularRecipes),
+        PopularRecipesSection(
+          recipes: feed.popularRecipes,
+          savedRecipeIds: savedRecipeIds,
+          onSavePressed: onRecipeActionPressed,
+        ),
         const SizedBox(height: 10),
         LatestRecipesSection(
           recipes: feed.latestRecipes,

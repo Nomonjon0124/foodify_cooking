@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/app_loader.dart';
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
+import '../../../../config/routes/route_names.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/profile_view.dart';
+import '../cubit/auth_cubit.dart';
+import '../cubit/auth_state.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
+import '../widgets/auth_required_prompt.dart';
 import '../widgets/profile_cover_header.dart';
 import '../widgets/profile_info_section.dart';
 import '../widgets/profile_recipe_card.dart';
@@ -30,56 +35,79 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!getIt.isRegistered<ProfileCubit>()) {
+    if (!getIt.isRegistered<AuthCubit>() ||
+        !getIt.isRegistered<ProfileCubit>()) {
       return Scaffold(
         body: Center(child: Text(context.l10n.profileModuleDisabled)),
       );
     }
 
-    return BlocProvider<ProfileCubit>(
-      create: (_) => getIt<ProfileCubit>()..loadProfile(),
-      child: BlocBuilder<ProfileCubit, ProfileState>(
-        builder: (context, state) {
-          final profile = state.profile;
-
-          if (state.status == ProfileStatus.failure) {
-            return Scaffold(
-              backgroundColor: Colors.white,
-              body: Center(
-                child: Text(
-                  state.errorMessage ?? context.l10n.profileLoadFailure,
-                ),
-              ),
-            );
-          }
-
-          if (state.status == ProfileStatus.loading || profile == null) {
-            return const Scaffold(
-              backgroundColor: Colors.white,
-              body: AppLoader(),
-            );
-          }
-
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(child: _buildHeader(profile)),
-                SliverToBoxAdapter(child: SizedBox(height: 24.h)),
-                if (_isMoreDetails)
-                  _buildMoreDetailsSliver(context, profile.recipes)
-                else
-                  _buildLessDetailsSliver(context, profile.recipes),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: MediaQuery.paddingOf(context).bottom + 93.h,
-                  ),
-                ),
-              ],
-            ),
+    return BlocBuilder<AuthCubit, AuthState>(
+      bloc: getIt<AuthCubit>(),
+      builder: (context, authState) {
+        if (!authState.isAuthenticated) {
+          return _ProfileGuestView(
+            onGooglePressed: () {
+              getIt<AuthCubit>().signInWithGoogle(returnTo: RouteNames.profile);
+            },
           );
-        },
-      ),
+        }
+
+        return BlocProvider<ProfileCubit>(
+          create: (_) => getIt<ProfileCubit>()..loadProfile(),
+          child: BlocBuilder<ProfileCubit, ProfileState>(
+            builder: (context, state) {
+              final profile = state.profile;
+
+              if (state.status == ProfileStatus.failure) {
+                return Scaffold(
+                  backgroundColor: Colors.white,
+                  body: Center(
+                    child: Text(
+                      state.errorMessage ?? context.l10n.profileLoadFailure,
+                    ),
+                  ),
+                );
+              }
+
+              if (state.status == ProfileStatus.loading || profile == null) {
+                return const Scaffold(
+                  backgroundColor: Colors.white,
+                  body: AppLoader(),
+                );
+              }
+
+              return Scaffold(
+                backgroundColor: Colors.white,
+                body: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(child: _buildHeader(profile)),
+                    SliverToBoxAdapter(child: SizedBox(height: 24.h)),
+                    if (_isMoreDetails)
+                      _buildMoreDetailsSliver(context, profile.recipes)
+                    else
+                      _buildLessDetailsSliver(context, profile.recipes),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
+                        child: OutlinedButton(
+                          onPressed: getIt<AuthCubit>().logout,
+                          child: Text(context.l10n.profileLogout),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: MediaQuery.paddingOf(context).bottom + 93.h,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -199,6 +227,31 @@ class _ProfilePageState extends State<ProfilePage> {
             chefAvatarUrl: recipe.chefAvatarUrl,
           );
         },
+      ),
+    );
+  }
+}
+
+class _ProfileGuestView extends StatelessWidget {
+  const _ProfileGuestView({required this.onGooglePressed});
+
+  final VoidCallback onGooglePressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(title: Text(context.l10n.navProfile)),
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.r),
+          child: AuthRequiredPrompt(
+            onGooglePressed: onGooglePressed,
+            onEmailPressed: () {
+              context.push(loginRouteForReturnTo(RouteNames.profile));
+            },
+          ),
+        ),
       ),
     );
   }

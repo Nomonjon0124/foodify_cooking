@@ -4,7 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/route_names.dart';
+import '../../../../core/di/injection_container.dart';
 import '../../../../core/gen/fonts.gen.dart';
+import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../../../features/auth/presentation/cubit/auth_state.dart';
+import '../../../../features/auth/presentation/widgets/auth_required_prompt.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
 import '../widgets/add_new_flow_scaffold.dart';
@@ -22,6 +26,44 @@ import '../widgets/submit_success_sheet.dart';
 
 class AddNewPage extends StatelessWidget {
   const AddNewPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if (getIt.isRegistered<AuthCubit>()) {
+      return BlocBuilder<AuthCubit, AuthState>(
+        bloc: getIt<AuthCubit>(),
+        builder: (context, authState) {
+          if (!authState.isAuthenticated) {
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20.r),
+                  child: AuthRequiredPrompt(
+                    onGooglePressed: () {
+                      getIt<AuthCubit>().signInWithGoogle(
+                        returnTo: RouteNames.addNew,
+                      );
+                    },
+                    onEmailPressed: () {
+                      context.push(loginRouteForReturnTo(RouteNames.addNew));
+                    },
+                  ),
+                ),
+              ),
+            );
+          }
+          return const _AddNewFlow();
+        },
+      );
+    }
+
+    return const _AddNewFlow();
+  }
+}
+
+class _AddNewFlow extends StatelessWidget {
+  const _AddNewFlow();
 
   @override
   Widget build(BuildContext context) {

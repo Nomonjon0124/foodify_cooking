@@ -7,14 +7,19 @@ import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../config/routes/route_names.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../l10n/l10n_extension.dart';
+import '../auth_error_l10n.dart';
 import '../cubit/login_cubit.dart';
 import '../cubit/login_state.dart';
 import '../widgets/auth_header.dart';
+import '../cubit/auth_cubit.dart';
 import '../widgets/login_form.dart';
 import '../widgets/social_login_buttons.dart';
+import '../widgets/auth_required_prompt.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, this.returnTo});
+
+  final String? returnTo;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +37,23 @@ class LoginPage extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(16.r),
             child: BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state.status == LoginStatus.success) {
-                  context.push(RouteNames.profile);
+                  final router = GoRouter.of(context);
+                  final authCubit = context.read<AuthCubit>();
+                  await authCubit.checkAuthStatus();
+                  router.go(returnTo ?? RouteNames.profile);
+                  return;
                 }
                 if (state.status == LoginStatus.failure) {
-                  AppSnackbar.show(context, context.l10n.loginFailed);
+                  AppSnackbar.show(
+                    context,
+                    AuthErrorL10n.messageFor(
+                      context,
+                      state.errorMessage,
+                      fallback: context.l10n.loginFailed,
+                    ),
+                  );
                 }
               },
               builder: (context, state) {
@@ -59,11 +75,21 @@ class LoginPage extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    const SocialLoginButtons(),
+                    SocialLoginButtons(
+                      onGooglePressed: () {
+                        context.read<AuthCubit>().signInWithGoogle(
+                          returnTo: returnTo ?? RouteNames.profile,
+                        );
+                      },
+                    ),
                     const Spacer(),
                     TextButton(
                       onPressed: () {
-                        context.push(RouteNames.register);
+                        context.push(
+                          registerRouteForReturnTo(
+                            returnTo ?? RouteNames.profile,
+                          ),
+                        );
                       },
                       child: Text(context.l10n.loginCreateAccount),
                     ),
