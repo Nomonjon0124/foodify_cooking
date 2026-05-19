@@ -1,6 +1,18 @@
 alter table public.profiles
   add column if not exists auth_user_id uuid unique;
 
+alter table public.profiles enable row level security;
+
+revoke all privileges on public.profiles from anon;
+revoke all privileges on public.profiles from authenticated;
+
+drop policy if exists "Profiles are publicly readable" on public.profiles;
+create policy "Profiles are publicly readable"
+  on public.profiles
+  for select
+  to anon, authenticated
+  using (true);
+
 drop policy if exists "Users can create own profile" on public.profiles;
 create policy "Users can create own profile"
   on public.profiles
@@ -42,6 +54,14 @@ create policy "Users can save recipes"
   to authenticated
   with check (auth.uid() = user_id);
 
+drop policy if exists "Users can keep own saved recipes" on public.user_saved_recipes;
+create policy "Users can keep own saved recipes"
+  on public.user_saved_recipes
+  for update
+  to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 drop policy if exists "Users can remove own saved recipes" on public.user_saved_recipes;
 create policy "Users can remove own saved recipes"
   on public.user_saved_recipes
@@ -49,5 +69,6 @@ create policy "Users can remove own saved recipes"
   to authenticated
   using (auth.uid() = user_id);
 
+grant select on public.profiles to anon, authenticated;
 grant insert, update on public.profiles to authenticated;
-grant select, insert, delete on public.user_saved_recipes to authenticated;
+grant select, insert, update, delete on public.user_saved_recipes to authenticated;

@@ -55,6 +55,15 @@ dart run build_runner build --delete-conflicting-outputs
 
 # Resolve dependencies
 flutter pub get
+
+# Supabase migration dry run before remote DB changes
+supabase db push --dry-run
+
+# Apply Supabase migrations after reviewing dry-run output
+supabase db push
+
+# Verify local/remote migration sync
+supabase migration list --linked
 ```
 
 After adding any image, SVG, or font asset, ALWAYS run `build_runner build` to
@@ -218,6 +227,9 @@ without auth wiring.
   Handled by `AuthCallbackRoute` in router `redirect`. Errors propagate to
   `AuthCubit.handleAuthCallbackFailure`. The intent-filter is declared in
   `android/app/src/main/AndroidManifest.xml`.
+- After a guarded Google sign-in succeeds, `App` listens for authenticated
+  `AuthCubit` state, navigates to `state.pendingRoute`, then calls
+  `AuthCubit.clearPendingRoute()`.
 
 ### Localization
 
@@ -273,6 +285,50 @@ inline in components — they are **not** in `AppColors`.
 - **Dio** still exists for non-Supabase HTTP. `DioFactory.create()` →
   `DioClient` wraps Dio with three interceptors in order: `LoggingInterceptor`,
   `AuthInterceptor` (Bearer from `TokenService`), `RetryInterceptor`.
+
+### Supabase project and migration runbook
+
+- Remote project ref: `zxhtseztegvzxvhxbqfj` (`Milliy Taste`).
+- Local link file: `supabase/.temp/project-ref`.
+- Before applying database changes, run `supabase db push --dry-run` and verify
+  only expected migrations are listed.
+- After applying, run both `supabase migration list --linked` and SQL checks for
+  affected tables, policies, grants, triggers, and backfilled data.
+- If `SUPABASE_ACCESS_TOKEN` or `SUPABASE_PAT_TOKEN` causes
+  `Invalid access token format`, unset those env vars for the command and let
+  the CLI use its cached login:
+
+```powershell
+$env:SUPABASE_ACCESS_TOKEN=$null
+$env:SUPABASE_PAT_TOKEN=$null
+supabase db push --dry-run
+```
+
+- Supabase advisors should be checked after DDL changes. Current known
+  non-blocking advisories are leaked password protection disabled, an
+  unindexed `home_feed_items.recipe_id` FK, and unused-index info on low-traffic
+  seed indexes.
+
+### Auth/profile database contract
+
+- Google OAuth may succeed while profile load fails. When debugging login to
+  profile, inspect Supabase REST/Postgres logs for `profiles` and
+  `user_saved_recipes` errors before changing Flutter routing.
+- Required migrations for the current profile flow:
+  `20260518120000_auth_profiles_saved_recipes.sql`,
+  `20260520090000_handle_new_user.sql`,
+  `20260520100000_tighten_saved_recipe_privileges.sql`,
+  `20260520101000_optimize_auth_rls_policies.sql`.
+- `public.profiles`: RLS enabled, `anon`/`authenticated` select allowed,
+  authenticated insert/update only when `(select auth.uid()) = auth_user_id`.
+- `public.user_saved_recipes`: RLS enabled, authenticated-only
+  select/insert/update/delete, each constrained to `(select auth.uid()) =
+  user_id`.
+- Profile creation trigger: `auth.users` `after insert` trigger executes
+  `private.handle_new_user()`. Keep this `security definer` function in the
+  private schema, not in `public`.
+- Existing auth users must be backfilled into `public.profiles`; do not ask
+  users to recreate Google accounts.
 
 ### Data flow types — pick the right wrapper per layer
 
@@ -375,6 +431,11 @@ Anything written outside `StorageKeys.all` is rejected. To add a key:
 - If a branch has known baseline failures, surface them explicitly in the
   PR body — do not silently skip.
 - When localized copy changes affect widget expectations, update tests.
+- Auth/profile regressions to keep covered:
+  `test/auth_return_flow_test.dart` for Google return-to-profile pending route
+  behavior, and
+  `test/features/auth/presentation/cubit/profile_cubit_test.dart` for profile
+  load failure state.
 
 ---
 
@@ -409,6 +470,10 @@ Anything written outside `StorageKeys.all` is rejected. To add a key:
 - Issue `#4` — responsive UI overflows — DONE (merged via PR `#5`).
 - Issue `#6` — auth flow — IN PROGRESS on `issue-6-auth-flow`. PR target:
   `dev`.
+
+- Issue `#6` remote DB note: Google login to profile DB fix has been applied
+  remotely to `zxhtseztegvzxvhxbqfj`; keep local migration files and regression
+  tests in the PR.
 
 For follow-up copy/language bugs after `#1`: open a NEW issue and a NEW
 branch from `dev`. Do not reuse `issue-1-localization`.
