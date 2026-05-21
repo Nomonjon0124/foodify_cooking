@@ -513,6 +513,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recipeDetailTabComments => 'Comments';
 
   @override
+  String get recipeDetailTabAiAnalysis => 'AI Analysis';
+
+  @override
+  String get recipeAiAnalysisLoading => 'Analyzing recipe with AI…';
+
+  @override
+  String recipeAiAnalysisError(String reason) {
+    return 'AI analysis failed. $reason';
+  }
+
+  @override
+  String get recipeAiAnalysisRetry => 'Try again';
+
+  @override
+  String get recipeAiAnalysisHealthScore => 'Health score';
+
+  @override
+  String get recipeAiAnalysisNutritionTitle =>
+      'Nutrition per serving (estimated)';
+
+  @override
+  String recipeAiAnalysisKcal(int value) {
+    return '$value kcal';
+  }
+
+  @override
+  String recipeAiAnalysisProtein(int value) {
+    return '$value g protein';
+  }
+
+  @override
+  String recipeAiAnalysisCarbs(int value) {
+    return '$value g carbs';
+  }
+
+  @override
+  String recipeAiAnalysisFat(int value) {
+    return '$value g fat';
+  }
+
+  @override
+  String get recipeAiAnalysisDisclaimerFallback =>
+      'Values are AI estimates and not medical advice.';
+
+  @override
   String recipeDetailStepsCount(int count) {
     return '$count Steps';
   }

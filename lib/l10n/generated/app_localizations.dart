@@ -1054,6 +1054,72 @@ abstract class AppLocalizations {
   /// **'Comments'**
   String get recipeDetailTabComments;
 
+  /// Recipe detail AI nutrition + health analysis tab label.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Analysis'**
+  String get recipeDetailTabAiAnalysis;
+
+  /// Shown while the analyze-recipe edge function call is in flight.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing recipe with AI…'**
+  String get recipeAiAnalysisLoading;
+
+  /// Shown when the AI analysis fails; reason is the backend error string.
+  ///
+  /// In en, this message translates to:
+  /// **'AI analysis failed. {reason}'**
+  String recipeAiAnalysisError(String reason);
+
+  /// Button label that retries the AI analysis call after a failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get recipeAiAnalysisRetry;
+
+  /// Label above the 0-100 AI health score gauge.
+  ///
+  /// In en, this message translates to:
+  /// **'Health score'**
+  String get recipeAiAnalysisHealthScore;
+
+  /// Section header above the estimated per-serving nutrition row.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition per serving (estimated)'**
+  String get recipeAiAnalysisNutritionTitle;
+
+  /// Per-serving energy estimate.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} kcal'**
+  String recipeAiAnalysisKcal(int value);
+
+  /// Per-serving protein estimate in grams.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} g protein'**
+  String recipeAiAnalysisProtein(int value);
+
+  /// Per-serving carbohydrate estimate in grams.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} g carbs'**
+  String recipeAiAnalysisCarbs(int value);
+
+  /// Per-serving fat estimate in grams.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} g fat'**
+  String recipeAiAnalysisFat(int value);
+
+  /// Fallback disclaimer if the AI response is missing one.
+  ///
+  /// In en, this message translates to:
+  /// **'Values are AI estimates and not medical advice.'**
+  String get recipeAiAnalysisDisclaimerFallback;
+
   /// Header above the steps list on the introduction tab.
   ///
   /// In en, this message translates to:
