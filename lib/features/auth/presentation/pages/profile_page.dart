@@ -186,6 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
             title: recipe.title,
             rating: recipe.ratingLabel,
             imagePath: FoodifyImage(recipe.imageUrl, fit: BoxFit.cover),
+            onTap: () => context.push(RouteNames.recipeDetail(recipe.id)),
           );
         }, childCount: recipes.length),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

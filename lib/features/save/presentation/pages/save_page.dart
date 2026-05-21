@@ -105,6 +105,8 @@ class SavePage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                     state: FoodifyPopularCardState.saved,
+                    onTap: () =>
+                        context.push(RouteNames.recipeDetail(recipe.id)),
                     onSavePressed: () => savedCubit.unsaveRecipe(recipe.id),
                   );
                 },

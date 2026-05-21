@@ -502,4 +502,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get recipeDetailTabIntroduction => 'Введение';
+
+  @override
+  String get recipeDetailTabIngredients => 'Ингредиенты';
+
+  @override
+  String get recipeDetailTabComments => 'Комментарии';
+
+  @override
+  String recipeDetailStepsCount(int count) {
+    return '$count шагов';
+  }
+
+  @override
+  String recipeDetailIngredientsCount(int count) {
+    return '$count ингредиентов';
+  }
+
+  @override
+  String recipeDetailCommentsCount(int count) {
+    return '$count комментариев';
+  }
+
+  @override
+  String get recipeDetailCommentsEmpty => 'Комментариев пока нет';
+
+  @override
+  String get recipeDetailLoadFailure => 'Не удалось загрузить рецепт';
+
+  @override
+  String get recipeDetailLikeFailure => 'Не удалось обновить лайк';
 }

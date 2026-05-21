@@ -665,5 +665,50 @@
   "ok": "OK",
   "@ok": {
     "description": "Generic OK dialog action."
+  },
+  "recipeDetailTabIntroduction": "Introduction",
+  "@recipeDetailTabIntroduction": {
+    "description": "Recipe detail introduction (steps) tab label."
+  },
+  "recipeDetailTabIngredients": "Ingredients",
+  "@recipeDetailTabIngredients": {
+    "description": "Recipe detail ingredients tab label."
+  },
+  "recipeDetailTabComments": "Comments",
+  "@recipeDetailTabComments": {
+    "description": "Recipe detail comments tab label."
+  },
+  "recipeDetailStepsCount": "{count} Steps",
+  "@recipeDetailStepsCount": {
+    "description": "Header above the steps list on the introduction tab.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "recipeDetailIngredientsCount": "{count} Ingredients",
+  "@recipeDetailIngredientsCount": {
+    "description": "Header above the ingredient list on the ingredients tab.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "recipeDetailCommentsCount": "{count} Comments",
+  "@recipeDetailCommentsCount": {
+    "description": "Header above the comments list on the comments tab.",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "recipeDetailCommentsEmpty": "No comments yet",
+  "@recipeDetailCommentsEmpty": {
+    "description": "Empty state for the recipe comments tab."
+  },
+  "recipeDetailLoadFailure": "Unable to load recipe",
+  "@recipeDetailLoadFailure": {
+    "description": "Recipe detail load failure message."
+  },
+  "recipeDetailLikeFailure": "Unable to update like",
+  "@recipeDetailLikeFailure": {
+    "description": "Recipe detail like toggle failure message."
   }
 }

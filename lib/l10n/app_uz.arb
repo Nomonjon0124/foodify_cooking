@@ -155,5 +155,14 @@
   "addNewIngredientPlaceholder": "Ingredient nomi...",
   "addNewRecipeTitleFallback": "Mukammal uy pankeyki",
   "addNewHeadlineTagFallback": "Kam kaloriyali",
-  "ok": "OK"
+  "ok": "OK",
+  "recipeDetailTabIntroduction": "Tanishuv",
+  "recipeDetailTabIngredients": "Ingredientlar",
+  "recipeDetailTabComments": "Izohlar",
+  "recipeDetailStepsCount": "{count} bosqich",
+  "recipeDetailIngredientsCount": "{count} ingredient",
+  "recipeDetailCommentsCount": "{count} izoh",
+  "recipeDetailCommentsEmpty": "Hali izohlar yo'q",
+  "recipeDetailLoadFailure": "Retseptni yuklab bo'lmadi",
+  "recipeDetailLikeFailure": "Yoqtirishni yangilab bo'lmadi"
 }

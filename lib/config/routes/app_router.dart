@@ -12,7 +12,7 @@ import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/add_new/presentation/pages/add_new_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
-import '../../features/recipe/presentation/pages/recipe_page.dart';
+import '../../features/recipe/presentation/pages/recipe_detail_page.dart';
 import '../../features/save/presentation/pages/save_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
@@ -137,9 +137,10 @@ abstract final class AppRouter {
         ),
       ),
       GoRoute(
-        path: RouteNames.recipes,
-        name: 'recipes',
-        builder: (context, state) => const RecipePage(),
+        path: RouteNames.recipeDetailPath,
+        name: 'recipeDetail',
+        builder: (context, state) =>
+            RecipeDetailPage(recipeId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: RouteNames.settings,

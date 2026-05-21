@@ -1035,6 +1035,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'OK'**
   String get ok;
+
+  /// Recipe detail introduction (steps) tab label.
+  ///
+  /// In en, this message translates to:
+  /// **'Introduction'**
+  String get recipeDetailTabIntroduction;
+
+  /// Recipe detail ingredients tab label.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients'**
+  String get recipeDetailTabIngredients;
+
+  /// Recipe detail comments tab label.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get recipeDetailTabComments;
+
+  /// Header above the steps list on the introduction tab.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Steps'**
+  String recipeDetailStepsCount(int count);
+
+  /// Header above the ingredient list on the ingredients tab.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Ingredients'**
+  String recipeDetailIngredientsCount(int count);
+
+  /// Header above the comments list on the comments tab.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Comments'**
+  String recipeDetailCommentsCount(int count);
+
+  /// Empty state for the recipe comments tab.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet'**
+  String get recipeDetailCommentsEmpty;
+
+  /// Recipe detail load failure message.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load recipe'**
+  String get recipeDetailLoadFailure;
+
+  /// Recipe detail like toggle failure message.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to update like'**
+  String get recipeDetailLikeFailure;
 }
 
 class _AppLocalizationsDelegate
