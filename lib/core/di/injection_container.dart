@@ -31,11 +31,16 @@ import '../../features/home/domain/repositories/home_repository.dart';
 import '../../features/home/domain/usecases/get_home_feed_usecase.dart';
 import '../../features/home/presentation/cubit/home_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import '../../features/recipe/data/data_sources/recipe_analysis_remote_data_source.dart';
 import '../../features/recipe/data/data_sources/recipe_detail_remote_data_source.dart';
+import '../../features/recipe/data/repositories/recipe_analysis_repository_impl.dart';
 import '../../features/recipe/data/repositories/recipe_repository_impl.dart';
+import '../../features/recipe/domain/repositories/recipe_analysis_repository.dart';
 import '../../features/recipe/domain/repositories/recipe_repository.dart';
+import '../../features/recipe/domain/usecases/analyze_recipe_usecase.dart';
 import '../../features/recipe/domain/usecases/get_recipe_detail_usecase.dart';
 import '../../features/recipe/domain/usecases/toggle_recipe_like_usecase.dart';
+import '../../features/recipe/presentation/cubit/recipe_analysis_cubit.dart';
 import '../../features/recipe/presentation/cubit/recipe_detail_cubit.dart';
 import '../../features/search/data/data_sources/search_remote_data_source.dart';
 import '../../features/search/data/repositories/search_repository_impl.dart';
@@ -137,6 +142,20 @@ void _registerRecipeDependencies() {
     )
     ..registerLazySingleton<ToggleRecipeLikeUseCase>(
       () => ToggleRecipeLikeUseCase(getIt()),
+    )
+    ..registerLazySingleton<RecipeAnalysisRemoteDataSource>(
+      () => SupabaseRecipeAnalysisRemoteDataSource(
+        () => getIt<SupabaseClient>(),
+      ),
+    )
+    ..registerLazySingleton<RecipeAnalysisRepository>(
+      () => RecipeAnalysisRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<AnalyzeRecipeUseCase>(
+      () => AnalyzeRecipeUseCase(getIt()),
+    )
+    ..registerFactory<RecipeAnalysisCubit>(
+      () => RecipeAnalysisCubit(analyzeRecipeUseCase: getIt()),
     );
 }
 
