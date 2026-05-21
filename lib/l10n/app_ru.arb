@@ -155,5 +155,14 @@
   "addNewIngredientPlaceholder": "Название ингредиента...",
   "addNewRecipeTitleFallback": "Идеальные домашние панкейки",
   "addNewHeadlineTagFallback": "Низкокалорийно",
-  "ok": "OK"
+  "ok": "OK",
+  "recipeDetailTabIntroduction": "Введение",
+  "recipeDetailTabIngredients": "Ингредиенты",
+  "recipeDetailTabComments": "Комментарии",
+  "recipeDetailStepsCount": "{count} шагов",
+  "recipeDetailIngredientsCount": "{count} ингредиентов",
+  "recipeDetailCommentsCount": "{count} комментариев",
+  "recipeDetailCommentsEmpty": "Комментариев пока нет",
+  "recipeDetailLoadFailure": "Не удалось загрузить рецепт",
+  "recipeDetailLikeFailure": "Не удалось обновить лайк"
 }

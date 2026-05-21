@@ -31,10 +31,12 @@ import '../../features/home/domain/repositories/home_repository.dart';
 import '../../features/home/domain/usecases/get_home_feed_usecase.dart';
 import '../../features/home/presentation/cubit/home_cubit.dart';
 import '../../features/onboarding/presentation/cubit/onboarding_cubit.dart';
+import '../../features/recipe/data/data_sources/recipe_detail_remote_data_source.dart';
 import '../../features/recipe/data/repositories/recipe_repository_impl.dart';
 import '../../features/recipe/domain/repositories/recipe_repository.dart';
-import '../../features/recipe/domain/usecases/get_popular_recipes_usecase.dart';
-import '../../features/recipe/presentation/cubit/recipe_cubit.dart';
+import '../../features/recipe/domain/usecases/get_recipe_detail_usecase.dart';
+import '../../features/recipe/domain/usecases/toggle_recipe_like_usecase.dart';
+import '../../features/recipe/presentation/cubit/recipe_detail_cubit.dart';
 import '../../features/search/data/data_sources/search_remote_data_source.dart';
 import '../../features/search/data/repositories/search_repository_impl.dart';
 import '../../features/search/domain/repositories/search_repository.dart';
@@ -123,11 +125,19 @@ void _registerOnboardingDependencies() {
 
 void _registerRecipeDependencies() {
   getIt
-    ..registerLazySingleton<RecipeRepository>(RecipeRepositoryImpl.new)
-    ..registerLazySingleton<GetPopularRecipesUseCase>(
-      () => GetPopularRecipesUseCase(getIt()),
+    ..registerLazySingleton<RecipeDetailRemoteDataSource>(
+      () =>
+          SupabaseRecipeDetailRemoteDataSource(() => getIt<SupabaseClient>()),
     )
-    ..registerFactory<RecipeCubit>(() => RecipeCubit(getIt()));
+    ..registerLazySingleton<RecipeRepository>(
+      () => RecipeRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<GetRecipeDetailUseCase>(
+      () => GetRecipeDetailUseCase(getIt()),
+    )
+    ..registerLazySingleton<ToggleRecipeLikeUseCase>(
+      () => ToggleRecipeLikeUseCase(getIt()),
+    );
 }
 
 void _registerSearchDependencies() {
@@ -220,6 +230,13 @@ void _registerAuthDependencies() {
         getSavedRecipeIdsUseCase: getIt(),
         saveRecipeUseCase: getIt(),
         unsaveRecipeUseCase: getIt(),
+      ),
+    )
+    ..registerFactory<RecipeDetailCubit>(
+      () => RecipeDetailCubit(
+        getRecipeDetailUseCase: getIt(),
+        toggleRecipeLikeUseCase: getIt(),
+        savedRecipesCubit: getIt(),
       ),
     )
     ..registerLazySingleton<AuthCubit>(

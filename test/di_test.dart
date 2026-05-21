@@ -8,7 +8,7 @@ import 'package:foodify_cooking/features/auth/presentation/cubit/auth_cubit.dart
 import 'package:foodify_cooking/features/auth/presentation/cubit/profile_cubit.dart';
 import 'package:foodify_cooking/features/home/presentation/cubit/home_cubit.dart';
 import 'package:foodify_cooking/features/onboarding/presentation/cubit/onboarding_cubit.dart';
-import 'package:foodify_cooking/features/recipe/presentation/cubit/recipe_cubit.dart';
+import 'package:foodify_cooking/features/recipe/presentation/cubit/recipe_detail_cubit.dart';
 import 'package:foodify_cooking/features/search/presentation/cubit/search_cubit.dart';
 import 'package:foodify_cooking/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:foodify_cooking/features/splash/presentation/cubit/splash_cubit.dart';
@@ -22,7 +22,7 @@ void main() {
     expect(getIt.isRegistered<SupabaseClient>(), isTrue);
     expect(getIt<HomeCubit>(), isA<HomeCubit>());
     expect(getIt<OnboardingCubit>(), isA<OnboardingCubit>());
-    expect(getIt<RecipeCubit>(), isA<RecipeCubit>());
+    expect(getIt<RecipeDetailCubit>(), isA<RecipeDetailCubit>());
     expect(getIt<SearchCubit>(), isA<SearchCubit>());
     expect(getIt<SettingsCubit>(), isA<SettingsCubit>());
     expect(getIt<SplashCubit>(), isA<SplashCubit>());

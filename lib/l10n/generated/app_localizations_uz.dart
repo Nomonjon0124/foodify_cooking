@@ -508,4 +508,37 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get recipeDetailTabIntroduction => 'Tanishuv';
+
+  @override
+  String get recipeDetailTabIngredients => 'Ingredientlar';
+
+  @override
+  String get recipeDetailTabComments => 'Izohlar';
+
+  @override
+  String recipeDetailStepsCount(int count) {
+    return '$count bosqich';
+  }
+
+  @override
+  String recipeDetailIngredientsCount(int count) {
+    return '$count ingredient';
+  }
+
+  @override
+  String recipeDetailCommentsCount(int count) {
+    return '$count izoh';
+  }
+
+  @override
+  String get recipeDetailCommentsEmpty => 'Hali izohlar yo\'q';
+
+  @override
+  String get recipeDetailLoadFailure => 'Retseptni yuklab bo\'lmadi';
+
+  @override
+  String get recipeDetailLikeFailure => 'Yoqtirishni yangilab bo\'lmadi';
 }

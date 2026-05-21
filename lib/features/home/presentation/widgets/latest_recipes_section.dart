@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/recipe_cards/recipe_main_card.dart';
+import '../../../../config/routes/route_names.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
@@ -40,18 +42,23 @@ class LatestRecipesSection extends StatelessWidget {
 
               return [
                 Center(
-                  child: RecipeMainCard(
-                    title: recipe.title,
-                    authorName: author?.displayName ?? '',
-                    description: recipe.description ?? '',
-                    durationLabel: recipe.durationLabel ?? '',
-                    difficultyLabel: recipe.difficultyLabel ?? '',
-                    imagePath: recipe.coverImageUrl,
-                    overlayImagePath: recipe.overlayImageUrl ?? '',
-                    authorImagePath: author?.avatarUrl ?? '',
-                    topRating: recipe.topRatingLabel,
-                    authorRating: author?.ratingLabel ?? '0.0',
-                    onActionPressed: () => onActionPressed(recipe),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () =>
+                        context.push(RouteNames.recipeDetail(recipe.id)),
+                    child: RecipeMainCard(
+                      title: recipe.title,
+                      authorName: author?.displayName ?? '',
+                      description: recipe.description ?? '',
+                      durationLabel: recipe.durationLabel ?? '',
+                      difficultyLabel: recipe.difficultyLabel ?? '',
+                      imagePath: recipe.coverImageUrl,
+                      overlayImagePath: recipe.overlayImageUrl ?? '',
+                      authorImagePath: author?.avatarUrl ?? '',
+                      topRating: recipe.topRatingLabel,
+                      authorRating: author?.ratingLabel ?? '0.0',
+                      onActionPressed: () => onActionPressed(recipe),
+                    ),
                   ),
                 ),
                 if (entry.key != recipes.length - 1) SizedBox(height: 12.h),

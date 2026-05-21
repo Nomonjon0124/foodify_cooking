@@ -502,4 +502,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ok => 'OK';
+
+  @override
+  String get recipeDetailTabIntroduction => 'Introduction';
+
+  @override
+  String get recipeDetailTabIngredients => 'Ingredients';
+
+  @override
+  String get recipeDetailTabComments => 'Comments';
+
+  @override
+  String recipeDetailStepsCount(int count) {
+    return '$count Steps';
+  }
+
+  @override
+  String recipeDetailIngredientsCount(int count) {
+    return '$count Ingredients';
+  }
+
+  @override
+  String recipeDetailCommentsCount(int count) {
+    return '$count Comments';
+  }
+
+  @override
+  String get recipeDetailCommentsEmpty => 'No comments yet';
+
+  @override
+  String get recipeDetailLoadFailure => 'Unable to load recipe';
+
+  @override
+  String get recipeDetailLikeFailure => 'Unable to update like';
 }

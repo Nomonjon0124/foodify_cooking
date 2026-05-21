@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
+import '../../../../config/routes/route_names.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/search_results.dart';
 
@@ -32,6 +34,7 @@ class SearchRecipesTab extends StatelessWidget {
           title: recipe.title,
           rating: recipe.ratingLabel,
           imagePath: FoodifyImage(recipe.imageUrl, fit: BoxFit.cover),
+          onTap: () => context.push(RouteNames.recipeDetail(recipe.id)),
         );
       },
     );

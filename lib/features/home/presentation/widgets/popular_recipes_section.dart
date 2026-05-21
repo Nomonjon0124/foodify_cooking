@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../common/widgets/foodify_components/foodify_popular_card.dart';
+import '../../../../config/routes/route_names.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/home_feed.dart';
 import 'home_section_title.dart';
@@ -69,6 +71,8 @@ class _PopularRecipesSectionState extends State<PopularRecipesSection> {
                     state: widget.savedRecipeIds.contains(recipe.id)
                         ? FoodifyPopularCardState.saved
                         : FoodifyPopularCardState.toBeSaved,
+                    onTap: () =>
+                        context.push(RouteNames.recipeDetail(recipe.id)),
                     onSavePressed: () => widget.onSavePressed(recipe),
                   );
                 },

@@ -6,6 +6,9 @@ abstract final class RouteNames {
   static const addNew = '/add-new';
   static const save = '/save';
   static const recipes = '/recipes';
+  static const recipeDetailPath = '/recipes/:id';
+
+  static String recipeDetail(String id) => '/recipes/$id';
   static const settings = '/settings';
 
   static const login = '/login';
