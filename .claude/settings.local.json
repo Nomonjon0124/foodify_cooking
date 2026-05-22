@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "mcp__plugin_figma_figma__get_design_context",
-      "Bash(flutter analyze *)"
+      "Bash(flutter analyze *)",
+      "Bash(git reset *)",
+      "PowerShell($env:SUPABASE_ACCESS_TOKEN=$null; $env:SUPABASE_PAT_TOKEN=$null; supabase db push --dry-run)",
+      "mcp__supabase__execute_sql",
+      "Bash(flutter test *)",
+      "Bash(flutter gen-l10n *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)"
     ]
   },
   "enableAllProjectMcpServers": true,
