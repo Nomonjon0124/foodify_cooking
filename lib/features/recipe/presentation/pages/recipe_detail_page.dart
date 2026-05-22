@@ -10,8 +10,10 @@ import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../../domain/entities/recipe_detail.dart';
+import '../cubit/recipe_analysis_cubit.dart';
 import '../cubit/recipe_detail_cubit.dart';
 import '../cubit/recipe_detail_state.dart';
+import '../widgets/recipe_ai_analysis_panel.dart';
 import '../widgets/recipe_detail_author_pill.dart';
 import '../widgets/recipe_detail_hero.dart';
 import '../widgets/recipe_detail_rows.dart';
@@ -25,15 +27,24 @@ class RecipeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RecipeDetailCubit>(
-      create: (_) => getIt<RecipeDetailCubit>()..load(recipeId),
-      child: const _RecipeDetailView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<RecipeDetailCubit>(
+          create: (_) => getIt<RecipeDetailCubit>()..load(recipeId),
+        ),
+        BlocProvider<RecipeAnalysisCubit>(
+          create: (_) => getIt<RecipeAnalysisCubit>(),
+        ),
+      ],
+      child: _RecipeDetailView(recipeId: recipeId),
     );
   }
 }
 
 class _RecipeDetailView extends StatelessWidget {
-  const _RecipeDetailView();
+  const _RecipeDetailView({required this.recipeId});
+
+  final String recipeId;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +71,11 @@ class _RecipeDetailView extends StatelessWidget {
           }
           final recipe = state.recipe;
           if (recipe == null) return const SizedBox.shrink();
-          return _RecipeDetailContent(state: state, recipe: recipe);
+          return _RecipeDetailContent(
+            state: state,
+            recipe: recipe,
+            recipeId: recipeId,
+          );
         },
       ),
     );
@@ -68,10 +83,15 @@ class _RecipeDetailView extends StatelessWidget {
 }
 
 class _RecipeDetailContent extends StatelessWidget {
-  const _RecipeDetailContent({required this.state, required this.recipe});
+  const _RecipeDetailContent({
+    required this.state,
+    required this.recipe,
+    required this.recipeId,
+  });
 
   final RecipeDetailState state;
   final RecipeDetail recipe;
+  final String recipeId;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +138,8 @@ class _RecipeDetailContent extends StatelessWidget {
                 RecipeDetailTab.ingredients:
                     context.l10n.recipeDetailTabIngredients,
                 RecipeDetailTab.comments: context.l10n.recipeDetailTabComments,
+                RecipeDetailTab.aiAnalysis:
+                    context.l10n.recipeDetailTabAiAnalysis,
               },
               onTabSelected: cubit.changeTab,
             ),
@@ -125,7 +147,11 @@ class _RecipeDetailContent extends StatelessWidget {
         ),
         SliverPadding(
           padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 24.h),
-          sliver: _TabBody(activeTab: state.activeTab, recipe: recipe),
+          sliver: _TabBody(
+            activeTab: state.activeTab,
+            recipe: recipe,
+            recipeId: recipeId,
+          ),
         ),
       ],
     );
@@ -206,10 +232,15 @@ class _ChipsCard extends StatelessWidget {
 }
 
 class _TabBody extends StatelessWidget {
-  const _TabBody({required this.activeTab, required this.recipe});
+  const _TabBody({
+    required this.activeTab,
+    required this.recipe,
+    required this.recipeId,
+  });
 
   final RecipeDetailTab activeTab;
   final RecipeDetail recipe;
+  final String recipeId;
 
   @override
   Widget build(BuildContext context) {
@@ -269,6 +300,10 @@ class _TabBody extends StatelessWidget {
                 content: comment.content,
               ),
           ],
+        );
+      case RecipeDetailTab.aiAnalysis:
+        return SliverToBoxAdapter(
+          child: RecipeAiAnalysisPanel(recipeId: recipeId),
         );
     }
   }

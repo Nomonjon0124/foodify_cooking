@@ -513,6 +513,50 @@ class AppLocalizationsRu extends AppLocalizations {
   String get recipeDetailTabComments => 'Комментарии';
 
   @override
+  String get recipeDetailTabAiAnalysis => 'AI-анализ';
+
+  @override
+  String get recipeAiAnalysisLoading => 'Анализируем рецепт с помощью AI…';
+
+  @override
+  String recipeAiAnalysisError(String reason) {
+    return 'AI-анализ не выполнен. $reason';
+  }
+
+  @override
+  String get recipeAiAnalysisRetry => 'Повторить';
+
+  @override
+  String get recipeAiAnalysisHealthScore => 'Оценка пользы';
+
+  @override
+  String get recipeAiAnalysisNutritionTitle => 'На порцию (оценка)';
+
+  @override
+  String recipeAiAnalysisKcal(int value) {
+    return '$value ккал';
+  }
+
+  @override
+  String recipeAiAnalysisProtein(int value) {
+    return '$value г белка';
+  }
+
+  @override
+  String recipeAiAnalysisCarbs(int value) {
+    return '$value г углеводов';
+  }
+
+  @override
+  String recipeAiAnalysisFat(int value) {
+    return '$value г жира';
+  }
+
+  @override
+  String get recipeAiAnalysisDisclaimerFallback =>
+      'Значения являются оценкой AI и не являются медицинской рекомендацией.';
+
+  @override
   String recipeDetailStepsCount(int count) {
     return '$count шагов';
   }

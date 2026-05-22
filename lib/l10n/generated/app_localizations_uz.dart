@@ -519,6 +519,51 @@ class AppLocalizationsUz extends AppLocalizations {
   String get recipeDetailTabComments => 'Izohlar';
 
   @override
+  String get recipeDetailTabAiAnalysis => 'AI tahlil';
+
+  @override
+  String get recipeAiAnalysisLoading =>
+      'Retsept AI yordamida tahlil qilinmoqda…';
+
+  @override
+  String recipeAiAnalysisError(String reason) {
+    return 'AI tahlil bajarilmadi. $reason';
+  }
+
+  @override
+  String get recipeAiAnalysisRetry => 'Qayta urinish';
+
+  @override
+  String get recipeAiAnalysisHealthScore => 'Foydalilik bahosi';
+
+  @override
+  String get recipeAiAnalysisNutritionTitle => 'Bir porsiya uchun (taxminiy)';
+
+  @override
+  String recipeAiAnalysisKcal(int value) {
+    return '$value kkal';
+  }
+
+  @override
+  String recipeAiAnalysisProtein(int value) {
+    return '$value g oqsil';
+  }
+
+  @override
+  String recipeAiAnalysisCarbs(int value) {
+    return '$value g uglevod';
+  }
+
+  @override
+  String recipeAiAnalysisFat(int value) {
+    return '$value g yog\'';
+  }
+
+  @override
+  String get recipeAiAnalysisDisclaimerFallback =>
+      'Qiymatlar AI tomonidan taxminiy hisoblangan, tibbiy maslahat emas.';
+
+  @override
   String recipeDetailStepsCount(int count) {
     return '$count bosqich';
   }

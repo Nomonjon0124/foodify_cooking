@@ -678,6 +678,65 @@
   "@recipeDetailTabComments": {
     "description": "Recipe detail comments tab label."
   },
+  "recipeDetailTabAiAnalysis": "AI Analysis",
+  "@recipeDetailTabAiAnalysis": {
+    "description": "Recipe detail AI nutrition + health analysis tab label."
+  },
+  "recipeAiAnalysisLoading": "Analyzing recipe with AI…",
+  "@recipeAiAnalysisLoading": {
+    "description": "Shown while the analyze-recipe edge function call is in flight."
+  },
+  "recipeAiAnalysisError": "AI analysis failed. {reason}",
+  "@recipeAiAnalysisError": {
+    "description": "Shown when the AI analysis fails; reason is the backend error string.",
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
+  },
+  "recipeAiAnalysisRetry": "Try again",
+  "@recipeAiAnalysisRetry": {
+    "description": "Button label that retries the AI analysis call after a failure."
+  },
+  "recipeAiAnalysisHealthScore": "Health score",
+  "@recipeAiAnalysisHealthScore": {
+    "description": "Label above the 0-100 AI health score gauge."
+  },
+  "recipeAiAnalysisNutritionTitle": "Nutrition per serving (estimated)",
+  "@recipeAiAnalysisNutritionTitle": {
+    "description": "Section header above the estimated per-serving nutrition row."
+  },
+  "recipeAiAnalysisKcal": "{value} kcal",
+  "@recipeAiAnalysisKcal": {
+    "description": "Per-serving energy estimate.",
+    "placeholders": {
+      "value": {"type": "int"}
+    }
+  },
+  "recipeAiAnalysisProtein": "{value} g protein",
+  "@recipeAiAnalysisProtein": {
+    "description": "Per-serving protein estimate in grams.",
+    "placeholders": {
+      "value": {"type": "int"}
+    }
+  },
+  "recipeAiAnalysisCarbs": "{value} g carbs",
+  "@recipeAiAnalysisCarbs": {
+    "description": "Per-serving carbohydrate estimate in grams.",
+    "placeholders": {
+      "value": {"type": "int"}
+    }
+  },
+  "recipeAiAnalysisFat": "{value} g fat",
+  "@recipeAiAnalysisFat": {
+    "description": "Per-serving fat estimate in grams.",
+    "placeholders": {
+      "value": {"type": "int"}
+    }
+  },
+  "recipeAiAnalysisDisclaimerFallback": "Values are AI estimates and not medical advice.",
+  "@recipeAiAnalysisDisclaimerFallback": {
+    "description": "Fallback disclaimer if the AI response is missing one."
+  },
   "recipeDetailStepsCount": "{count} Steps",
   "@recipeDetailStepsCount": {
     "description": "Header above the steps list on the introduction tab.",
