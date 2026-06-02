@@ -84,7 +84,9 @@ class FoodifyPopularCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _PopularCardRatingBadge(rating: rating, scale: scale),
+                        // Recipe rating badge hidden.
+                        // _PopularCardRatingBadge(rating: rating, scale: scale),
+                        const SizedBox.shrink(),
                         _PopularCardStateAction(
                           state: state,
                           scale: scale,
@@ -151,46 +153,47 @@ class _PopularCardCaption extends StatelessWidget {
   }
 }
 
-class _PopularCardRatingBadge extends StatelessWidget {
-  const _PopularCardRatingBadge({required this.rating, required this.scale});
-
-  final String rating;
-  final double scale;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      key: const Key('foodify_popular_card_rating'),
-      height: 18 * scale,
-      padding: EdgeInsets.symmetric(horizontal: 5 * scale, vertical: 4 * scale),
-      decoration: BoxDecoration(
-        color: const Color(0xFF353535),
-        borderRadius: BorderRadius.circular(4 * scale),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Assets.icons.recipeCards.starWhite.svg(
-            width: 12 * scale,
-            height: 12 * scale,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-          SizedBox(width: 4 * scale),
-          Text(
-            rating,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 11 * scale,
-              fontWeight: FontWeight.w400,
-              height: 1,
-              fontFamily: FontFamily.montserrat,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Recipe rating badge hidden (recipe rating display disabled).
+// class _PopularCardRatingBadge extends StatelessWidget {
+//   const _PopularCardRatingBadge({required this.rating, required this.scale});
+//
+//   final String rating;
+//   final double scale;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       key: const Key('foodify_popular_card_rating'),
+//       height: 18 * scale,
+//       padding: EdgeInsets.symmetric(horizontal: 5 * scale, vertical: 4 * scale),
+//       decoration: BoxDecoration(
+//         color: const Color(0xFF353535),
+//         borderRadius: BorderRadius.circular(4 * scale),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Assets.icons.recipeCards.starWhite.svg(
+//             width: 12 * scale,
+//             height: 12 * scale,
+//             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+//           ),
+//           SizedBox(width: 4 * scale),
+//           Text(
+//             rating,
+//             style: TextStyle(
+//               color: Colors.white,
+//               fontSize: 11 * scale,
+//               fontWeight: FontWeight.w400,
+//               height: 1,
+//               fontFamily: FontFamily.montserrat,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _PopularCardStateAction extends StatelessWidget {
   const _PopularCardStateAction({

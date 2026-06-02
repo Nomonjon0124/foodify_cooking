@@ -126,6 +126,7 @@
   "addNewSubmitSuccessTitle": "Retsept yuklandi",
   "addNewSubmitSuccessSubtitle": "Retseptingiz profilingizga qo'shildi.",
   "addNewCreateAnother": "Yana yaratish",
+  "addNewSubmitError": "Retseptni saqlab bo'lmadi. Qayta urinib ko'ring.",
   "recipesLoadFailure": "Retseptlarni yuklab bo'lmadi",
   "addNewStepRecipeInformation": "Retsept ma'lumotlari",
   "addNewStepIngredients": "Ingredientlar",

@@ -408,6 +408,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addNewCreateAnother => 'Создать еще';
 
   @override
+  String get addNewSubmitError =>
+      'Не удалось сохранить рецепт. Попробуйте ещё раз.';
+
+  @override
   String get recipesLoadFailure => 'Не удалось загрузить рецепты';
 
   @override

@@ -528,6 +528,10 @@
   "@addNewCreateAnother": {
     "description": "Recipe submit success action to create another recipe."
   },
+  "addNewSubmitError": "Could not save recipe. Please try again.",
+  "@addNewSubmitError": {
+    "description": "Generic fallback shown when saving a recipe fails."
+  },
   "recipesLoadFailure": "Unable to load recipes",
   "@recipesLoadFailure": {
     "description": "Recipe list load failure message."

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foodify_cooking/core/gen/assets.gen.dart';
 
 import '../../core/gen/fonts.gen.dart';
-import 'foodify_components/foodify_logo.dart';
 import 'foodify_components/foodify_search_field.dart';
 
 enum _FoodifyAppBarVariant { home, searchFilter, titleAction }
@@ -61,13 +59,6 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onActionTap;
 
   static const _primary = Color(0xFF4058A0);
-  static const _tertiary = Color(0xFFDEE21B);
-  static const _dark = Color(0xFF353535);
-  static final _filterIcon = Assets.icons.foodifyComponents.documentFilter.svg(
-    width: 20.r,
-    height: 20.r,
-    colorFilter: const ColorFilter.mode(FoodifyAppBar._dark, BlendMode.srcIn),
-  );
 
   @override
   Size get preferredSize => Size.fromHeight(_spec.height);
@@ -75,7 +66,7 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
   _FoodifyAppBarSpec get _spec {
     return switch (_variant) {
       _FoodifyAppBarVariant.home => const _FoodifyAppBarSpec(
-        height: 131,
+        height: 98,
         bottomRadius: 12,
       ),
       _FoodifyAppBarVariant.searchFilter => const _FoodifyAppBarSpec(
@@ -110,7 +101,14 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
               height: spec.height.h,
               width: double.infinity,
               child: switch (_variant) {
-                _FoodifyAppBarVariant.home => _buildHomeHeader(),
+                _FoodifyAppBarVariant.home => _SearchAndFilterRow(
+                  controller: controller,
+                  hintText: hintText,
+                  initialText: initialText,
+                  onChanged: onChanged,
+                  onFilterTap: onFilterTap,
+                  searchBackgroundColor: const Color(0xFFF6FBF4),
+                ),
                 _FoodifyAppBarVariant.searchFilter => _buildSearchHeader(),
                 _FoodifyAppBarVariant.titleAction => _buildTitleHeader(context),
               },
@@ -118,38 +116,6 @@ class FoodifyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildHomeHeader() {
-    return Stack(
-      children: [
-        Positioned(
-          top: 27.h,
-          left: 0,
-          right: 0,
-          child: const Center(
-            child: FoodifyLogo(
-              size: FoodifyLogoSize.medium,
-              text: FoodifyLogoText.horizontal,
-              color: FoodifyLogoColor.stroke,
-            ),
-          ),
-        ),
-        Positioned(
-          left: 20.w,
-          right: 20.w,
-          top: 77.h,
-          child: _SearchAndFilterRow(
-            controller: controller,
-            hintText: hintText,
-            initialText: initialText,
-            onChanged: onChanged,
-            onFilterTap: onFilterTap,
-            searchBackgroundColor: const Color(0xFFF6FBF4),
-          ),
-        ),
-      ],
     );
   }
 
@@ -271,43 +237,20 @@ class _SearchAndFilterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: FoodifySearchField(
-            controller: controller,
-            initialText: initialText,
-            hintText: hintText,
-            onChanged: onChanged,
-            backgroundColor: searchBackgroundColor,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: FoodifySearchField(
+              controller: controller,
+              initialText: initialText,
+              hintText: hintText,
+              onChanged: onChanged,
+              backgroundColor: searchBackgroundColor,
+            ),
           ),
-        ),
-        SizedBox(width: 3.w),
-        _FilterButton(onPressed: onFilterTap),
-      ],
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({this.onPressed});
-
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      key: const Key('foodify_filter_button'),
-      color: FoodifyAppBar._tertiary,
-      borderRadius: BorderRadius.circular(8.r),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onPressed,
-        child: SizedBox(
-          width: 40.r,
-          height: 40.r,
-          child: Center(child: FoodifyAppBar._filterIcon),
-        ),
+        ],
       ),
     );
   }

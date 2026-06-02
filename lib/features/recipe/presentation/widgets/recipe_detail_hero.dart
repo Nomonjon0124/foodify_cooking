@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../common/widgets/foodify_image.dart';
 import '../../../../core/gen/assets.gen.dart';
-import '../../../../core/gen/fonts.gen.dart';
 
 class RecipeDetailHero extends StatelessWidget {
   const RecipeDetailHero({
@@ -61,15 +60,15 @@ class RecipeDetailHero extends StatelessWidget {
             left: 20.w,
             top: topInset + 12.h,
             child: _CircleIconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
               onPressed: () => context.pop(),
             ),
           ),
-          Positioned(
-            left: 16.w,
-            bottom: 16.h,
-            child: _RatingBadge(rating: ratingLabel),
-          ),
+          // Positioned(
+          //   left: 16.w,
+          //   bottom: 16.h,
+          //   child: _RatingBadge(rating: ratingLabel),
+          // ),
           Positioned(
             right: 16.w,
             bottom: 16.h,
@@ -127,40 +126,6 @@ class RecipeDetailHero extends StatelessWidget {
   }
 }
 
-class _RatingBadge extends StatelessWidget {
-  const _RatingBadge({required this.rating});
-
-  final String rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 23.h,
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: const Color(0xFF353535),
-        borderRadius: BorderRadius.circular(4.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Assets.icons.recipeCards.starWhite.svg(width: 12.w, height: 12.h),
-          SizedBox(width: 4.w),
-          Text(
-            rating,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 11.sp,
-              fontFamily: FontFamily.montserrat,
-              fontWeight: FontWeight.w400,
-              height: 1,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _HeroAction extends StatelessWidget {
   const _HeroAction({

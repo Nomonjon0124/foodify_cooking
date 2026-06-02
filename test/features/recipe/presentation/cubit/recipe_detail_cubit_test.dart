@@ -70,6 +70,14 @@ void main() {
       expect(cubit.state.activeTab, RecipeDetailTab.ingredients);
     });
 
+    test('available tabs do not include comments', () {
+      expect(RecipeDetailTab.values, [
+        RecipeDetailTab.introduction,
+        RecipeDetailTab.ingredients,
+        RecipeDetailTab.aiAnalysis,
+      ]);
+    });
+
     test('toggleLike applies optimistic state then confirmed result', () async {
       repo.detail = _detail(id: 'r-1', likesCount: 4);
       await cubit.load('r-1');

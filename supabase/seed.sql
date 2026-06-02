@@ -157,7 +157,7 @@ insert into public.recipes (
 values
   (
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1',
-    null,
+    '66666666-6666-4666-8666-666666666666',
     'chocolate ice cream buttercream fruit',
     null,
     4.8,
@@ -168,7 +168,7 @@ values
   ),
   (
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2',
-    null,
+    '55555555-5555-4555-8555-555555555555',
     'chocolate cake with buttercream frosting',
     null,
     4.8,
@@ -179,7 +179,7 @@ values
   ),
   (
     'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3',
-    null,
+    '44444444-4444-4444-8444-444444444444',
     'Italian pineapple pizza',
     null,
     4.8,
@@ -196,8 +196,8 @@ values
     4.8,
     30,
     'Medium',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/main-card-content.png',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/frosted-pinecone-cake-overlay.png'
+    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/frosted-pinecone-cake-overlay.png',
+    null
   ),
   (
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb2',
@@ -207,8 +207,8 @@ values
     3.8,
     120,
     'Simple',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/main-card-content.png',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/classic-victoria-sandwich-overlay.png'
+    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/classic-victoria-sandwich-overlay.png',
+    null
   ),
   (
     'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbb3',
@@ -218,8 +218,8 @@ values
     4.5,
     15,
     'Hard',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/main-card-content.png',
-    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/pea-ricotta-omelets-overlay.png'
+    'https://zxhtseztegvzxvhxbqfj.supabase.co/storage/v1/object/public/recipe-images/home/latest/pea-ricotta-omelets-overlay.png',
+    null
   )
 on conflict (id) do update set
   author_id = excluded.author_id,

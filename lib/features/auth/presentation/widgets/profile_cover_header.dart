@@ -52,21 +52,21 @@ class ProfileCoverHeader extends StatelessWidget {
             ),
           ),
           // Yellow rating chip — bottom-left of cover
-          Positioned(
-            left: 24.w,
-            top: 100.h,
-            child: _RatingChip(rating: rating),
-          ),
+          // Positioned(
+          //   left: 24.w,
+          //   top: 100.h,
+          //   child: _RatingChip(rating: rating),
+          // ),
           // Share / export icon
-          Positioned(
-            left: 75.w,
-            top: 99.h,
-            child: Icon(
-              Icons.ios_share_rounded,
-              color: Colors.white,
-              size: 20.r,
-            ),
-          ),
+          // Positioned(
+          //   left: 75.w,
+          //   top: 99.h,
+          //   child: Icon(
+          //     Icons.ios_share_rounded,
+          //     color: Colors.white,
+          //     size: 20.r,
+          //   ),
+          // ),
           // Menu button — top-right
           Positioned(right: 20.w, top: 37.h, child: const _MenuButton()),
         ],
@@ -75,6 +75,7 @@ class ProfileCoverHeader extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _RatingChip extends StatelessWidget {
   const _RatingChip({required this.rating});
 

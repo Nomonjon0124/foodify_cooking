@@ -4,7 +4,7 @@ import '../../domain/entities/recipe_detail.dart';
 
 enum RecipeDetailStatus { initial, loading, success, failure }
 
-enum RecipeDetailTab { introduction, ingredients, comments, aiAnalysis }
+enum RecipeDetailTab { introduction, ingredients, aiAnalysis }
 
 class RecipeDetailState extends Equatable {
   const RecipeDetailState({

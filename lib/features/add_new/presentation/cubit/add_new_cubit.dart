@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/entities/create_recipe_draft.dart';
+import '../../domain/usecases/create_recipe_usecase.dart';
 import '../add_new_constants.dart';
 
 enum AddNewStatus { initial, loading, success, failure }
@@ -22,6 +26,9 @@ class AddNewState extends Equatable {
     this.previewTab = RecipePreviewTab.introduction,
     this.status = AddNewStatus.initial,
     this.coverImagePath = '',
+    this.coverImageBytes,
+    this.coverImageName = '',
+    this.coverImageMimeType = 'image/jpeg',
     this.cropQuarterTurns = 0,
     this.title = '',
     this.description = '',
@@ -47,6 +54,9 @@ class AddNewState extends Equatable {
   final RecipePreviewTab previewTab;
   final AddNewStatus status;
   final String coverImagePath;
+  final Uint8List? coverImageBytes;
+  final String coverImageName;
+  final String coverImageMimeType;
   final int cropQuarterTurns;
   final String title;
   final String description;
@@ -66,7 +76,9 @@ class AddNewState extends Equatable {
   final List<AddNewComment> mockComments;
   final String errorMessage;
 
-  bool get hasCover => coverImagePath.trim().isNotEmpty;
+  bool get hasCover =>
+      coverImageBytes != null || coverImagePath.trim().isNotEmpty;
+  bool get hasPickedCover => coverImageBytes != null;
   bool get hasTitle => title.trim().isNotEmpty;
   bool get hasValidIngredients =>
       ingredients.any((ingredient) => ingredient.trim().isNotEmpty);
@@ -118,6 +130,10 @@ class AddNewState extends Equatable {
     RecipePreviewTab? previewTab,
     AddNewStatus? status,
     String? coverImagePath,
+    Uint8List? coverImageBytes,
+    String? coverImageName,
+    String? coverImageMimeType,
+    bool clearCoverImageBytes = false,
     int? cropQuarterTurns,
     String? title,
     String? description,
@@ -143,6 +159,11 @@ class AddNewState extends Equatable {
       previewTab: previewTab ?? this.previewTab,
       status: status ?? this.status,
       coverImagePath: coverImagePath ?? this.coverImagePath,
+      coverImageBytes: clearCoverImageBytes
+          ? null
+          : (coverImageBytes ?? this.coverImageBytes),
+      coverImageName: coverImageName ?? this.coverImageName,
+      coverImageMimeType: coverImageMimeType ?? this.coverImageMimeType,
       cropQuarterTurns: cropQuarterTurns ?? this.cropQuarterTurns,
       title: title ?? this.title,
       description: description ?? this.description,
@@ -171,6 +192,9 @@ class AddNewState extends Equatable {
     previewTab,
     status,
     coverImagePath,
+    coverImageBytes,
+    coverImageName,
+    coverImageMimeType,
     cropQuarterTurns,
     title,
     description,
@@ -193,8 +217,11 @@ class AddNewState extends Equatable {
 }
 
 class AddNewCubit extends Cubit<AddNewState> {
-  AddNewCubit()
-    : super(AddNewState(mockComments: AddNewConstants.mockComments));
+  AddNewCubit({CreateRecipeUseCase? createRecipeUseCase})
+    : _createRecipeUseCase = createRecipeUseCase,
+      super(AddNewState(mockComments: AddNewConstants.mockComments));
+
+  final CreateRecipeUseCase? _createRecipeUseCase;
 
   bool canContinueCurrentStage() => state.isStepValid && !state.isSubmitting;
 
@@ -225,6 +252,29 @@ class AddNewCubit extends Cubit<AddNewState> {
     emit(
       state.copyWith(
         coverImagePath: path,
+        clearCoverImageBytes: true,
+        coverImageName: '',
+        coverImageMimeType: 'image/jpeg',
+        phase: AddNewPhase.cropPhoto,
+        status: AddNewStatus.initial,
+        errorMessage: '',
+      ),
+    );
+  }
+
+  void selectPickedPhoto({
+    required Uint8List bytes,
+    required String name,
+    required String mimeType,
+  }) {
+    if (bytes.isEmpty) return;
+    emit(
+      state.copyWith(
+        coverImagePath: name,
+        coverImageBytes: bytes,
+        coverImageName: name,
+        coverImageMimeType: mimeType.isEmpty ? 'image/jpeg' : mimeType,
+        cropQuarterTurns: 0,
         phase: AddNewPhase.cropPhoto,
         status: AddNewStatus.initial,
         errorMessage: '',
@@ -261,6 +311,9 @@ class AddNewCubit extends Cubit<AddNewState> {
     emit(
       state.copyWith(
         coverImagePath: '',
+        clearCoverImageBytes: true,
+        coverImageName: '',
+        coverImageMimeType: 'image/jpeg',
         cropQuarterTurns: 0,
         phase: AddNewPhase.photoPicker,
       ),
@@ -373,7 +426,65 @@ class AddNewCubit extends Cubit<AddNewState> {
   Future<void> submitDraft() async {
     if (state.isSubmitting) return;
     emit(state.copyWith(status: AddNewStatus.loading, errorMessage: ''));
-    await Future<void>.delayed(const Duration(milliseconds: 900));
-    emit(state.copyWith(status: AddNewStatus.success));
+    final createRecipeUseCase = _createRecipeUseCase;
+    if (createRecipeUseCase == null) {
+      await Future<void>.delayed(const Duration(milliseconds: 900));
+      emit(state.copyWith(status: AddNewStatus.success));
+      return;
+    }
+
+    final bytes = state.coverImageBytes;
+    if (bytes == null) {
+      emit(
+        state.copyWith(
+          status: AddNewStatus.failure,
+          errorMessage: 'Choose a photo from gallery or camera',
+        ),
+      );
+      return;
+    }
+
+    final result = await createRecipeUseCase(_createDraft(bytes));
+    result.fold(
+      (message) => emit(
+        state.copyWith(status: AddNewStatus.failure, errorMessage: message),
+      ),
+      (_) => emit(state.copyWith(status: AddNewStatus.success)),
+    );
+  }
+
+  CreateRecipeDraft _createDraft(Uint8List coverImageBytes) {
+    return CreateRecipeDraft(
+      title: state.title.trim(),
+      description: state.description.trim(),
+      durationMinutes: state.prepTime + state.cookTime,
+      difficulty: state.difficulty,
+      coverImageBytes: coverImageBytes,
+      coverImageName: state.coverImageName.isEmpty
+          ? 'cover.jpg'
+          : state.coverImageName,
+      coverImageMimeType: state.coverImageMimeType,
+      ingredients: state.ingredients
+          .map((ingredient) => ingredient.trim())
+          .where((ingredient) => ingredient.isNotEmpty)
+          .toList(),
+      instructions: state.steps
+          .map((step) => step.trim())
+          .where((step) => step.isNotEmpty)
+          .toList(),
+      tags: _recipeTags(),
+    );
+  }
+
+  List<String> _recipeTags() {
+    final values = <String>{
+      ...state.tags.map((tag) => tag.trim()).where((tag) => tag.isNotEmpty),
+      if (state.category.trim().isNotEmpty) state.category.trim(),
+      ...state.hashtags
+          .split(RegExp(r'\s+'))
+          .map((tag) => tag.trim())
+          .where((tag) => tag.isNotEmpty),
+    };
+    return values.toList(growable: false);
   }
 }

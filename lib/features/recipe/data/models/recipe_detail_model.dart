@@ -35,7 +35,6 @@ class RecipeDetailModel extends RecipeDetail {
     final authorJson = json['author'];
     final ingredientsJson = json['recipe_ingredients'];
     final instructionsJson = json['recipe_instructions'];
-    final commentsJson = json['recipe_comments'];
     final tagLinksJson = json['recipe_tags'];
 
     final ingredients = (ingredientsJson is List)
@@ -53,14 +52,6 @@ class RecipeDetailModel extends RecipeDetail {
               .toList()
         : <RecipeInstruction>[];
     instructions.sort((a, b) => a.stepNumber.compareTo(b.stepNumber));
-
-    final comments = (commentsJson is List)
-        ? commentsJson
-              .whereType<Map<String, dynamic>>()
-              .map(RecipeCommentModel.fromJson)
-              .toList()
-        : <RecipeComment>[];
-    comments.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
     final tags = (tagLinksJson is List)
         ? tagLinksJson
@@ -81,13 +72,13 @@ class RecipeDetailModel extends RecipeDetail {
       durationLabel: _durationLabel(json['duration_minutes']),
       difficultyLabel: _nullableStringValue(json['difficulty']),
       likesCount: likesCount,
-      commentsCount: comments.length,
+      commentsCount: 0,
       isLikedByMe: isLikedByMe,
       isSavedByMe: isSavedByMe,
       tags: tags,
       ingredients: ingredients,
       instructions: instructions,
-      comments: comments,
+      comments: const <RecipeComment>[],
       author: authorJson is Map<String, dynamic>
           ? RecipeAuthorModel.fromJson(authorJson)
           : null,

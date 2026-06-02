@@ -66,7 +66,8 @@ class _RecipeDetailView extends StatelessWidget {
           if (state.status == RecipeDetailStatus.failure &&
               state.recipe == null) {
             return AppErrorWidget(
-              message: state.errorMessage ?? context.l10n.recipeDetailLoadFailure,
+              message:
+                  state.errorMessage ?? context.l10n.recipeDetailLoadFailure,
             );
           }
           final recipe = state.recipe;
@@ -137,7 +138,6 @@ class _RecipeDetailContent extends StatelessWidget {
                     context.l10n.recipeDetailTabIntroduction,
                 RecipeDetailTab.ingredients:
                     context.l10n.recipeDetailTabIngredients,
-                RecipeDetailTab.comments: context.l10n.recipeDetailTabComments,
                 RecipeDetailTab.aiAnalysis:
                     context.l10n.recipeDetailTabAiAnalysis,
               },
@@ -207,15 +207,7 @@ class _ChipsCard extends StatelessWidget {
         RecipeInfoChip(label: recipe.durationLabel!, icon: trendDown),
       RecipeInfoChip(
         label: recipe.likesCount.toString(),
-        icon: Icon(
-          Icons.favorite,
-          size: 12.sp,
-          color: const Color(0xFFFF6339),
-        ),
-      ),
-      RecipeInfoChip(
-        label: recipe.commentsCount.toString(),
-        icon: const Icon(Icons.mode_comment_outlined),
+        icon: Icon(Icons.favorite, size: 12.sp, color: const Color(0xFFFF6339)),
       ),
     ];
 
@@ -273,34 +265,6 @@ class _TabBody extends StatelessWidget {
               ),
           ],
         );
-      case RecipeDetailTab.comments:
-        return SliverList.list(
-          children: [
-            _SectionHeader(
-              label: context.l10n.recipeDetailCommentsCount(
-                recipe.comments.length,
-              ),
-            ),
-            if (recipe.comments.isEmpty)
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.h),
-                child: Text(
-                  context.l10n.recipeDetailCommentsEmpty,
-                  style: TextStyle(
-                    fontFamily: FontFamily.montserrat,
-                    fontSize: 12.sp,
-                    color: const Color(0xFFADADAD),
-                  ),
-                ),
-              ),
-            for (final comment in recipe.comments)
-              RecipeCommentRow(
-                authorName: comment.authorName,
-                authorAvatarUrl: comment.authorAvatarUrl,
-                content: comment.content,
-              ),
-          ],
-        );
       case RecipeDetailTab.aiAnalysis:
         return SliverToBoxAdapter(
           child: RecipeAiAnalysisPanel(recipeId: recipeId),
@@ -320,7 +284,11 @@ class _SectionHeader extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 8.h),
       child: Row(
         children: [
-          Icon(Icons.keyboard_arrow_down, color: const Color(0xFFFF6339), size: 24.sp),
+          Icon(
+            Icons.keyboard_arrow_down,
+            color: const Color(0xFFFF6339),
+            size: 24.sp,
+          ),
           SizedBox(width: 4.w),
           Text(
             label,
