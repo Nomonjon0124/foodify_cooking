@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../config/routes/route_names.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/gen/fonts.gen.dart';
@@ -10,6 +11,7 @@ import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../../../features/auth/presentation/cubit/auth_state.dart';
 import '../../../../features/auth/presentation/widgets/auth_required_prompt.dart';
 import '../../../../l10n/l10n_extension.dart';
+import '../../domain/usecases/create_recipe_usecase.dart';
 import '../cubit/add_new_cubit.dart';
 import '../widgets/add_new_flow_scaffold.dart';
 import '../widgets/add_new_header.dart';
@@ -68,7 +70,11 @@ class _AddNewFlow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddNewCubit(),
+      create: (_) => AddNewCubit(
+        createRecipeUseCase: getIt.isRegistered<CreateRecipeUseCase>()
+            ? getIt<CreateRecipeUseCase>()
+            : null,
+      ),
       child: BlocConsumer<AddNewCubit, AddNewState>(
         listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) async {
@@ -85,7 +91,14 @@ class _AddNewFlow extends StatelessWidget {
             );
             if (context.mounted) {
               context.read<AddNewCubit>().clearDraft();
+              context.go(RouteNames.home);
             }
+          } else if (state.status == AddNewStatus.failure) {
+            final message = state.errorMessage.trim().isEmpty
+                ? context.l10n.addNewSubmitError
+                : state.errorMessage;
+            AppSnackbar.show(context, message);
+            context.read<AddNewCubit>().resetStatus();
           }
         },
         builder: (context, state) {
@@ -97,6 +110,7 @@ class _AddNewFlow extends StatelessWidget {
               resizeToAvoidBottomInset: false,
               body: CropPhotoView(
                 imagePath: state.coverImagePath,
+                imageBytes: state.coverImageBytes,
                 quarterTurns: state.cropQuarterTurns,
                 onCancel: context.read<AddNewCubit>().cancelCrop,
                 onDone: context.read<AddNewCubit>().confirmCrop,

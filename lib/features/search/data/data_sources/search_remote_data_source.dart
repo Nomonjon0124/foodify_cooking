@@ -32,13 +32,17 @@ class SupabaseSearchRemoteDataSource implements SearchRemoteDataSource {
     final builder = _readClient()
         .from('recipes')
         .select('id,title,rating,cover_image_url')
-        .eq('is_search_featured', true);
+        .eq('is_profile_visible', true);
 
     final rows = query.isEmpty
-        ? await builder.order('search_sort_order', nullsFirst: false).limit(20)
+        ? await builder
+              .order('search_sort_order', nullsFirst: false)
+              .order('created_at', ascending: false)
+              .limit(20)
         : await builder
               .or('title.ilike.%$query%,description.ilike.%$query%')
               .order('search_sort_order', nullsFirst: false)
+              .order('created_at', ascending: false)
               .limit(20);
 
     return rows

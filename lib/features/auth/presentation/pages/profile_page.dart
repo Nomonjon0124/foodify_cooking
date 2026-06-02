@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
             right: 0,
             child: Center(child: _ProfileAvatar(imageUrl: profile.avatarUrl)),
           ),
-          Positioned(top: 166.h, left: 189.w, child: const _AddPicButton()),
+          // Positioned(top: 166.h, left: 189.w, child: const _AddPicButton()),
           Positioned(
             left: 0,
             right: 0,
@@ -282,6 +282,7 @@ class _ProfileAvatar extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _AddPicButton extends StatelessWidget {
   const _AddPicButton();
 

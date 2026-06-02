@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/gen/fonts.gen.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../cubit/add_new_cubit.dart';
+import 'add_new_cover_image.dart';
 
 class CoverPreviewView extends StatelessWidget {
   const CoverPreviewView({super.key});
@@ -40,8 +41,9 @@ class CoverPreviewView extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12.r),
-                    child: Image.asset(
-                      state.coverImagePath,
+                    child: AddNewCoverImage(
+                      source: state.coverImagePath,
+                      bytes: state.coverImageBytes,
                       width: imageWidth,
                       height: imageHeight,
                       fit: BoxFit.cover,

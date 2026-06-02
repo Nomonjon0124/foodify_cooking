@@ -55,7 +55,6 @@ class ProfileRecipeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _RecipeImage(
-                rating: rating,
                 cookTime: cookTime,
                 difficulty: difficulty,
                 imageUrl: imageUrl,
@@ -83,7 +82,6 @@ class ProfileRecipeCard extends StatelessWidget {
 
 class _RecipeImage extends StatelessWidget {
   const _RecipeImage({
-    required this.rating,
     required this.cookTime,
     required this.difficulty,
     required this.imageUrl,
@@ -92,7 +90,6 @@ class _RecipeImage extends StatelessWidget {
     required this.height,
   });
 
-  final String rating;
   final String cookTime;
   final String difficulty;
   final String imageUrl;
@@ -114,11 +111,12 @@ class _RecipeImage extends StatelessWidget {
               Container(color: placeholderColor)
             else
               FoodifyImage(imageUrl, fit: BoxFit.cover),
-            Positioned(
-              top: 8.h,
-              left: 8.w,
-              child: _DarkRatingBadge(rating: rating),
-            ),
+            // Recipe rating badge hidden.
+            // Positioned(
+            //   top: 8.h,
+            //   left: 8.w,
+            //   child: _DarkRatingBadge(rating: rating),
+            // ),
             Positioned(
               left: 0,
               right: 0,
@@ -136,46 +134,47 @@ class _RecipeImage extends StatelessWidget {
   }
 }
 
-class _DarkRatingBadge extends StatelessWidget {
-  const _DarkRatingBadge({required this.rating});
-
-  final String rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 18.h,
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: const Color(0xFF353535),
-        borderRadius: BorderRadius.circular(4.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Assets.icons.recipeCards.starWhite.svg(
-            width: 12.r,
-            height: 12.r,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          ),
-          SizedBox(width: 4.w),
-          Text(
-            rating,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w400,
-              height: 1,
-              fontFamily: FontFamily.montserrat,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// Recipe rating badge hidden (recipe rating display disabled).
+// class _DarkRatingBadge extends StatelessWidget {
+//   const _DarkRatingBadge({required this.rating});
+//
+//   final String rating;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 18.h,
+//       padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 4.h),
+//       decoration: BoxDecoration(
+//         color: const Color(0xFF353535),
+//         borderRadius: BorderRadius.circular(4.r),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Assets.icons.recipeCards.starWhite.svg(
+//             width: 12.r,
+//             height: 12.r,
+//             colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+//           ),
+//           SizedBox(width: 4.w),
+//           Text(
+//             rating,
+//             maxLines: 1,
+//             overflow: TextOverflow.ellipsis,
+//             style: TextStyle(
+//               color: Colors.white,
+//               fontSize: 11.sp,
+//               fontWeight: FontWeight.w400,
+//               height: 1,
+//               fontFamily: FontFamily.montserrat,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _TimeDifficultyOverlay extends StatelessWidget {
   const _TimeDifficultyOverlay({

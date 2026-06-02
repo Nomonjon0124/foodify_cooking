@@ -12,7 +12,8 @@ void main() {
 
     expect(find.text('Muffin with Blue Cream'), findsOneWidget);
     expect(find.text('Kelly Mayer'), findsOneWidget);
-    expect(find.text('4.8'), findsOneWidget);
+    // Recipe rating badge hidden; only the author rating chip remains.
+    expect(find.text('4.8'), findsNothing);
     expect(find.text('4.9'), findsOneWidget);
     expect(find.text('30 Min'), findsOneWidget);
     expect(find.text('Simple'), findsOneWidget);

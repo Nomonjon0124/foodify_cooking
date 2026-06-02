@@ -56,15 +56,6 @@ class SupabaseRecipeDetailRemoteDataSource
         slug,
         display_name
       )
-    ),
-    recipe_comments (
-      id,
-      content,
-      created_at,
-      author:profiles!recipe_comments_author_profile_id_fkey (
-        display_name,
-        avatar_url
-      )
     )
   ''';
 

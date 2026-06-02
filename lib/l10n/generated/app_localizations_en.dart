@@ -408,6 +408,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addNewCreateAnother => 'Create another';
 
   @override
+  String get addNewSubmitError => 'Could not save recipe. Please try again.';
+
+  @override
   String get recipesLoadFailure => 'Unable to load recipes';
 
   @override

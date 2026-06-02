@@ -414,6 +414,10 @@ class AppLocalizationsUz extends AppLocalizations {
   String get addNewCreateAnother => 'Yana yaratish';
 
   @override
+  String get addNewSubmitError =>
+      'Retseptni saqlab bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
   String get recipesLoadFailure => 'Retseptlarni yuklab bo\'lmadi';
 
   @override

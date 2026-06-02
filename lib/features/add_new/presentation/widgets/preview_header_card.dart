@@ -6,6 +6,7 @@ import '../../../../core/gen/fonts.gen.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
 import '../cubit/add_new_cubit.dart';
+import 'add_new_cover_image.dart';
 
 class PreviewHeaderCard extends StatelessWidget {
   const PreviewHeaderCard({
@@ -37,7 +38,11 @@ class PreviewHeaderCard extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 height: headerHeight,
-                child: Image.asset(state.coverImagePath, fit: BoxFit.cover),
+                child: AddNewCoverImage(
+                  source: state.coverImagePath,
+                  bytes: state.coverImageBytes,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Positioned.fill(
@@ -74,19 +79,20 @@ class PreviewHeaderCard extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              left: 15.w,
-              bottom: 11.h,
-              child: _RatingBadge(
-                backgroundColor: const Color(0xFF353535),
-                labelColor: Colors.white,
-                icon: Assets.icons.recipeCards.starWhite.svg(
-                  width: 12.r,
-                  height: 12.r,
-                ),
-                label: AddNewConstants.recipeRating,
-              ),
-            ),
+            // Recipe rating badge hidden.
+            // Positioned(
+            //   left: 15.w,
+            //   bottom: 11.h,
+            //   child: _RatingBadge(
+            //     backgroundColor: const Color(0xFF353535),
+            //     labelColor: Colors.white,
+            //     icon: Assets.icons.recipeCards.starWhite.svg(
+            //       width: 12.r,
+            //       height: 12.r,
+            //     ),
+            //     label: AddNewConstants.recipeRating,
+            //   ),
+            // ),
             Positioned(
               right: 20.w,
               bottom: 13.h,

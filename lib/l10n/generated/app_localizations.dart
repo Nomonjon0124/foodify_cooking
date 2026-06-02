@@ -856,6 +856,12 @@ abstract class AppLocalizations {
   /// **'Create another'**
   String get addNewCreateAnother;
 
+  /// Generic fallback shown when saving a recipe fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save recipe. Please try again.'**
+  String get addNewSubmitError;
+
   /// Recipe list load failure message.
   ///
   /// In en, this message translates to:

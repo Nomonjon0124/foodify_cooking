@@ -126,6 +126,7 @@
   "addNewSubmitSuccessTitle": "Рецепт загружен",
   "addNewSubmitSuccessSubtitle": "Ваш рецепт добавлен в профиль.",
   "addNewCreateAnother": "Создать еще",
+  "addNewSubmitError": "Не удалось сохранить рецепт. Попробуйте ещё раз.",
   "recipesLoadFailure": "Не удалось загрузить рецепты",
   "addNewStepRecipeInformation": "Информация",
   "addNewStepIngredients": "Ингредиенты",

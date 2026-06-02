@@ -32,6 +32,7 @@ class RecipeDetailCubit extends Cubit<RecipeDetailState> {
     final response = await _getRecipeDetailUseCase(
       GetRecipeDetailParams(recipeId),
     );
+    if (isClosed) return;
     response.fold(
       (message) => emit(
         state.copyWith(
@@ -78,6 +79,7 @@ class RecipeDetailCubit extends Cubit<RecipeDetailState> {
     final response = await _toggleRecipeLikeUseCase(
       ToggleRecipeLikeParams(recipe.id),
     );
+    if (isClosed) return;
     response.fold(
       (message) {
         emit(

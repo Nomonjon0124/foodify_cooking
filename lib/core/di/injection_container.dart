@@ -4,7 +4,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app/cubit/app_shell_cubit.dart';
 import '../../app/cubit/app_start_cubit.dart';
-import '../constants/storage_keys.dart';
+import '../../features/add_new/data/data_sources/add_new_remote_data_source.dart';
+import '../../features/add_new/data/repositories/add_new_repository_impl.dart';
+import '../../features/add_new/domain/repositories/add_new_repository.dart';
+import '../../features/add_new/domain/usecases/create_recipe_usecase.dart';
 import '../../features/auth/data/data_sources/auth_local_data_source.dart';
 import '../../features/auth/data/data_sources/auth_remote_data_source.dart';
 import '../../features/auth/data/data_sources/profile_remote_data_source.dart';
@@ -56,6 +59,7 @@ import '../../features/save/domain/usecases/unsave_recipe_usecase.dart';
 import '../../features/save/presentation/cubit/saved_recipes_cubit.dart';
 import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../../features/splash/presentation/cubit/splash_cubit.dart';
+import '../constants/storage_keys.dart';
 import '../network/dio_client.dart';
 import '../network/dio_factory.dart';
 import '../network/interceptors/auth_interceptor.dart';
@@ -75,6 +79,7 @@ Future<void> configureDependencies({bool enableAuthFeature = true}) async {
 
   await _registerCoreDependencies();
   _registerHomeDependencies();
+  _registerAddNewDependencies();
   _registerOnboardingDependencies();
   _registerRecipeDependencies();
   _registerSearchDependencies();
@@ -112,6 +117,19 @@ Future<void> _registerCoreDependencies() async {
     ..registerLazySingleton<DioClient>(() => DioClient(getIt()));
 }
 
+void _registerAddNewDependencies() {
+  getIt
+    ..registerLazySingleton<AddNewRemoteDataSource>(
+      () => SupabaseAddNewRemoteDataSource(() => getIt<SupabaseClient>()),
+    )
+    ..registerLazySingleton<AddNewRepository>(
+      () => AddNewRepositoryImpl(getIt()),
+    )
+    ..registerLazySingleton<CreateRecipeUseCase>(
+      () => CreateRecipeUseCase(getIt()),
+    );
+}
+
 void _registerHomeDependencies() {
   getIt
     ..registerLazySingleton<HomeRemoteDataSource>(
@@ -131,8 +149,7 @@ void _registerOnboardingDependencies() {
 void _registerRecipeDependencies() {
   getIt
     ..registerLazySingleton<RecipeDetailRemoteDataSource>(
-      () =>
-          SupabaseRecipeDetailRemoteDataSource(() => getIt<SupabaseClient>()),
+      () => SupabaseRecipeDetailRemoteDataSource(() => getIt<SupabaseClient>()),
     )
     ..registerLazySingleton<RecipeRepository>(
       () => RecipeRepositoryImpl(getIt()),
@@ -144,9 +161,8 @@ void _registerRecipeDependencies() {
       () => ToggleRecipeLikeUseCase(getIt()),
     )
     ..registerLazySingleton<RecipeAnalysisRemoteDataSource>(
-      () => SupabaseRecipeAnalysisRemoteDataSource(
-        () => getIt<SupabaseClient>(),
-      ),
+      () =>
+          SupabaseRecipeAnalysisRemoteDataSource(() => getIt<SupabaseClient>()),
     )
     ..registerLazySingleton<RecipeAnalysisRepository>(
       () => RecipeAnalysisRepositoryImpl(getIt()),

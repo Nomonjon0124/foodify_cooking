@@ -54,7 +54,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(FoodifyAppBar), findsNWidgets(2));
-    expect(find.byKey(const Key('foodify_filter_button')), findsOneWidget);
+    expect(find.byKey(const Key('foodify_filter_button')), findsNothing);
     expect(find.text('New Recipe'), findsOneWidget);
     expect(find.text('Clear all'), findsOneWidget);
   });

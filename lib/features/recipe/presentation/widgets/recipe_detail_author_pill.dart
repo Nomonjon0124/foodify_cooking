@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/widgets/foodify_image.dart';
-import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
 import '../../domain/entities/recipe_author.dart';
 
@@ -13,9 +12,10 @@ class RecipeDetailAuthorPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = author?.displayName ?? '';
+    final name = (author?.displayName ?? '').trim().isEmpty
+        ? 'Foodify User'
+        : author!.displayName.trim();
     final avatarUrl = author?.avatarUrl;
-    final rating = author?.ratingLabel;
 
     return SizedBox(
       height: 48.h,
@@ -49,8 +49,6 @@ class RecipeDetailAuthorPill extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (rating != null && rating.isNotEmpty)
-                    _AuthorRatingBadge(rating: rating),
                 ],
               ),
             ),
@@ -90,41 +88,6 @@ class _AuthorAvatar extends StatelessWidget {
         width: size,
         height: size,
         child: FoodifyImage(url, fit: BoxFit.cover),
-      ),
-    );
-  }
-}
-
-class _AuthorRatingBadge extends StatelessWidget {
-  const _AuthorRatingBadge({required this.rating});
-
-  final String rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 18.h,
-      padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: const Color(0xFFDEE21B),
-        borderRadius: BorderRadius.circular(31.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Assets.icons.recipeCards.starDark.svg(width: 12.w, height: 12.h),
-          SizedBox(width: 4.w),
-          Text(
-            rating,
-            style: TextStyle(
-              color: const Color(0xFF353535),
-              fontFamily: FontFamily.montserrat,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w400,
-              height: 1,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../common/widgets/app_snackbar.dart';
 import '../../../../core/gen/assets.gen.dart';
 import '../../../../core/gen/fonts.gen.dart';
 import '../../../../l10n/l10n_extension.dart';
 import '../add_new_constants.dart';
 import '../cubit/add_new_cubit.dart';
+import 'add_new_cover_image.dart';
 
 class CoverPickerView extends StatelessWidget {
   const CoverPickerView({super.key});
@@ -61,8 +67,9 @@ class CoverPickerView extends StatelessWidget {
                 SizedBox(height: 10.h),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
-                  child: Image.asset(
-                    selectedPath,
+                  child: AddNewCoverImage(
+                    source: selectedPath,
+                    bytes: state.coverImageBytes,
                     width: previewWidth,
                     height: previewHeight,
                     fit: BoxFit.cover,
@@ -98,13 +105,15 @@ class CoverPickerView extends StatelessWidget {
                             BlendMode.srcIn,
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () =>
+                            _pickDeviceImage(context, ImageSource.gallery),
                       ),
                       SizedBox(width: 6.w),
                       _ToolbarIconButton(
                         tooltip: context.l10n.addNewCameraAction,
                         icon: Icon(Icons.camera_alt_outlined, size: 22.r),
-                        onTap: () {},
+                        onTap: () =>
+                            _pickDeviceImage(context, ImageSource.camera),
                       ),
                     ],
                   ),
@@ -129,8 +138,7 @@ class CoverPickerView extends StatelessWidget {
 
                       return GestureDetector(
                         key: Key('cover-picker-item-$index'),
-                        onTap: () =>
-                            context.read<AddNewCubit>().selectPhoto(imagePath),
+                        onTap: () => _selectBundledImage(context, imagePath),
                         child: DecoratedBox(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.r),
@@ -160,6 +168,141 @@ class CoverPickerView extends StatelessWidget {
       },
     );
   }
+}
+
+Future<void> _selectBundledImage(BuildContext context, String assetPath) async {
+  final data = await rootBundle.load(assetPath);
+  if (!context.mounted) return;
+
+  context.read<AddNewCubit>().selectPickedPhoto(
+    bytes: data.buffer.asUint8List(),
+    name: assetPath.split('/').last,
+    mimeType: _mimeTypeForName(assetPath),
+  );
+}
+
+Future<void> _pickDeviceImage(BuildContext context, ImageSource source) async {
+  late final bool hasPermission;
+  try {
+    hasPermission = await _ensurePickerPermission(context, source);
+  } on PlatformException catch (error) {
+    if (!context.mounted) return;
+    _showPermissionError(context, error);
+    return;
+  }
+
+  if (!hasPermission || !context.mounted) return;
+
+  late final XFile? picked;
+  try {
+    picked = await ImagePicker().pickImage(source: source, imageQuality: 90);
+  } on PlatformException catch (error) {
+    if (!context.mounted) return;
+    _showPickerError(context, error);
+    return;
+  }
+
+  if (picked == null || !context.mounted) return;
+
+  final bytes = await picked.readAsBytes();
+  if (!context.mounted) return;
+
+  context.read<AddNewCubit>().selectPickedPhoto(
+    bytes: bytes,
+    name: _pickedName(picked),
+    mimeType: picked.mimeType ?? _mimeTypeForName(_pickedName(picked)),
+  );
+}
+
+Future<bool> _ensurePickerPermission(
+  BuildContext context,
+  ImageSource source,
+) async {
+  if (kIsWeb) return true;
+
+  final permission = source == ImageSource.camera
+      ? Permission.camera
+      : _galleryPermissionForPlatform();
+  final status = await permission.status;
+  if (_isAllowed(status)) return true;
+
+  final requested = await permission.request();
+  if (_isAllowed(requested)) return true;
+
+  if (source == ImageSource.gallery &&
+      defaultTargetPlatform == TargetPlatform.android) {
+    final storageRequested = await Permission.storage.request();
+    if (_isAllowed(storageRequested)) return true;
+    if (!context.mounted) return false;
+    return _handleDeniedPermission(context, storageRequested);
+  }
+
+  if (!context.mounted) return false;
+  return _handleDeniedPermission(context, requested);
+}
+
+Permission _galleryPermissionForPlatform() {
+  return switch (defaultTargetPlatform) {
+    TargetPlatform.android => Permission.photos,
+    TargetPlatform.iOS || TargetPlatform.macOS => Permission.photos,
+    _ => Permission.storage,
+  };
+}
+
+bool _isAllowed(PermissionStatus status) {
+  return status.isGranted || status.isLimited;
+}
+
+bool _handleDeniedPermission(BuildContext context, PermissionStatus status) {
+  if (!context.mounted) return false;
+  if (status.isPermanentlyDenied || status.isRestricted) {
+    AppSnackbar.show(
+      context,
+      'Ruxsat berilmagan. Telefon sozlamalaridan kamera yoki rasm ruxsatini yoqing.',
+    );
+    openAppSettings();
+    return false;
+  }
+
+  AppSnackbar.show(
+    context,
+    'Rasm tanlash uchun kamera yoki galereya ruxsatini bering.',
+  );
+  return false;
+}
+
+void _showPickerError(BuildContext context, PlatformException error) {
+  final isChannelError = error.code == 'channel-error';
+  AppSnackbar.show(
+    context,
+    isChannelError
+        ? 'Rasm tanlash moduli ulanmagan. Ilovani toliq qayta ishga tushiring.'
+        : 'Rasm tanlashda xatolik yuz berdi: ${error.message ?? error.code}',
+  );
+}
+
+void _showPermissionError(BuildContext context, PlatformException error) {
+  final isChannelError = error.code == 'channel-error';
+  AppSnackbar.show(
+    context,
+    isChannelError
+        ? 'Permission moduli ulanmagan. Ilovani toliq qayta ishga tushiring.'
+        : 'Ruxsat sorashda xatolik yuz berdi: ${error.message ?? error.code}',
+  );
+}
+
+String _pickedName(XFile file) {
+  if (file.name.trim().isNotEmpty) return file.name.trim();
+  final pathParts = file.path.split(RegExp(r'[\\/]'));
+  final name = pathParts.isEmpty ? '' : pathParts.last.trim();
+  return name.isEmpty ? 'cover.jpg' : name;
+}
+
+String _mimeTypeForName(String name) {
+  final lower = name.toLowerCase();
+  if (lower.endsWith('.png')) return 'image/png';
+  if (lower.endsWith('.webp')) return 'image/webp';
+  return 'image/jpeg';
 }
 
 class _ToolbarIconButton extends StatelessWidget {

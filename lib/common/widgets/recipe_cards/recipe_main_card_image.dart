@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/foodify_image.dart';
 import '../../../core/gen/fonts.gen.dart';
-import 'recipe_rating_badge.dart';
+// Rating badge hidden (recipe rating display disabled).
+// import 'recipe_rating_badge.dart';
 
 class RecipeMainCardImage extends StatelessWidget {
   const RecipeMainCardImage({
@@ -35,17 +36,18 @@ class RecipeMainCardImage extends StatelessWidget {
             FoodifyImage(imagePath, fit: BoxFit.cover),
             if (overlayImagePath.isNotEmpty)
               FoodifyImage(overlayImagePath, fit: BoxFit.cover),
-            Positioned(
-              left: 8 * scale,
-              top: 8 * scale,
-              child: RecipeRatingBadge(
-                rating: topRating,
-                starAssetPath: 'assets/icons/recipe_cards/star_white.svg',
-                backgroundColor: const Color(0xFF353535),
-                textColor: Colors.white,
-                scale: scale,
-              ),
-            ),
+            // Recipe rating badge hidden.
+            // Positioned(
+            //   left: 8 * scale,
+            //   top: 8 * scale,
+            //   child: RecipeRatingBadge(
+            //     rating: topRating,
+            //     starAssetPath: 'assets/icons/recipe_cards/star_white.svg',
+            //     backgroundColor: const Color(0xFF353535),
+            //     textColor: Colors.white,
+            //     scale: scale,
+            //   ),
+            // ),
             Positioned(
               left: 0,
               right: 0,

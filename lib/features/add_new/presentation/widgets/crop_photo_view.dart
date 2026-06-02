@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import '../../../../l10n/l10n_extension.dart';
 class CropPhotoView extends StatelessWidget {
   const CropPhotoView({
     required this.imagePath,
+    this.imageBytes,
     required this.quarterTurns,
     required this.onCancel,
     required this.onDone,
@@ -17,6 +19,7 @@ class CropPhotoView extends StatelessWidget {
   });
 
   final String imagePath;
+  final Uint8List? imageBytes;
   final int quarterTurns;
   final VoidCallback onCancel;
   final VoidCallback onDone;
@@ -38,7 +41,9 @@ class CropPhotoView extends StatelessWidget {
             children: [
               RotatedBox(
                 quarterTurns: quarterTurns,
-                child: Image.asset(imagePath, fit: BoxFit.cover),
+                child: imageBytes == null
+                    ? Image.asset(imagePath, fit: BoxFit.cover)
+                    : Image.memory(imageBytes!, fit: BoxFit.cover),
               ),
               CustomPaint(
                 painter: _CropOverlayPainter(
